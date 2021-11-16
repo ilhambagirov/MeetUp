@@ -1,0 +1,30 @@
+.fredoka-font{
+ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.customlogotext{
+    font-weight: 600;
+    font-size: 32px;
+    margin-left: 10px;
+    color: #0d6efd;
+}
+
+.nav-head{
+    height: 96px;
+    display: flex;
+    align-items: center;
+}
+
+.meetup-Logo{
+    width: 45px;
+    height: 100%;
+}
+
+.logo-Link{
+    width: 180px;
+    fill: #0d6efd !important;
+}
+
+.logo-Link svg{
+    fill: #0d6efd !important;
+}
