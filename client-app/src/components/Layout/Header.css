@@ -1,6 +1,52 @@
+/* navleft */
 .fredoka-font{
  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+@media screen and (max-width: 1198.98px) {
+    .nav-head{
+        height: auto !important;
+        padding: 10px;
+    }
+
+    .lg-show{
+        display: none;
+    }
+
+    .xl-none{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+    .nav-head{
+        height: auto;
+    }
+
+    .lg-show{
+        display: block !important;
+    }
+    .navmiddle{
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .search-991{
+        display: block !important;
+    }
+}
+
+@media screen and (max-width:575.98px) {
+    .customlogotext{
+        font-size: 25px !important;
+    }
+    .logo-Link{
+        width: max-content;
+        margin-right: 0 !important;
+    }
+
+
+}
+
+
 
 .customlogotext{
     font-weight: 600;
@@ -13,6 +59,7 @@
     height: 96px;
     display: flex;
     align-items: center;
+    background-color: #fff;
 }
 
 .meetup-Logo{
@@ -21,10 +68,145 @@
 }
 
 .logo-Link{
-    width: 180px;
+    max-width: 250px;
+    margin-right: 70px;
     fill: #0d6efd !important;
 }
 
 .logo-Link svg{
     fill: #0d6efd !important;
 }
+
+/* navmiddle */
+
+.navmiddle{
+    margin-left: 2rem;
+}
+.search-input-wrapper{
+    position: relative;
+}
+.search-input-logo{
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    top: 14px;
+    outline-color: grey;
+}
+
+.search-input{
+    border-radius: 20px;
+    line-height: 32px;
+    font-size: 13px;
+    background-color: #eee;
+    width: 350px;
+    font-weight: 500;
+    padding-left:3rem ;
+    padding-bottom: 0.5rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    border: 0;
+    outline: 0;
+}
+
+.nav-middle-link{
+    padding: 0.5rem;
+    text-align: center;
+    position: relative;
+    margin-left: 1rem;
+    width: 50px;
+    height: 50px;
+    background-color: #f5f5f5!important;
+    border-radius: 50%;
+}
+
+
+.nav-middle-Logo{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    font-size: 25px;
+    line-height: 40px;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+/* nav-right */
+
+.nav-right{
+    position: relative;
+}
+
+.nav-right-link{
+    position: relative;
+    padding: 0.5rem;
+    text-align: center;
+    margin-left: 1rem;
+}
+
+.nav-right-logo{
+    width: 27px;
+    height: 27px;
+}
+
+.notification{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 5px;
+    width: 7px;
+    height: 7px;
+    line-height: 15px;
+    text-align: center;
+    display: inline-block;
+    font-size: 10px;
+    background-color: #fe9431;
+}
+
+
+.profile-img{
+    width: 40px;
+}
+
+.notification-drop{
+    position: absolute;
+    top: 55px;
+    right: 170px;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.notification-drop h6{
+    color: gray;
+    font-size: 12px;
+    font-weight: 500;
+}
+.notification-drop h5{
+    color: black;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.not-drop:hover{
+    color: black;
+}
+
+.not-drop{
+    margin-bottom: 1rem;
+    width: max-content;
+}
+.not-user-pics{
+    width: 40px;
+    height: 40px;
+}
+
+.time-not-user{
+    float: right;
+    font-size: 11px;
+    color: #ced4da;
+    font-weight: 600;
+}
+
