@@ -1,4 +1,11 @@
 /* navleft */
+li{
+    list-style-type: none;
+}
+header{
+    background-color: #fff;
+   
+}
 .fredoka-font{
  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -6,38 +13,63 @@
     .nav-head{
         height: auto !important;
         padding: 10px;
+        .lg-show{
+            display: none;
+        }
+    
+        .xl-none{
+            display: none;
+        }
     }
 
-    .lg-show{
-        display: none;
-    }
-
-    .xl-none{
-        display: none;
-    }
+    
 }
 
 @media screen and (max-width: 991.98px) {
     .nav-head{
         height: auto;
+        .navmiddle{
+            width: 100%;
+            justify-content: flex-end;
+            .lg-show{
+                display: block !important;
+            }
+            
+            .search-991{
+                display: block !important;
+            }
+        }
     }
 
-    .lg-show{
-        display: block !important;
-    }
-    .navmiddle{
-        width: 100%;
-        justify-content: flex-end;
-    }
-    .search-991{
-        display: block !important;
-    }
+  
 }
 
 @media screen and (max-width:575.98px) {
-    .customlogotext{
-        font-size: 25px !important;
+
+    .logo-Link{
+        align-items: center;
+        .customlogotext{
+            font-size: 25px !important;
+        }
+        .meetup-Logo{
+            width: 30px !important;
+            height: 100%;
+        }
     }
+    .navmiddle {
+        margin-left: 0 !important;
+        .nav-middle-link{
+            width: 45px !important;
+            height: 45px !important;
+            .nav-middle-Logo{
+                width: 20px;
+                height: 20px;
+        }
+        }
+    }
+  
+   
+  
     .logo-Link{
         width: max-content;
         margin-right: 0 !important;
@@ -46,7 +78,26 @@
 
 }
 
+@media (max-width: 420px) {
+   .nav-middle-link{
+       margin-left: 0.5rem !important;
+   }
+  
+  }
 
+@media (max-width: 380px) {
+  .custom-container{
+      padding: 0;
+  }
+  
+  }
+
+header{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
 
 .customlogotext{
     font-weight: 600;
@@ -60,6 +111,7 @@
     display: flex;
     align-items: center;
     background-color: #fff;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.03);
 }
 
 .meetup-Logo{
@@ -68,7 +120,7 @@
 }
 
 .logo-Link{
-    max-width: 250px;
+    max-width: 350px;
     margin-right: 70px;
     fill: #0d6efd !important;
 }
@@ -127,6 +179,7 @@
     display: inline-block;
     font-size: 25px;
     line-height: 40px;
+    margin-top: 4px;
 }
 
 a{
@@ -138,6 +191,55 @@ a{
 
 .nav-right{
     position: relative;
+    .settings-drop{
+        width: 300px;
+        z-index: 1;
+        position: absolute;
+        right: 83px;
+        top: 55px;
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 15px;
+        .choose-color{
+            font-size: 14px;
+            margin-bottom: 1rem;
+            color: #adb5bd;
+            font-weight: 700;
+           
+        }
+        .colors-settings{
+            display: inline-block;
+            padding: 0;
+            margin-right: 8px;
+
+            input[type=radio]{
+                display: none;
+            }
+            .colors-settings-bg{
+                display: inline-block;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+            }
+        }
+        .settings-toggle{
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1rem;
+            h4{
+                font-size: 14px;
+                font-weight: 700;
+            }
+            .toggle-button-settings{
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+}
+
+@keyframes rotate{
+    from{ transform: rotate(-360deg); }
+    to{ transform: rotate(360deg); }
 }
 
 .nav-right-link{
@@ -145,11 +247,19 @@ a{
     padding: 0.5rem;
     text-align: center;
     margin-left: 1rem;
+   
 }
 
 .nav-right-logo{
     width: 27px;
     height: 27px;
+}
+
+.rotate{
+    animation-name: rotate;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 .notification{
@@ -177,12 +287,15 @@ a{
     right: 170px;
     padding: 1.5rem;
     border-radius: 15px;
+    z-index: 2;
+    background-color: #fff;
 }
 
 .notification-drop h6{
     color: gray;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
+    line-height: 1.6;
 }
 .notification-drop h5{
     color: black;
