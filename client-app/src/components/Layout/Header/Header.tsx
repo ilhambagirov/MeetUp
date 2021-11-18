@@ -11,12 +11,23 @@ import user8 from '../../../assets/images/user-8.png'
 import { Switch } from "antd"
 import './Header.scss';
 import 'antd/dist/antd.css'
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 
-export default function Header() {
+
+export default observer( function Header() {
 
     const [notificiationDropdown, SetnotificiationDropdown] = useState(false);
     const [settingsDropdown, SetsettingsDropdown] = useState(false);
+    const [menuBackground, SetmenuBackground] = useState("");
+    const { activitystore } = useStore();
+    const {darkMode,setDarkMode}=activitystore
+
+
+    const handleMenuBackColor = (color: string) => {
+        menuBackground.length === 0 ? SetmenuBackground(color) : SetmenuBackground("")
+    }
     const handleNotDropdown = () => {
         SetnotificiationDropdown(!notificiationDropdown)
     }
@@ -24,9 +35,9 @@ export default function Header() {
         SetsettingsDropdown(!settingsDropdown);
     }
     return (
-        <header>
+        <header  style={{ backgroundColor: menuBackground ? menuBackground : darkMode ? '#293145' : 'white' }} >
             <div className='custom-container'>
-                <div className='nav-head shadow-xs'>
+                <div  style={{ backgroundColor: menuBackground ? menuBackground : darkMode ? '#293145' : 'white' }} className='nav-head  shadow-xs'>
                     <div className='navleft'>
                         <a className='d-flex text-decoration-none logo-Link' href="#">
                             <FaMeetup className='meetup-Logo' />
@@ -36,27 +47,29 @@ export default function Header() {
                     <div className='navmiddle d-flex'>
                         <form action="" className='d-lg-flex d-none'>
                             <div className='form-group search-input-wrapper'>
-                                <FiSearch className='search-input-logo' />
-                                <input className='search-input' placeholder='Start typing to search..' type="text" name="searchInput" id="" />
+                                
+                                <FiSearch style={{ color: darkMode ? 'white' : 'grey' }} className='search-input-logo' />
+                                
+                                <input style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} className='search-input' placeholder='Start typing to search..' type="text" name="searchInput" id="" />
                             </div>
                         </form>
                         <div className='d-flex'>
-                            <a href="" className='nav-middle-link xl-none'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <AiOutlineHome className='nav-middle-Logo' />
                             </a>
-                            <a href="" className='nav-middle-link d-none search-991'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link d-none search-991'>
                                 <FiSearch className='nav-middle-Logo' />
                             </a>
-                            <a href="" className='nav-middle-link lg-show'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link lg-show'>
                                 <AiOutlineHistory className='nav-middle-Logo' />
                             </a>
-                            <a href="" className='nav-middle-link lg-show'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link lg-show'>
                                 <BsCameraVideo className='nav-middle-Logo' />
                             </a>
-                            <a href="" className='nav-middle-link xl-none'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <AiOutlineUsergroupDelete className='nav-middle-Logo' />
                             </a>
-                            <a href="" className='nav-middle-link d-none search-991'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link d-none search-991'>
                                 <AiOutlineMenu className='nav-middle-Logo' />
                             </a>
                         </div>
@@ -207,7 +220,7 @@ export default function Header() {
                                 <div className='settings-toggle d-flex'>
                                     <h4>Side Bar Background</h4>
                                     <div>
-                                        <Switch className='toggle-button-settings' />
+                                        <Switch onClick={() => handleMenuBackColor("red")} className='toggle-button-settings' />
                                     </div>
 
                                 </div>
@@ -220,7 +233,7 @@ export default function Header() {
                                 <div className='settings-toggle d-flex'>
                                     <h4>Dark Mode</h4>
                                     <div>
-                                        <Switch className='toggle-button-settings' />
+                                        <Switch onClick={() => setDarkMode()} className='toggle-button-settings' />
                                     </div>
                                 </div>
                             </div>
@@ -234,4 +247,4 @@ export default function Header() {
             </div>
         </header>
     )
-}
+})

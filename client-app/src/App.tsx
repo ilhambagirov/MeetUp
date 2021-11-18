@@ -1,16 +1,17 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import Header from './components/Layout/Header/Header';
 import Main from './components/Layout/Main/Main';
+import { observer } from 'mobx-react-lite';
 
-function App() {
+
+export default observer(function App() {
   return (
-    <Fragment>
-      <Header />
-      <Main/>
-    </Fragment>
+    <>
+      <Header/>
+      <Main />
+    </>
   );
-}
+})
 
-export default App;
