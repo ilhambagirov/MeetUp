@@ -13,16 +13,16 @@ import './Header.scss';
 import 'antd/dist/antd.css'
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import classnames from 'classnames'
 
-
-
-export default observer( function Header() {
+export default observer(function Header() {
 
     const [notificiationDropdown, SetnotificiationDropdown] = useState(false);
     const [settingsDropdown, SetsettingsDropdown] = useState(false);
+    const [checkedBoxDarkMode, SetcheckedBoxDarkMode] = useState(false);
     const [menuBackground, SetmenuBackground] = useState("");
     const { activitystore } = useStore();
-    const {darkMode,setDarkMode}=activitystore
+    const { darkMode, setDarkMode } = activitystore
 
 
     const handleMenuBackColor = (color: string) => {
@@ -34,22 +34,35 @@ export default observer( function Header() {
     const handleSettingsDropdown = () => {
         SetsettingsDropdown(!settingsDropdown);
     }
+
+    const handleToggleiconDarkMode = () => {
+        SetcheckedBoxDarkMode(!checkedBoxDarkMode)
+    }
+    const navbardark = classnames({ navbardark: darkMode })
+    const notificationDrop = classnames("notification-drop shadow-lg", { notificationdropdark: darkMode })
+    const settingsDrop = classnames("settings-drop shadow-lg", { settingsdropdark: darkMode })
+    const notificationHeader = classnames("fw-700 font-xs mb-4", { notificationheaderdark: darkMode })
+    const notificationNames = classnames("notificationdropnames", { notificationdropnameslight: !darkMode }, { notificationnames: darkMode })
+    const seetingMenu = classnames("settings-menu", { seetingmenudark: darkMode })
+    const toggleCatch = classnames("nav-right-logo")
+    const darkModeToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': checkedBoxDarkMode })
+
     return (
-        <header  style={{ backgroundColor: menuBackground ? menuBackground : darkMode ? '#293145' : 'white' }} >
+        <header className={navbardark}  >
             <div className='custom-container'>
-                <div  style={{ backgroundColor: menuBackground ? menuBackground : darkMode ? '#293145' : 'white' }} className='nav-head  shadow-xs'>
+                <div className={`nav-head  shadow-xs `}>
                     <div className='navleft'>
                         <a className='d-flex text-decoration-none logo-Link' href="#">
                             <FaMeetup className='meetup-Logo' />
-                            <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp.</span>
+                            <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp..</span>
                         </a>
                     </div>
                     <div className='navmiddle d-flex'>
                         <form action="" className='d-lg-flex d-none'>
                             <div className='form-group search-input-wrapper'>
-                                
+
                                 <FiSearch style={{ color: darkMode ? 'white' : 'grey' }} className='search-input-logo' />
-                                
+
                                 <input style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} className='search-input' placeholder='Start typing to search..' type="text" name="searchInput" id="" />
                             </div>
                         </form>
@@ -82,12 +95,12 @@ export default observer( function Header() {
                         </a>
                         {
                             notificiationDropdown &&
-                            <div className='notification-drop shadow-lg'>
-                                <h4 className='fw-700 font-xs mb-4'>Notification</h4>
+                            <div className={notificationDrop}>
+                                <h4 className={notificationHeader}>Notification</h4>
                                 <a className='d-flex not-drop' href="">
                                     <img className='not-user-pics' src={user8} alt="" />
                                     <div className='ms-2'>
-                                        <h5>
+                                        <h5 className={notificationNames}>
                                             Ilham Baghirov
                                             <span className='time-not-user'>3 min</span>
                                         </h5>
@@ -97,7 +110,7 @@ export default observer( function Header() {
                                 <a className='d-flex not-drop' href="">
                                     <img className='not-user-pics' src={user8} alt="" />
                                     <div className='ms-2'>
-                                        <h5>
+                                        <h5 className={notificationNames}>
                                             Ilham Baghirov
                                             <span className='time-not-user'>3 min</span>
                                         </h5>
@@ -107,7 +120,7 @@ export default observer( function Header() {
                                 <a className='d-flex not-drop' href="">
                                     <img className='not-user-pics' src={user8} alt="" />
                                     <div className='ms-2'>
-                                        <h5>
+                                        <h5 className={notificationNames}>
                                             Ilham Baghirov
                                             <span className='time-not-user'>3 min</span>
                                         </h5>
@@ -117,7 +130,7 @@ export default observer( function Header() {
                                 <a className='d-flex not-drop mb-0' href="">
                                     <img className='not-user-pics' src={user8} alt="" />
                                     <div className='ms-2'>
-                                        <h5>
+                                        <h5 className={notificationNames}>
                                             Ilham Baghirov
                                             <span className='time-not-user'>3 min</span>
                                         </h5>
@@ -131,12 +144,13 @@ export default observer( function Header() {
                             <MdChatBubbleOutline fill='#0d6efd' className='nav-right-logo' />
                         </a>
                         <a className=' text-decoration-none nav-right-link rotate' onClick={() => handleSettingsDropdown()} href="#">
-                            <VscSettingsGear fill='#0d6efd' className='nav-right-logo' />
+
+                            <VscSettingsGear fill='#0d6efd' className={toggleCatch} />
                         </a>
                         {
                             settingsDropdown &&
-                            <div className='settings-drop shadow-lg'>
-                                <h4 className='fw-700 font-xs mb-4'>Settings</h4>
+                            <div className={settingsDrop}>
+                                <h4 className={notificationHeader}>Settings</h4>
                                 <h6 className='choose-color'>Choose Color Theme</h6>
                                 <ul className='' style={{ padding: 0 }}>
                                     <li>
@@ -199,7 +213,7 @@ export default observer( function Header() {
                                         <li className='colors-settings'>
                                             <label htmlFor="">
                                                 <input type="radio" name="" id="" />
-                                                <span style={{ backgroundColor: 'black' }} className='colors-settings-bg'></span>
+                                                <span style={{ backgroundColor: 'teal' }} className='colors-settings-bg'></span>
                                             </label>
                                         </li>
                                         <li className='colors-settings'>
@@ -218,27 +232,28 @@ export default observer( function Header() {
                                 </ul>
 
                                 <div className='settings-toggle d-flex'>
-                                    <h4>Side Bar Background</h4>
+                                    <h4 className={seetingMenu}>Side Bar Background</h4>
                                     <div>
                                         <Switch onClick={() => handleMenuBackColor("red")} className='toggle-button-settings' />
                                     </div>
 
                                 </div>
                                 <div className='settings-toggle d-flex'>
-                                    <h4>Menu Position</h4>
+                                    <h4 className={seetingMenu}>Menu Position</h4>
                                     <div>
                                         <Switch className='toggle-button-settings' />
                                     </div>
                                 </div>
                                 <div className='settings-toggle d-flex'>
-                                    <h4>Dark Mode</h4>
+                                    <h4 className={seetingMenu}>Dark Mode</h4>
                                     <div>
-                                        <Switch onClick={() => setDarkMode()} className='toggle-button-settings' />
+                                        <label htmlFor="dark-mode-toggle-checkbox">
+                                            <Switch aria-checked={checkedBoxDarkMode ? true : false} onClick={() => setDarkMode()} onChange={() => handleToggleiconDarkMode()} className={darkModeToggleButtonClassNames} />
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                         }
-
                         <a className=' text-decoration-none nav-right-link' href="#">
                             <img className='profile-img' src={profile4} alt="" />
                         </a>

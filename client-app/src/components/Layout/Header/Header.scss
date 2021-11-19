@@ -4,6 +4,11 @@ li{
 }
 header{
     background-color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    box-shadow: 1 0.5 1.5rem rgba(0,0,0,.03)!important;
    
 }
 .fredoka-font{
@@ -104,10 +109,13 @@ header{
     height: 96px;
     display: flex;
     align-items: center;
-    background-color: #fff;
-    box-shadow: 0 1rem rgba(0,0,0,.03);
 }
 
+.navbardark{
+   background-color: #293145;
+
+   
+}
 .meetup-Logo{
     width: 45px;
     height: 100%;
@@ -163,6 +171,7 @@ header{
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    background-color: #eee;
 }
 
 
@@ -219,14 +228,28 @@ a{
             align-items: center;
             justify-content: space-between;
             margin-top: 1rem;
-            h4{
+
+            .dark-mode-toggle-checkbox{
+                visibility: hidden;
+                position: absolute;
+                display: inline-block;
+                width: 20px;
+                right: 20px;
+            }
+            .settings-menu{
                 font-size: 14px;
                 font-weight: 700;
+            }
+            .seetingmenudark{
+                color :white;
             }
             .toggle-button-settings{
                 margin-bottom: 0.5rem;
             }
         }
+    }
+    .settingsdropdark{
+        background-color:#1a2236;
     }
 }
 
@@ -240,7 +263,12 @@ a{
     padding: 0.5rem;
     text-align: center;
     margin-left: 1rem;
+
    
+   
+}
+.clickedtoggle{
+    background-color: #1890ff;
 }
 
 .nav-right-logo{
@@ -284,17 +312,31 @@ a{
     background-color: #fff;
 }
 
+.notificationdropdark{
+    background-color: #1a2236;
+}
+
+.notificationheaderdark{
+    color: #eee;
+}
+
+.notificationnames{
+    color: #eee;
+}
+
 .notification-drop h6{
     color: gray;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.6;
 }
-.notification-drop h5{
-    color: black;
+.notificationdropnames{
     font-size: 14px;
     font-weight: 700;
     margin-bottom: 0.25rem;
+}
+.notificationdropnameslight{
+    color: black;
 }
 .not-drop:hover{
     color: black;
