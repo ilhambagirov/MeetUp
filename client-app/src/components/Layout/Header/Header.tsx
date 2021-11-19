@@ -54,7 +54,7 @@ export default observer(function Header() {
                     <div className='navleft'>
                         <a className='d-flex text-decoration-none logo-Link' href="#">
                             <FaMeetup className='meetup-Logo' />
-                            <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp..</span>
+                            <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp.</span>
                         </a>
                     </div>
                     <div className='navmiddle d-flex'>
