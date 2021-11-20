@@ -1,14 +1,128 @@
+
+// @media  screen and (max-width:1600px) {
+//     .main-content{
+//          padding-right: 0 !important;
+//     }
+   
+// }
+.main-content-chatopen{
+    padding-right: 270px;
+}
+@media screen and (max-width:1500px) {
+    .main-content-chatopen{
+        padding-right: 0 !important;
+    }
+}
 .main-content{
-    -ms-text-kashida-space: 1200px;
-    height: 500px;
+    height: 1500px;
     padding-top: 96px;
-    padding-left: 300px;
+    padding-left: 270px;
     background-color: #f5f5f7;
     overflow:hidden;
-    div{
-        width: 200px;
-        height: 450px;
-        margin-left: 50px;
-        background-color: #64392e;
+    .slick-slide{
+        width: 125px !important;
+        margin-right: 7px;
+        margin-left: 4px;
     }
+    .main-content-wrapper{
+        padding-top: 20px;
+        .main-content-container{
+            margin-left: auto !important;
+            margin-right: auto;
+            max-width: 960px;
+            margin-left: 50px;
+            .main-content-left{
+                height: 450px;
+                padding-right: 10px;
+                padding-left: 10px;
+                .stories-bottom-shadow::after{
+                    content: "";
+                    background: linear-gradient(
+                180deg,rgba(0,0,0,.01) 60%,rgba(0,0,0,.9) 100%);
+                    width: 100%;
+                    height: 280px;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    z-index: 1;
+                    border-radius: 10px;
+                }
+                .story-item{
+                    margin-bottom: 1rem;
+                    margin-top: 1rem;
+                    position: relative;
+                    height: 200px;
+                    width: 125px;
+                    border-radius: 10px;
+                   
+                    .add-button-wrap{
+                        padding:1rem;
+                        text-align: center;
+                        width: 100%;
+                        position: absolute;
+                        bottom: 0;
+
+                        .story-img-down{
+                            margin-top: 0 !important;
+                        }
+                        .add-button{
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50px;
+                            display: inline-block;
+                            line-height: 50px;
+                            text-align: center;
+                            background-color: #fff!important;
+                            position: relative;
+                            z-index: 10;
+                            .add-icon{
+                                width: 25px;
+                                height: 25px;
+                                color: #0d6efd;
+                            }
+                            .user-profile-pic{
+                                width: 100%;
+                            }
+                        }
+                        .story-author{
+                            font-size: 14px;
+                            position: relative;
+                            z-index: 10;
+                            color: #eee;
+                        }
+                    }
+                }
+                .story-item-add{
+                    background-color: #343a40;
+                }
+                .story-of-user-slide{
+                    background-image: url(../../../assets/images/s-2.jpg);
+                }
+                .story-of-user-slide2{
+                    background-image: url(../../../assets/images/s-1.jpg);
+                }
+            }
+            .main-content-right{
+                background-color: brown;
+                height: 450px;
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .main-content{
+        padding-left: 150px !important;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .main-content{
+        padding-left: 0 !important;
+    }
+}
+
+@media screen and (max-width:381px) {
+    
 }

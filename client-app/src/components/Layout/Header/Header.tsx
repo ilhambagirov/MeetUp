@@ -11,7 +11,7 @@ import user8 from '../../../assets/images/user-8.png'
 import { Switch } from "antd"
 import './Header.scss';
 import 'antd/dist/antd.css'
-import { useStore } from "../../../app/stores/store";
+import { UseChatMode, useDarkMode } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import classnames from 'classnames'
 
@@ -21,12 +21,14 @@ export default observer(function Header() {
     const [settingsDropdown, SetsettingsDropdown] = useState(false);
     const [checkedBoxDarkMode, SetcheckedBoxDarkMode] = useState(false);
     const [menuBackground, SetmenuBackground] = useState("");
-    const { activitystore } = useStore();
+    const { activitystore } = useDarkMode();
+    const { chatstore } = UseChatMode();
     const { darkMode, setDarkMode } = activitystore
+    const { ChatMode ,setChatMode} = chatstore
 
 
-    const handleMenuBackColor = (color: string) => {
-        menuBackground.length === 0 ? SetmenuBackground(color) : SetmenuBackground("")
+    function handleMenuBackColor(color: string) {
+        menuBackground.length === 0 ? SetmenuBackground(color) : SetmenuBackground("");
     }
     const handleNotDropdown = () => {
         SetnotificiationDropdown(!notificiationDropdown)
@@ -141,7 +143,7 @@ export default observer(function Header() {
                         }
 
                         <a className=' text-decoration-none nav-right-link' href="#">
-                            <MdChatBubbleOutline fill='#0d6efd' className='nav-right-logo' />
+                            <MdChatBubbleOutline onClick={() => setChatMode()} fill='#0d6efd' className='nav-right-logo' />
                         </a>
                         <a className=' text-decoration-none nav-right-link rotate' onClick={() => handleSettingsDropdown()} href="#">
 

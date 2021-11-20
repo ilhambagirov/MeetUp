@@ -1,10 +1,28 @@
 .darkmodeNavigation{
     background-color: #293145 !important;
 }
-
+@media screen and (max-width:1200px) {
+    .navigation{
+        width: 100px !important;
+        .nav-wrap-info{
+            display: none;
+        }
+        .nav-wrap-header{
+            display: none;
+        }
+        .nav-wrap-sidebar-feed{
+            padding:12px 12px !important ;
+        }
+    }
+}
+@media screen and (max-width:992px) {
+    .navigation{
+        display: none;
+    }
+}
 .navigation{
-    width: 280px;
-    height: 100%;
+    width: 270px;
+    height: 100vh;
     background-color: #f5f5f7;
     position: fixed;
     overflow: hidden;
@@ -13,10 +31,13 @@
     overflow-y: scroll;
     padding-bottom: 10px;
     .nav-content{
-        height: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
+        height: 100vh;
+        padding-right: 25px;
+        .nawrapdarkmode{
+            background-color: #293145 !important;
+        }
         .nav-wrap{
+            box-shadow: 0 8px 30px rgba(0,0,0,.05);
             background-color: #fff;
             border-radius: 15px;
             padding-top: 1rem;
@@ -48,6 +69,10 @@
                 .sidebar-logos{
                     width: 30px;
                     height: 30px;
+                }
+
+                .nawrapinfodarkmode{
+                   color:#ddd !important ;
                 }
 
                 .nav-wrap-info{
