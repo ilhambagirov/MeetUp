@@ -1,10 +1,93 @@
+.right-scroll-bar::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+}
+.right-scroll-bar::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+}
+.right-scroll-bar::-webkit-scrollbar-track {
+    background-color: black;
+}
 .chat-List{
     position: fixed;
     top: 0;
-    right: 0;
+    right: -1000px;
     width: 290px;
-    background-color: orange;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255,255,255,.3);
     height: calc(100vh - 15px);
+    padding-top: 96px;
     padding-right: 15px;
-    padding-left: 15px
+    padding-left: 15px;
+    transition: right 0.8s ease;
+    margin-top: 0.5rem;
+    overflow-y: auto;
+    .chat-list-content{
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,.05);
+        .chatlist-friends{
+            padding-right: 1rem;
+            padding-left: 1.5rem;
+            padding-top: 1.2rem;
+            position: relative;
+
+            .chat-list-header{
+                font-size: 13px;
+                color: #adb5bd;
+            }
+            .friends-list{
+                display: flex;
+                flex-direction: column;
+                padding-left: 0;
+                margin-bottom: 0;
+                position: relative;
+                .friends-profile-img{
+                    width: 35px;
+                }
+                .friends-names{
+                    font-weight: 700;
+                    font-size: 1.125rem;
+                    color: #6c757d;
+                    font-size: 13px;
+                }
+
+                .notification-chatlist{
+                    border-radius: 50%;
+                    position: absolute;
+                    background-color: blue;
+                    right: 0;
+                    color: white;
+                    line-height: 1;
+                    width: 15px;
+                    height: 15px;
+                    text-align: center;
+                }
+
+                .online-chatlist{
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 8px;
+                    background-color: green;
+                    margin-left: auto;
+                }
+                .offline-chatlist{
+                    font-weight: 700 !important;
+                    color: #adb5bd;
+                    margin-left: auto;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
 }
+
+.chatmodeopen{
+    right: 0;
+    transition: right 0.5s ease;
+}
+.chatmodeclose{
+    right: -1000px;
+    transition: right 0.8s ease;
+}
+

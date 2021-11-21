@@ -1,15 +1,19 @@
 import classNames from "classnames";
+import { observer } from "mobx-react-lite";
 import React from "react";
-import { UseChatMode } from "../../../app/stores/store";
+import { UseChatMode } from "../../../app/stores/chatboxstore";
 import './Main.scss'
 import StorySlider from "./StrorySlider";
 
-export default function Main() {
+export default observer(function Main() {
 
     const { chatstore } = UseChatMode()
     const { ChatMode } = chatstore
 
+
+
     const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode })
+    console.log(ChatMode)
     return (
         <div className={menuContent}>
             <div className='main-content-wrapper'>
@@ -25,4 +29,4 @@ export default function Main() {
             </div>
         </div>
     )
-}
+})

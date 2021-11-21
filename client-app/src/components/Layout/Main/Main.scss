@@ -6,7 +6,8 @@
    
 // }
 .main-content-chatopen{
-    padding-right: 270px;
+    padding-right: 270px !important;
+    transition: padding-right 1s ease;
 }
 @media screen and (max-width:1500px) {
     .main-content-chatopen{
@@ -19,6 +20,7 @@
     padding-left: 270px;
     background-color: #f5f5f7;
     overflow:hidden;
+    transition: padding-right 1s ease;
     .slick-slide{
         width: 125px !important;
         margin-right: 7px;

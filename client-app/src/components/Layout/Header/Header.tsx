@@ -11,9 +11,10 @@ import user8 from '../../../assets/images/user-8.png'
 import { Switch } from "antd"
 import './Header.scss';
 import 'antd/dist/antd.css'
-import { UseChatMode, useDarkMode } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import classnames from 'classnames'
+import { UseChatMode } from "../../../app/stores/chatboxstore";
+import { useDarkMode } from "../../../app/stores/store";
 
 export default observer(function Header() {
 
