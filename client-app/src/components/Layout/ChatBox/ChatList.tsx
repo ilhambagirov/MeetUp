@@ -1,17 +1,11 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
-import { setTimeout } from "timers";
+import React from "react";
 import { UseChatMode } from "../../../app/stores/chatboxstore";
+import { dark, useDarkMode } from "../../../app/stores/store";
 import './ChatBox.scss'
-import UserWindow from "./ChatDisable";
 
 export default observer(function Main() {
-    const { chatstore } = UseChatMode();
-    const { ChatMode, setChatMode } = chatstore
-
-    let chatList = classNames("chat-List right-scroll-bar", { chatmodeopen: ChatMode })
-
     // useEffect(() => {
     //     window.addEventListener('resize', () => {
     //         setTimeout(() => {
@@ -22,10 +16,20 @@ export default observer(function Main() {
     //     });
     // })
 
+    //custom hooks
+    const { chatstore } = UseChatMode();
+    const { ChatMode, } = chatstore
+    const { activitystore } = useDarkMode()
+    const { darkMode } = activitystore
+
+    //classnames
+    const darkmode = classNames("chat-list-content", { "chat-list-content-dark": darkMode })
+    const names = classNames("friends-names", { "friends-names-dark": darkMode })
+    let chatList = classNames("chat-List right-scroll-bar", { chatmodeopen: ChatMode })
 
     return (
         <div className={chatList}>
-            <div className='chat-list-content'>
+            <div className={darkmode}>
                 <section className='chatlist-friends'>
                     <h6 style={{ fontWeight: 700, letterSpacing: 1 }} className='chat-list-header'>Friends</h6>
                     <ul className='friends-list'>
@@ -34,7 +38,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-12.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='notification-chatlist'>2</span>
                         </li>
@@ -43,7 +47,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-8.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='online-chatlist'></span>
                         </li>
@@ -52,7 +56,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-11.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='offline-chatlist'>2days</span>
                         </li>
@@ -61,7 +65,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-12.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='notification-chatlist'>2</span>
                         </li>
@@ -70,7 +74,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-11.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='offline-chatlist'>2days</span>
                         </li>
@@ -79,7 +83,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-11.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='offline-chatlist'>2days</span>
                         </li>
@@ -93,7 +97,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-12.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='notification-chatlist'>2</span>
                         </li>
@@ -102,7 +106,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-8.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='online-chatlist'></span>
                         </li>
@@ -111,7 +115,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-11.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='offline-chatlist'>2days</span>
                         </li>
@@ -126,7 +130,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-12.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='online-chatlist'></span>
                         </li>
@@ -135,7 +139,7 @@ export default observer(function Main() {
                                 <img className='friends-profile-img' src={require('../../../assets/images/user-8.png').default} alt="" />
                             </span>
                             <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                                <a className='friends-names' href="">Hurin Seary</a>
+                                <a className={names} href="">Hurin Seary</a>
                             </h3>
                             <span className='online-chatlist'></span>
                         </li>

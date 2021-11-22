@@ -2,8 +2,12 @@ import React from "react";
 import './Main.scss'
 import Slider from "react-slick";
 import { FiPlus } from "react-icons/fi";
+import { useDarkMode } from "../../../app/stores/store";
+import classNames from "classnames";
+import { observer } from "mobx-react-lite";
 
-export default function StorySlider() {
+export default observer(function StorySlider() {
+    //react slider settings
     const settings = {
         infinite: false,
         speed: 500,
@@ -35,11 +39,16 @@ export default function StorySlider() {
         ]
     };
 
+    //custom hooks
+    const { activitystore } = useDarkMode()
+    const { darkMode } = activitystore
+
+    const addSlide = classNames("story-item story-item-add", { "darkModeadd-slider": darkMode })
     return (
         <div className='story-slider'>
             <Slider {...settings}>
                 <div className='story'>
-                    <div className='story-item story-item-add'>
+                    <div className={addSlide}>
                         <div className='add-button-wrap'>
                             <a href="#">
                                 <span className='add-button'>
@@ -125,4 +134,4 @@ export default function StorySlider() {
             </Slider>
         </div>
     )
-}
+})

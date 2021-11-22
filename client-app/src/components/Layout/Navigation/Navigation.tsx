@@ -10,16 +10,22 @@ import { VscSettingsGear } from "react-icons/vsc";
 import { useDarkMode } from "../../../app/stores/store";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { UseSideBar } from "../../../app/stores/sidebarstore";
 
 export default observer(function Navigation() {
 
+    //custom hooks
     const { activitystore } = useDarkMode();
     const { darkMode } = activitystore
-    console.log(darkMode)
-    const navigation = classNames("navigation scroll-bar", { darkmodeNavigation: darkMode })
+    const { sidestore } = UseSideBar();
+    const { SideBarCollapseMode } = sidestore
+
+    //classnames
+    const navigation = classNames("navigation scroll-bar", { darkmodeNavigation: darkMode, "navigation-dark": SideBarCollapseMode })
     const navWrap = classNames("nav-wrap", { nawrapdarkmode: darkMode })
     const navWrap0 = classNames("nav-wrap navwrapp-0", { nawrapdarkmode: darkMode })
     const navWrapInfos = classNames("nav-wrap-info", { nawrapinfodarkmode: darkMode })
+
     return (
         <nav className={navigation}>
             <div className='nav-content '>

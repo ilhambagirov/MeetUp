@@ -22,6 +22,9 @@
     transition: right 0.8s ease;
     margin-top: 0.5rem;
     overflow-y: auto;
+    .chat-list-content-dark{
+        background-color: #293145 !important;
+    }
     .chat-list-content{
         background-color: #fff;
         border-radius: 15px;
@@ -44,6 +47,9 @@
                 position: relative;
                 .friends-profile-img{
                     width: 35px;
+                }
+                .friends-names-dark{
+                    color: #eee !important;
                 }
                 .friends-names{
                     font-weight: 700;

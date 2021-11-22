@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { UseChatMode } from "../../../app/stores/chatboxstore";
+import { useDarkMode } from "../../../app/stores/store";
 import CreatePost from "./CreatePost";
 import './Main.scss'
 import PeopleRecomended from "./PeopleRecomended";
@@ -9,11 +10,14 @@ import PostWithPhoto from "./PostWithPhoto";
 import StorySlider from "./StrorySlider";
 
 export default observer(function Main() {
-
+    
+    //custom hooks
     const { chatstore } = UseChatMode()
+    const { activitystore } = useDarkMode()
     const { ChatMode } = chatstore
+    const { darkMode } = activitystore
 
-    const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode })
+    const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode, "darkmode-maincontent": darkMode })
     console.log(ChatMode)
     return (
         <div className={menuContent}>
@@ -23,8 +27,8 @@ export default observer(function Main() {
                         <div className='main-content-left col-xl-9 col-lg-9 '>
                             <StorySlider />
                             <CreatePost />
-                            <PostWithPhoto/>
-                            <PeopleRecomended/>
+                            <PostWithPhoto />
+                            <PeopleRecomended />
                         </div>
                         <div className='main-content-right col-xl-3 col-lg-3 d-lg-block d-none'>
                         </div>

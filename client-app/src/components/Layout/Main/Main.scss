@@ -5,6 +5,7 @@
 //     }
    
 // }
+
 .main-content-chatopen{
     padding-right: 270px !important;
     transition: padding-right 1s ease;
@@ -13,6 +14,9 @@
     .main-content-chatopen{
         padding-right: 0 !important;
     }
+}
+.darkmode-maincontent{
+    background-color: #1a2236 !important;
 }
 .main-content{
     padding-top: 96px;
@@ -46,6 +50,9 @@
                     left: 0;
                     z-index: 1;
                     border-radius: 10px;
+                }
+                .darkModeadd-slider{
+                    background-color: #293145 !important;
                 }
                 .story-item{
                     margin-bottom: 1rem;
@@ -101,6 +108,9 @@
                 .story-of-user-slide2{
                     background-image: url(../../../assets/images/s-1.jpg);
                 }
+                .postadd-dark-mode{
+                    background-color: #293145 !important;
+                }
                 .post-add{
                     padding-left: 1.5rem;
                     padding-right: 1.5rem;
@@ -115,6 +125,9 @@
                         width: 27px;
                         height: 27px;
                     }
+                    .create-post-link-dark{
+                        color: white !important;
+                    }
                     .create-post-link{
                         font-weight: 600;
                         color: #adb5bd ;
@@ -122,6 +135,7 @@
                     }
                    .post-content{
                        margin-top: 1rem;
+                       
                     .my-profile-img-add-post-wrapper{
                         position: absolute;
                         top: 69px;
@@ -132,6 +146,10 @@
                         width: 30px;
                     }
                     }
+                    .post-textarea-dark{
+                        background-color: rgb(26, 34, 54) !important;
+                        border: none !important;
+                       }
                     .post-textarea{
                         padding: 0.5rem;
                         padding-left: 3rem;
@@ -166,6 +184,10 @@
                     
                 }
 
+                .post-with-photo-dark{
+                    background-color: #293145 !important;
+                }
+
                 .post-with-photo{
                     padding: 1.5rem;
                     margin-bottom: 1rem;
@@ -191,6 +213,9 @@
                         }
                     }
                     .post-with-photo-header-left{
+                        .post-with-photo-user-name-dark{
+                            color: white !important;
+                        }
                         .post-with-photo-user-name{
                             color: #212529;
                             font-size: 14px;
@@ -244,6 +269,9 @@
                             width: 20px;
                             height: 20px;
                             margin-right: 5px;
+                        }
+                        .likes-count-dark{
+                            color: white !important;
                         }
                         .likes-count{
                             color: #212529;

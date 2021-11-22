@@ -15,19 +15,25 @@ import { observer } from "mobx-react-lite";
 import classnames from 'classnames'
 import { UseChatMode } from "../../../app/stores/chatboxstore";
 import { useDarkMode } from "../../../app/stores/store";
+import { UseSideBar } from "../../../app/stores/sidebarstore";
 
 export default observer(function Header() {
-
+    // built-in hooks
     const [notificiationDropdown, SetnotificiationDropdown] = useState(false);
     const [settingsDropdown, SetsettingsDropdown] = useState(false);
     const [checkedBoxDarkMode, SetcheckedBoxDarkMode] = useState(false);
+    const [sidebarcollapsedmode, Setsidebarcollapsedmode] = useState(false);
     const [menuBackground, SetmenuBackground] = useState("");
+
+    //custom hooks
     const { activitystore } = useDarkMode();
     const { chatstore } = UseChatMode();
+    const { sidestore } = UseSideBar();
     const { darkMode, setDarkMode } = activitystore
-    const { ChatMode ,setChatMode} = chatstore
+    const { setChatMode } = chatstore
+    const { setSideBarCollapseMode } = sidestore
 
-
+    //custom local methods
     function handleMenuBackColor(color: string) {
         menuBackground.length === 0 ? SetmenuBackground(color) : SetmenuBackground("");
     }
@@ -37,10 +43,14 @@ export default observer(function Header() {
     const handleSettingsDropdown = () => {
         SetsettingsDropdown(!settingsDropdown);
     }
-
     const handleToggleiconDarkMode = () => {
         SetcheckedBoxDarkMode(!checkedBoxDarkMode)
     }
+    const handleSideBarCollapseMode = () => {
+        Setsidebarcollapsedmode(!sidebarcollapsedmode)
+    }
+
+    //classnames
     const navbardark = classnames({ navbardark: darkMode })
     const notificationDrop = classnames("notification-drop shadow-lg", { notificationdropdark: darkMode })
     const settingsDrop = classnames("settings-drop shadow-lg", { settingsdropdark: darkMode })
@@ -49,6 +59,7 @@ export default observer(function Header() {
     const seetingMenu = classnames("settings-menu", { seetingmenudark: darkMode })
     const toggleCatch = classnames("nav-right-logo")
     const darkModeToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': checkedBoxDarkMode })
+    const SideBarToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': sidebarcollapsedmode })
 
     return (
         <header className={navbardark}  >
@@ -244,7 +255,7 @@ export default observer(function Header() {
                                 <div className='settings-toggle d-flex'>
                                     <h4 className={seetingMenu}>Menu Position</h4>
                                     <div>
-                                        <Switch className='toggle-button-settings' />
+                                        <Switch aria-checked={sidebarcollapsedmode ? true : false} onClick={() => setSideBarCollapseMode()} onChange={() => handleSideBarCollapseMode()} className={SideBarToggleButtonClassNames} />
                                     </div>
                                 </div>
                                 <div className='settings-toggle d-flex'>

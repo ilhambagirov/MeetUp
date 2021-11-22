@@ -2,19 +2,30 @@ import React from "react";
 import { FcLike } from "react-icons/fc";
 import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
+import { dark, useDarkMode } from "../../../app/stores/store";
+import classNames from "classnames";
+import { observer } from "mobx-react-lite";
 
-export default function PostWithPhoto() {
+export default observer(function PostWithPhoto() {
+    //custom hooks
+    const { activitystore } = useDarkMode()
+    const { darkMode } = activitystore
+
+    //classnames
+    const posts = classNames("post-with-photo", { "post-with-photo-dark": darkMode })
+    const Names = classNames("mb-0 post-with-photo-user-name", { "post-with-photo-user-name-dark": darkMode })
+    const Footer = classNames("likes-count", { "likes-count-dark": darkMode })
 
     return (
         <>
-            <div className='post-with-photo'>
+            <div className={posts}>
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
                         <span className='post-with-photo-user-photo me-3'>
                             <img className='user-profile-pic' src={require('../../../assets/images/user-12.png').default} alt="" />
                         </span>
                         <div className='d-flex flex-column post-with-photo-header-left'>
-                            <h4 style={{ fontWeight: 700 }} className='mb-0 post-with-photo-user-name '>
+                            <h4 style={{ fontWeight: 700 }} className={Names}>
                                 Ilham Baghirov
                             </h4>
                             <span>
@@ -46,27 +57,27 @@ export default function PostWithPhoto() {
                     <div className='d-flex align-items-center'>
                         <a className='likes d-flex align-items-center me-4' href="">
                             <FcLike className='likes-icon' />
-                            <span className='likes-count'>2.8K Like</span>
+                            <span className={Footer}>2.8K Like</span>
                         </a>
                         <a className='likes d-flex align-items-center ' href="">
                             <AiOutlineComment className='likes-icon' />
-                            <span className='likes-count'>22 Comment</span>
+                            <span className={Footer}>22 Comment</span>
                         </a>
                     </div>
                     <a href="">
                         <AiOutlineShareAlt className='share-icon me-1' />
-                        <span className='likes-count'>Share</span>
+                        <span className={Footer}>Share</span>
                     </a>
                 </div>
             </div>
-            <div className='post-with-photo'>
+            <div className={posts}>
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
                         <span className='post-with-photo-user-photo me-3'>
                             <img className='user-profile-pic' src={require('../../../assets/images/user-8.png').default} alt="" />
                         </span>
                         <div className='d-flex flex-column post-with-photo-header-left'>
-                            <h4 style={{ fontWeight: 700 }} className='mb-0 post-with-photo-user-name '>
+                            <h4 style={{ fontWeight: 700 }} className={Names}>
                                 Aysel Baghirova
                             </h4>
                             <span>
@@ -89,19 +100,19 @@ export default function PostWithPhoto() {
                     <div className='d-flex align-items-center'>
                         <a className='likes d-flex align-items-center me-4' href="">
                             <FcLike className='likes-icon' />
-                            <span className='likes-count'>2.8K Like</span>
+                            <span className={Footer}>2.8K Like</span>
                         </a>
                         <a className='likes d-flex align-items-center ' href="">
                             <AiOutlineComment className='likes-icon' />
-                            <span className='likes-count'>22 Comment</span>
+                            <span className={Footer}>22 Comment</span>
                         </a>
                     </div>
                     <a href="">
                         <AiOutlineShareAlt className='share-icon me-1' />
-                        <span className='likes-count'>Share</span>
+                        <span className={Footer}>Share</span>
                     </a>
                 </div>
             </div>
         </>
     )
-}
+})

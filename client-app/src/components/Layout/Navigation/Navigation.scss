@@ -1,9 +1,26 @@
 .darkmodeNavigation{
     background-color: #293145 !important;
 }
+.navigation-dark{
+    width: 100px !important;
+    transition: all 0.25s ease;
+    .nav-wrap-info{
+        display: none;
+    }
+    .nav-wrap-header{
+        display: none;
+    }
+    .nav-wrap-sidebar-feed{
+        padding:12px 12px !important ;
+    }
+    .sidebar-logos{
+        width: 100% !important;
+    }
+}
 @media screen and (max-width:1200px) {
     .navigation{
         width: 100px !important;
+        transition: all 0.25s ease;
         .nav-wrap-info{
             display: none;
         }
@@ -12,6 +29,9 @@
         }
         .nav-wrap-sidebar-feed{
             padding:12px 12px !important ;
+        }
+        .sidebar-logos{
+            width: 100% !important;
         }
     }
 }
@@ -22,6 +42,7 @@
 }
 .navigation{
     width: 270px;
+    transition: all .25s ease;
     height: 100vh;
     background-color: #f5f5f7;
     position: fixed;
