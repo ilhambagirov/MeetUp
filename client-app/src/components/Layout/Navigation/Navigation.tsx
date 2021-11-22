@@ -6,7 +6,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiUserFollowLine } from "react-icons/ri";
 import './Navigation.scss'
 import { AiOutlineDisconnect } from "react-icons/ai";
-import { VscSettingsGear } from "react-icons/vsc";
+import { VscSave, VscSettingsGear } from "react-icons/vsc";
 import { useDarkMode } from "../../../app/stores/store";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
@@ -96,6 +96,12 @@ export default observer(function Navigation() {
                             <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
                                 <VscSettingsGear className='sidebar-logos' />
                                 <span className={navWrapInfos}>Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
+                                <VscSave className='sidebar-logos' />
+                                <span className={navWrapInfos}>Saved</span>
                             </a>
                         </li>
                     </ul>

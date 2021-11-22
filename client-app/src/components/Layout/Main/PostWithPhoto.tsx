@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcLike } from "react-icons/fc";
 import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
 import { dark, useDarkMode } from "../../../app/stores/store";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { VscSave } from "react-icons/vsc";
+import { BiBlock } from "react-icons/bi";
+import { RiUserUnfollowLine } from "react-icons/ri";
 
 export default observer(function PostWithPhoto() {
+
+    //built in hooks
+    const [postsdrop, setPostsDrop] = useState(false)
+
     //custom hooks
     const { activitystore } = useDarkMode()
     const { darkMode } = activitystore
@@ -15,6 +22,13 @@ export default observer(function PostWithPhoto() {
     const posts = classNames("post-with-photo", { "post-with-photo-dark": darkMode })
     const Names = classNames("mb-0 post-with-photo-user-name", { "post-with-photo-user-name-dark": darkMode })
     const Footer = classNames("likes-count", { "likes-count-dark": darkMode })
+    const postsDrop = classNames("posts-drop", { "posts-drop-dark": darkMode })
+    const desc = classNames("desc", { "desc-dark": darkMode })
+
+    //local methods
+    const handledropforposts = () => {
+        setPostsDrop(!postsdrop)
+    }
 
     return (
         <>
@@ -33,9 +47,35 @@ export default observer(function PostWithPhoto() {
                             </span>
                         </div>
                     </div>
-                    <a href="" className='post-with-photo-menu'>
-                        <BsThreeDots />
-                    </a>
+                    <span className='post-with-photo-menu'>
+                        <BsThreeDots onClick={() => handledropforposts()} />
+                    </span>
+
+                    {postsdrop &&
+                        <div className={postsDrop} >
+                            <a className='d-flex not-drop d-flex align-items-center mb-0' href="">
+                                <VscSave className='me-3' />
+                                <h4 className='mb-0 me-4'>
+                                    <span className={desc}>Save Post</span>
+                                    <span className='mt-1'>Add this to your saved items</span>
+                                </h4>
+                            </a>
+                            <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
+                                <BiBlock className='me-3' />
+                                <h4 className='mb-0 me-4'  >
+                                    <span className={desc}>Block User</span>
+                                    <span className='mt-1'>Add this to your saved items</span>
+                                </h4>
+                            </a>
+                            <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
+                                <RiUserUnfollowLine className='me-3' />
+                                <h4 className='mb-0 me-4'>
+                                    <span className={desc}>Unfollow</span>
+                                    <span className='mt-1'>Add this to your saved items</span>
+                                </h4>
+                            </a>
+                        </div>
+                    }
                 </div>
 
                 <div className='post-with-photo-quote'>
@@ -85,9 +125,34 @@ export default observer(function PostWithPhoto() {
                             </span>
                         </div>
                     </div>
-                    <a href="" className='post-with-photo-menu'>
-                        <BsThreeDots />
-                    </a>
+                    <span className='post-with-photo-menu'>
+                        <BsThreeDots onClick={() => handledropforposts()} />
+                    </span>
+                    {postsdrop &&
+                        <div className={postsDrop} >
+                            <a className='d-flex not-drop d-flex align-items-center mb-0' href="">
+                                <VscSave className='me-3' />
+                                <h4 className='mb-0 me-4'>
+                                    <span className={desc}>Save Post</span>
+                                    <span className='mt-1'>Add this to your saved items</span>
+                                </h4>
+                            </a>
+                            <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
+                                <BiBlock className='me-3' />
+                                <h4 className='mb-0 me-4'  >
+                                    <span className={desc}>Block User</span>
+                                    <span className='mt-1'>Add this to your saved items</span>
+                                </h4>
+                            </a>
+                            <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
+                                <RiUserUnfollowLine className='me-3' />
+                                <h4 className='mb-0 me-4'>
+                                    <span className={desc}>Unfollow</span>
+                                    <span className='mt-1'>Add this to your saved items</span>
+                                </h4>
+                            </a>
+                        </div>
+                    }
                 </div>
 
                 <div className='post-with-photo-quote'>
