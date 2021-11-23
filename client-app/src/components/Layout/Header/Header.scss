@@ -36,6 +36,9 @@ header{
         .navmiddle{
             width: 100%;
             justify-content: flex-end;
+            .nav-middle-link{
+                margin-left: 0.3rem !important;
+            }
             .lg-show{
                 display: block !important;
             }

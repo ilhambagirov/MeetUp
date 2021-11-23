@@ -307,11 +307,34 @@
                     }
 
                     .post-with-photo-footer{
+                        .copy-link-input{
+                            position: relative;
+                            color: #adb5bd;
+                            font-weight: 600;
+                            padding: 0.5rem;
+                            border-radius: 0.3rem;
+                            font-size: 13px;
+                            border: none;
+                            outline: none;
+                            width: 100%;
+                            background-color: #eee;
+                        }
+                        .copy-link-icon{
+                            position: absolute;
+                            right: 28px;
+                            font-size: 21px;
+                            top: 127px;
+                        }
+                        .copy-link-input-dark{
+                            background-color: rgb(26, 34, 54) !important;
+                        }
                         .colors-settings{
                             display: inline-block;
                             padding: 0;
                             margin-right: 8px;
-                
+                            &:last-child{
+                                margin-right: 0 !important;
+                            }
                             input[type=radio]{
                                 display: none;
                             }
@@ -320,12 +343,24 @@
                                 width: 32px;
                                 height: 32px;
                                 border-radius: 50%;
+                                text-align: center;
+                                .social-media-Links{
+                                    width: 20px;
+                                    height: 20px;
+                                    vertical-align: -webkit-baseline-middle;
+                                    color: white;
+                                }
                             }
                         }
                         .header-share-menu{
                             color: #212529;
                             font-size: 16px !important;
                         }
+
+                        .header-share-menu-dark{
+                            color: white !important;
+                        }
+                       
                         .likes-icon{
                             width: 20px;
                             height: 20px;

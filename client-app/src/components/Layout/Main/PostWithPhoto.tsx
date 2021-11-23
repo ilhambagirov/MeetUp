@@ -16,6 +16,7 @@ export default observer(function PostWithPhoto() {
 
     //built in hooks
     const [postsdrop, setPostsDrop] = useState(0)
+    const [postsShareDrop, setpostsShareDrop] = useState(0)
 
     //custom hooks
     const { activitystore } = useDarkMode()
@@ -31,6 +32,9 @@ export default observer(function PostWithPhoto() {
     //local methods
     const handledropforposts = (id: number) => {
         postsdrop !== id ? setPostsDrop(id) : setPostsDrop(0)
+    }
+    const handleSharedropforposts = (id: number) => {
+        postsShareDrop !== id ? setpostsShareDrop(id) : setpostsShareDrop(0)
     }
     let id = 0
     console.log(id)
@@ -87,13 +91,13 @@ export default observer(function PostWithPhoto() {
                             <span className={Footer}>22 Comment</span>
                         </a>
                     </div>
-                    <a href="">
-                        <AiOutlineShareAlt className='share-icon me-1' />
+                    <label>
+                        <AiOutlineShareAlt onClick={() => handleSharedropforposts(1)} className='share-icon me-1' />
                         <span className={Footer}>Share</span>
-                    </a>
-
-                    <PostShareDropdown/>
-
+                    </label>
+                    {postsShareDrop === 1 &&
+                        <PostShareDropdown />
+                    }
                 </div>
             </div>
             <div className={posts}>
@@ -136,10 +140,13 @@ export default observer(function PostWithPhoto() {
                             <span className={Footer}>22 Comment</span>
                         </a>
                     </div>
-                    <a href="">
-                        <AiOutlineShareAlt className='share-icon me-1' />
+                    <label >
+                        <AiOutlineShareAlt onClick={() => handleSharedropforposts(2)} className='share-icon me-1' />
                         <span className={Footer}>Share</span>
-                    </a>
+                    </label>
+                    {postsShareDrop === 2 &&
+                        <PostShareDropdown />
+                    }
                 </div>
             </div>
         </>

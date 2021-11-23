@@ -87,10 +87,13 @@ export default observer(function Header() {
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link d-none search-991'>
                                 <FiSearch className='nav-middle-Logo' />
                             </a>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} className=' nav-middle-link d-none search-991' href="#">
+                                <MdChatBubbleOutline onClick={() => setChatMode()}  className='nav-middle-Logo' />
+                            </a>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link lg-show'>
                                 <AiOutlineHistory className='nav-middle-Logo' />
                             </a>
-                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link lg-show'>
+                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <BsCameraVideo className='nav-middle-Logo' />
                             </a>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
