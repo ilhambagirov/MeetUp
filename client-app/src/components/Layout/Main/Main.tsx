@@ -6,6 +6,7 @@ import { useDarkMode } from "../../../app/stores/store";
 import CreatePost from "./CreatePost";
 import './Main.scss'
 import PeopleRecomended from "./PeopleRecomended";
+import PopularEvents from "./PopularEvents";
 import PostWithPhoto from "./PostWithPhoto";
 import StorySlider from "./StrorySlider";
 
@@ -24,13 +25,14 @@ export default observer(function Main() {
             <div className='main-content-wrapper'>
                 <div className='main-content-container'>
                     <div className='row feed-body'>
-                        <div className='main-content-left col-xl-9 col-lg-9 '>
+                        <div className='main-content-left col-xl-8 col-lg-9 '>
                             <StorySlider />
                             <CreatePost />
                             <PostWithPhoto />
                             <PeopleRecomended />
                         </div>
-                        <div className='main-content-right col-xl-3 col-lg-3 d-lg-block d-none'>
+                        <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>
+                            <PopularEvents/>
                         </div>
                     </div>
                 </div>

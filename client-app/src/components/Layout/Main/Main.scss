@@ -384,9 +384,60 @@
 
             }
             .main-content-right{
-                background-color: brown;
                 height: 450px;
-                padding-right: 10px;
+                padding-left: 0 !important;
+                .popular-events-wrapper-dark{
+                    background-color: #293145!important;
+                }
+
+                .popular-events-wrapper{
+                    background-color: #fff;
+                    width: 100%;
+                    border-radius: 15px;
+                    .popular-events-header{
+                        padding: 1rem;
+                        .header-events-dark{
+                            color: white !important;
+                        }
+                        .header-events{
+                            color: #212529;
+                            font-size: 13px;
+                            margin-bottom: 0 !important;
+                        }
+                        a{
+                            font-weight: 600;
+                            color: #1e74fd;
+                        }
+                    }
+
+                    .popular-events{
+                        padding: 1rem;
+                        padding-top: 0 !important;
+                        .event-info{
+                            .event{
+                                font-size: 13px ;
+                            }
+
+                            .event-dark{
+                                color: white;
+                            }
+                        }
+                        .date-wrapper{
+                            border-radius: 15px;
+                            padding: 1rem;
+                            h4{
+                                text-align: center;
+                                color: white;
+                                margin-bottom: 0 !important;
+                                line-height: 0.8;
+                                span{
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                    
+                }
             }
         }
     }
@@ -395,6 +446,27 @@
 @media screen and (max-width:1200px) {
     .main-content{
         padding-left: 150px !important;
+    }
+    // .date-wrapper{
+    //     display: none !important;
+    // }
+    .event-address-main{
+        display: none !important;
+    }
+    .date-wrapper{
+        padding: 0.5rem !important;
+        h4{
+            font-size: 5 !important;
+            span{
+                font-size: 12px !important;
+            }
+        }
+    }
+
+    .event-info{
+        .event{
+            font-size: 11px !important;
+        }
     }
 }
 
