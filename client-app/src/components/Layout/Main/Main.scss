@@ -18,6 +18,47 @@
 .darkmode-maincontent{
     background-color: #1a2236 !important;
 }
+.posts-drop-dark{
+    background-color: #293145 !important;
+}
+.posts-drop-settings-position{
+    right: 10px;
+    top: 73px;
+}
+.posts-drop-share-position{
+    right: 33px;
+    bottom: 56px;
+}
+.posts-drop{
+    position: absolute;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 14px;
+    svg{
+        font-size: 27px;
+        color: #adb5bd;
+    }
+    h4{
+        .desc-dark{
+            color: white !important;
+        }
+        .desc{
+            color:#212529;
+            font-size: 13px !important;
+            font-weight: 600;
+           
+        }
+        span{
+            display: flex;
+            font-size: 11px;
+            color: #adb5bd;
+            font-weight: 500;
+        }
+        
+    }
+    
+}
 .main-content{
     padding-top: 96px;
     padding-left: 270px;
@@ -197,41 +238,7 @@
                     border-radius: 15px;
                     .post-with-photo-header{ 
                         margin-bottom: 15px;
-                        .posts-drop-dark{
-                            background-color: #293145 !important;
-                        }
-                        .posts-drop{
-                            position: absolute;
-                            box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-                            background-color: #fff;
-                            padding: 1.5rem;
-                            right: 10px;
-                            top: 73px;
-                            border-radius: 14px;
-                            svg{
-                                font-size: 27px;
-                                color: #adb5bd;
-                            }
-                            h4{
-                                .desc-dark{
-                                    color: white !important;
-                                }
-                                .desc{
-                                    color:#212529;
-                                    font-size: 13px !important;
-                                    font-weight: 600;
-                                   
-                                }
-                                span{
-                                    display: flex;
-                                    font-size: 11px;
-                                    color: #adb5bd;
-                                    font-weight: 500;
-                                }
-                                
-                            }
-                            
-                        }
+                       
                         .post-with-photo-user-photo{
                         width: 40px;
                         height: 40px;
@@ -300,6 +307,25 @@
                     }
 
                     .post-with-photo-footer{
+                        .colors-settings{
+                            display: inline-block;
+                            padding: 0;
+                            margin-right: 8px;
+                
+                            input[type=radio]{
+                                display: none;
+                            }
+                            .colors-settings-bg{
+                                display: inline-block;
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 50%;
+                            }
+                        }
+                        .header-share-menu{
+                            color: #212529;
+                            font-size: 16px !important;
+                        }
                         .likes-icon{
                             width: 20px;
                             height: 20px;
