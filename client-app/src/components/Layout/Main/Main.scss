@@ -474,6 +474,10 @@
     .main-content{
         padding-left: 0 !important;
         padding-top: 70px !important;
+        .main-content-wrapper{
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
     }
 }
 

@@ -1,6 +1,11 @@
 a:hover{
     color: #0d6efd;
 }
+
+.form-control:focus{
+    box-shadow: none !important;
+    border-color: #05f !important;
+}
 .login-nav{
     position: fixed;
     top: 0;
@@ -36,4 +41,56 @@ a:hover{
     background-image: url(../../../assets/images/login.jpg) ;
     background-size: cover;
     
+}
+
+.login-right{
+    height: 100vh;
+    min-width: 380px;
+    max-width: 400px;
+    margin: 0 auto;
+    .Login-wrapper{
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .Login-form-wrapper{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       input{
+        height: 60px;
+        display: block;
+        border: 2px #eee solid;
+        border-radius: 7px;
+       }
+       .Login-btn{
+        height: 60px;
+        display: block;
+        border-radius: 7px;
+        font-weight: 600!important;
+        background-color: #343a40!important;
+        color: white;
+        border: none;
+        width: 100%;
+       }
+
+       .form-saved{
+        display: flex;
+        align-items: center;
+
+        .checkbox-input{
+            height: auto;
+        }
+
+        
+       }
+    }
+}
+
+@media screen and (max-width:380px) {
+
+    .login-right{
+    min-width: 0 !important;
+    }
 }

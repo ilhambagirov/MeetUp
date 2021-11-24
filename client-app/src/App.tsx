@@ -18,17 +18,15 @@ export default observer(function App() {
   const { activitystore } = useDarkMode()
   const { darkMode } = activitystore
 
-  const container = classNames("custom-container", { containerdark: darkMode })
+
   const wrapper = classNames("wrapper", { containerdark: darkMode })
   return (
     <div className={wrapper}>
-      <div className={container}>
-        {/* <Login/> */}
-        <Header />
+      <Login />
+      {/* <Header />
         <Navigation />
         <Main />
-        <ChatList />
-      </div>
+        <ChatList /> */}
     </div>
   );
 })
