@@ -27,16 +27,16 @@ export default function Login() {
                         <div className='Login-form-wrapper'>
                             <form className='w-100' action="">
                                 <div className='form-group'>
-                                    <input className='mb-2 form-control' type="text" placeholder='Username' />
+                                    <input className='mb-2 form-control login-inputs' type="text" placeholder='Username' />
                                 </div>
                                 <div className='form-group'>
-                                    <input className='mb-2 form-control' type="text" placeholder='Email' />
+                                    <input className='mb-2 form-control login-inputs' type="text" placeholder='Email' />
                                 </div>
                                 <div className='form-group'>
-                                    <input className='mb-2 form-control' type="text" placeholder='Password' />
+                                    <input className='mb-2 form-control login-inputs' type="text" placeholder='Password' />
                                 </div>
                                 <div className='form-group'>
-                                    <input className='mb-2 form-control' type="text" placeholder='Confirm Password' />
+                                    <input className='mb-2 form-control login-inputs' type="text" placeholder='Confirm Password' />
                                 </div>
                                 <div className='form-saved mb-3 justify-content-between'>
                                     <div className='d-flex align-items-center'>

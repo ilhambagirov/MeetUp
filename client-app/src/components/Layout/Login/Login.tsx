@@ -27,10 +27,10 @@ export default function Login() {
                         <div className='Login-form-wrapper'>
                             <form className='w-100' action="">
                                 <div className='form-group'>
-                                    <input className='mb-2 form-control' type="text" placeholder='Email' />
+                                    <input className='mb-2 form-control login-inputs' type="text" placeholder='Email' />
                                 </div>
                                 <div className='form-group'>
-                                    <input className='mb-2 form-control' type="text" placeholder='Password' />
+                                    <input className='mb-2 form-control login-inputs' type="text" placeholder='Password' />
                                 </div>
                                 <div className='form-saved mb-3 justify-content-between'>
                                     <div className='d-flex align-items-center'>
@@ -40,7 +40,7 @@ export default function Login() {
                                     <a className='text-decoration-none text-black' href="">Forgot your Password?</a>
                                 </div>
                                 <div className='btnLogin'>
-                                    <button className='Login-btn'>Login</button>
+                                    <Link className='Login-btn d-flex align-items-center justify-content-center' to={"/feed"}> <span style={{fontSize:19}}>Login</span> </Link>
                                 </div>
                             </form>
                         </div>

@@ -16,6 +16,7 @@ import classnames from 'classnames'
 import { UseChatMode } from "../../../app/stores/chatboxstore";
 import { useDarkMode } from "../../../app/stores/store";
 import { UseSideBar } from "../../../app/stores/sidebarstore";
+import { Link } from "react-router-dom";
 
 export default observer(function Header() {
     // built-in hooks
@@ -66,10 +67,10 @@ export default observer(function Header() {
             <div className='custom-container'>
                 <div className={`nav-head  shadow-xs `}>
                     <div className='navleft'>
-                        <a className='d-flex text-decoration-none logo-Link' href="#">
+                        <Link to='/feed' className='d-flex text-decoration-none logo-Link'>
                             <FaMeetup className='meetup-Logo' />
                             <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp.</span>
-                        </a>
+                        </Link>
                     </div>
                     <div className='navmiddle d-flex'>
                         <form action="" className='d-lg-flex d-none'>

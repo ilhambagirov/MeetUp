@@ -14,7 +14,9 @@ import ChatDisable from './components/Layout/ChatBox/ChatDisable';
 import Login from './components/Layout/Login/Login';
 import Register from './components/Layout/Register/Register';
 import { Route } from 'react-router-dom';
-import Feed from './components/UI/Feed';
+import HomePage from './components/UI/HomePage';
+import { Container } from 'semantic-ui-react';
+import Settings from './components/Layout/Settings/Settings';
 
 export default observer(function App() {
 
@@ -25,9 +27,17 @@ export default observer(function App() {
   const wrapper = classNames("wrapper", { containerdark: darkMode })
   return (
     <div className={wrapper}>
-        {/* <Route exact path='/' component={Login} />
-        <Route path='/register' component={Register} /> */}
-        <Route path='/' component={Feed} />
+      <Route exact path='/' component={Login} />
+      <Route path='/register' component={Register} />
+      <Route path='/(.+)' render={() => (
+        <>
+          <Header />
+          <Navigation />
+          <ChatList />
+          <Route exact path='/feed' component={Main} />
+          <Route path='/settings' component={Settings} />
+        </>
+      )} />
     </div>
   );
 })

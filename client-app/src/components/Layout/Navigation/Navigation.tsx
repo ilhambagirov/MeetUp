@@ -12,6 +12,7 @@ import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import { UseSideBar } from "../../../app/stores/sidebarstore";
 import '../../../App.css';
+import { Link } from "react-router-dom";
 
 export default observer(function Navigation() {
 
@@ -97,10 +98,10 @@ export default observer(function Navigation() {
                     <div className={navWrap0}>
                         <ul className='mb-1'>
                             <li>
-                                <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
+                                <Link to='/settings' className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' >
                                     <VscSettingsGear className='sidebar-logos' />
                                     <span className={navWrapInfos}>Settings</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">

@@ -1,0 +1,48 @@
+.settings-content{
+    .settings-wrapper{
+        margin: 0 auto;
+        max-width: 800px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .settings-body{
+            background-color:#fff ;
+            border-radius: 0.25rem;
+            padding: 3rem;
+            width: 100%;
+            h4{
+                font-size: 25px;
+                color: #111;
+            }
+
+            .setting-caption{
+                font-weight: 600;
+                color: #adb5bd;
+                font-size: 13px;
+            }
+            .nav-wrap-sidebar-feed-icon-wrap{
+                padding: 0.5rem;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                padding: 10px;
+                svg{
+                    width: 30px;
+                    height: 30px;
+                    color: white;
+                }
+            }
+            .arrow-settings{
+                width: 25px;
+                height: 25px;
+                fill: #adb5bd;
+            }
+        }
+    }
+}
+@media screen and (max-width:992px) {
+    .settings-wrapper{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}

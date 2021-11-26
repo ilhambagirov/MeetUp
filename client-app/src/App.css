@@ -116,6 +116,9 @@
   .custom-container{
       max-width: 1533px;
   }
+  .main-content-container{
+    max-width: 1300px !important;
+  }
 }
 
 @media (min-width: 1600px) { 
@@ -128,4 +131,27 @@
   .custom-container{
       max-width: 1950px;
   }
+  .main-content-container{
+    max-width: 1060px !important;
+  }
+}
+
+@media (min-width: 2200px) { 
+  .custom-container{
+      max-width: 2250px;
+  }
+
+  .main-content-container{
+    max-width: 1500px !important;
+  }
+
+  .login-right{
+    max-width: 550px !important; 
+   
+  }
+
+  .login-inputs{
+      height: 75px !important;
+      font-size: 20px !important;
+    }
 }
