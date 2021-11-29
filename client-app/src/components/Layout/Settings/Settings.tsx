@@ -22,7 +22,7 @@ export default function Settings() {
                             <div className='setting-caption mb-2'>General</div>
                             <ul className='mb-4'>
                                 <li className=' border-bottom'>
-                                    <Link className=' pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
+                                    <Link className=' pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/accountdetails' >
                                         <div className='d-flex align-items-center ' >
                                             <span style={{ background: `linear-gradient(#0e0eec, #6a6aaf)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <AiOutlineHome />
@@ -93,7 +93,7 @@ export default function Settings() {
                                         <MdKeyboardArrowRight className='arrow-settings' />
                                     </Link>
                                 </li>
-                                <li>
+                                <li className='border-bottom'>
                                     <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
                                         <div className='d-flex align-items-center justify-content-center' >
                                             <span style={{ background: `linear-gradient(#f2994a,#f2c94c)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
