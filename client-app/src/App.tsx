@@ -13,7 +13,7 @@ import { useDarkMode } from './app/stores/store';
 import ChatDisable from './components/Layout/ChatBox/ChatDisable';
 import Login from './components/Layout/Login/Login';
 import Register from './components/Layout/Register/Register';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import HomePage from './components/UI/HomePage';
 import { Container } from 'semantic-ui-react';
 import Settings from './components/Layout/Settings/Settings';
@@ -28,26 +28,30 @@ export default observer(function App() {
   const { activitystore } = useDarkMode()
   const { darkMode } = activitystore
 
-
   const wrapper = classNames("wrapper", { containerdark: darkMode })
+  const location = useLocation();
+  const path = location.pathname
   return (
     <div className={wrapper}>
       <Route exact path='/' component={Login} />
       <Route path='/register' component={Register} />
-      <Route path='/(.+)' render={() => (
-        <>
-          <Header />
-          <Navigation />
-          <ChatList />
-          <Route exact path='/feed' component={Main} />
-          <Route path='/settings' component={Settings} />
-          <Route path='/accountdetails' component={AccountDetails} />
-          <Route path='/savedaddress' component={SavedAddress} />
-          <Route path='/socialaccount' component={SocialAccount} />
-          <Route path='/passwordchange' component={PasswordChange} />
-          <Route path='/help' component={Help} />
-        </>
-      )} />
+      {
+        path!=='/register' &&
+        <Route path='/(.+)' render={() => (
+          <>
+            <Header />
+            <Navigation />
+            <ChatList />
+            <Route exact path='/feed' component={Main} />
+            <Route path='/settings' component={Settings} />
+            <Route path='/accountdetails' component={AccountDetails} />
+            <Route path='/savedaddress' component={SavedAddress} />
+            <Route path='/socialaccount' component={SocialAccount} />
+            <Route path='/passwordchange' component={PasswordChange} />
+            <Route path='/help' component={Help} />
+          </>
+        )} />
+      }
     </div>
   );
 })

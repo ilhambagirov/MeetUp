@@ -4,8 +4,6 @@ import './Help.scss'
 import '../../Main/Main.scss'
 import { Accordion, AccordionSummary, Typography, AccordionDetails } from "@material-ui/core";
 
-
-
 export default function Help() {
     const [expanded, setExpanded] = React.useState(-1);
 
@@ -47,11 +45,21 @@ export default function Help() {
                                 This is a popular Social Netork Platform
                             </AccordionDetails>
                         </Accordion>
+
+                        <form action="">
+                            <div className="row align-items-center">
+                                <div className="col-lg-9 col-12 mb-3">
+                                    <label htmlFor="">Other</label>
+                                    <input className='d-block form-control' type="text" />
+                                </div>
+                                <div className='col-lg-3 col-12 mb-3'>
+                                    <a className='save-btn' href="">Send</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
-
     )
 }

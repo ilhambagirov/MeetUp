@@ -1,7 +1,62 @@
 .help-wrapper{
-    padding-right: 0;
+    padding-right: 10px;
     margin-right: auto;
     margin-left: auto;
     max-width: 960px;
     width: 100%;
+    .save-btn{
+        margin-top: 19px;
+        font-weight: 600;
+        border-radius: 0.3rem;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        font-size: 14px;
+        background-color: #05f;
+        width: 175px;
+        display: inline-block;
+    }
+    input{
+        line-height: 50px;
+        height: 58px;
+        font-size: 14px;
+        display: inline-block;
+        border: 2px #eee solid;
+        &:hover{
+            outline: none;
+        }
+    }
+
+    label{
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .MuiPaper-root{
+        margin-bottom: 20px;
+        border-radius: 10px;
+        position:relative;
+
+        &::before{
+            content: none;
+        }
+
+        .MuiButtonBase-root{
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            .MuiTypography-root{
+                font-size: 14px;
+            color: #444;
+            font-weight: 600;
+            padding-left: 0;
+            }
+        }
+        
+    }
+    
+}
+
+@media screen and (max-width:992px) {
+    .help-wrapper{
+padding-left: 10px !important;
+    }
 }
