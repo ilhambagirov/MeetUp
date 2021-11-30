@@ -1,13 +1,91 @@
-.account-details-content{
-        margin: 0 auto;
-        max-width: 800px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+.account-detail-content{
+        .account-wrapper{
+            margin: 0 auto;
+            max-width: 800px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+                .account-header{
+                    background-color: #05f;
+                    border-radius: 0.3rem;
+                    h4{
+                        color: white;
+                        font-size:19px ;
+                    }
+                }
+                .goback-icon{
+                    font-size: 20px;
+                    color: white;
+                }
+               
+                .account-content{
+                   background-color: #fff;
+                   border-radius: 0.3rem;
 
-        .account-details-body{
-            background-color:#fff;
-            border-radius: 0.25rem;
-            padding: 3rem;
-            width: 100%;
+                   input{
+                       line-height: 50px;
+                       height: 50px;
+                       font-size: 14px;
+                       display: inline-block;
+                       border: 2px #eee solid;
+                       &:hover{
+                           outline: none;
+                       }
+                   }
+
+                   label{
+                       font-size: 14px;
+                       font-weight: 600;
+                   }
+
+                   .drag-label{
+                    border: 2px #ddd dashed;
+                   }
+
+                   textarea{
+                       height: 100px;
+                       display: inline-block;
+                       border: 2px #eee solid;
+                       background-color: #f5f5f5;
+
+                       &:hover{
+                           outline: none;
+                       }
+                   }
+
+                   .save-btn{
+                       margin-top: 10px;
+                       font-weight: 600;
+                       border-radius: 0.3rem;
+                       color: #fff;
+                       text-align: center;
+                       padding: 1rem;
+                       font-size: 14px;
+                       background-color: #05f;
+                       width: 175px;
+                       display: inline-block;
+                   }
+
+                   .User-profile-pic{
+                    img{
+                        border-radius: 0.3rem;
+                    }
+                    figure{
+                        width: 100px;
+                    }
+                    .location-account{
+                        color: #adb5bd;
+                        margin-bottom: 1.5rem;
+                        font-size: 15px;
+                    }
+                   }
+                }
         }
 }
+
+@media screen and (max-width:992px) {
+    .account-wrapper{
+padding-left: 10px !important;
+padding-right: 10px !important;
+    }
+}
+
