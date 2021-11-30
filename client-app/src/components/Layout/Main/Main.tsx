@@ -25,7 +25,7 @@ export default observer(function Main() {
             <div className='main-content-wrapper'>
                 <div className='main-content-container'>
                     <div className='row feed-body'>
-                        <div className='main-content-left col-xl-8 col-lg-9 '>
+                        <div className='main-content-left col-xl-8 col-lg-9 col-12 '>
                             <StorySlider />
                             <CreatePost />
                             <PostWithPhoto />

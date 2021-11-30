@@ -57,19 +57,8 @@ export default function Settings() {
                             </ul>
                             <div className='setting-caption mb-2'>Account</div>
                             <ul className='mb-4'>
-                                <li className=' border-bottom'>
-                                    <Link className=' pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
-                                        <div className='d-flex align-items-center ' >
-                                            <span style={{ background: `linear-gradient(#0e0eec, #6a6aaf)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
-                                                <AiOutlineCreditCard />
-                                            </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>My Cards</h4>
-                                        </div>
-                                        <MdKeyboardArrowRight className='arrow-settings' />
-                                    </Link>
-                                </li>
                                 <li>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
+                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/passwordchange' >
                                         <div className='d-flex align-items-center justify-content-center' >
                                             <span style={{ background: `linear-gradient(#f2994a,#f2c94c)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <RiLockPasswordLine />
@@ -82,24 +71,13 @@ export default function Settings() {
                             </ul>
                             <div className='setting-caption mb-2'>Other</div>
                             <ul>
-                                <li className=' border-bottom'>
-                                    <Link className=' pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
-                                        <div className='d-flex align-items-center ' >
-                                            <span style={{ background: `linear-gradient(#0e0eec, #6a6aaf)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
-                                                <BiBell />
-                                            </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>My Cards</h4>
-                                        </div>
-                                        <MdKeyboardArrowRight className='arrow-settings' />
-                                    </Link>
-                                </li>
                                 <li className='border-bottom'>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
+                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/help' >
                                         <div className='d-flex align-items-center justify-content-center' >
                                             <span style={{ background: `linear-gradient(#f2994a,#f2c94c)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <BiHelpCircle />
                                             </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Password</h4>
+                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Help</h4>
                                         </div>
                                         <MdKeyboardArrowRight className='arrow-settings' />
                                     </Link>
@@ -110,7 +88,7 @@ export default function Settings() {
                                             <span style={{ background: `linear-gradient(#e44d26,#f16529)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <AiOutlineLogout />
                                             </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Social Account</h4>
+                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Logout</h4>
                                         </div>
                                         <MdKeyboardArrowRight className='arrow-settings' />
                                     </Link>
