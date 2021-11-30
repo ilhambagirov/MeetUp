@@ -18,6 +18,8 @@ import HomePage from './components/UI/HomePage';
 import { Container } from 'semantic-ui-react';
 import Settings from './components/Layout/Settings/Settings';
 import AccountDetails from './components/Layout/Account/AccountDetails/AccountDetails';
+import SavedAddress from './components/Layout/Account/SavedAddress/SavedAddress';
+import SocialAccount from './components/Layout/Account/SocialAccounts/SocialAccount';
 
 export default observer(function App() {
 
@@ -38,6 +40,8 @@ export default observer(function App() {
           <Route exact path='/feed' component={Main} />
           <Route path='/settings' component={Settings} />
           <Route path='/accountdetails' component={AccountDetails} />
+          <Route path='/savedaddress' component={SavedAddress} />
+          <Route path='/socialaccount' component={SocialAccount} />
         </>
       )} />
     </div>

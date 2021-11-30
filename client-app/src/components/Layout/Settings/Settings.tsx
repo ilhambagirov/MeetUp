@@ -33,7 +33,7 @@ export default function Settings() {
                                     </Link>
                                 </li>
                                 <li className=' border-bottom'>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
+                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/savedaddress' >
                                         <div className='d-flex align-items-center justify-content-center' >
                                             <span style={{ background: `linear-gradient(#f2994a,#f2c94c)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <HiOutlineLocationMarker />
@@ -44,7 +44,7 @@ export default function Settings() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
+                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/socialaccount' >
                                         <div className='d-flex align-items-center justify-content-center' >
                                             <span style={{ background: `linear-gradient(#e44d26,#f16529)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <BsTwitter />

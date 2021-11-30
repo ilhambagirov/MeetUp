@@ -2,6 +2,7 @@ import React from "react";
 import './AccountDetails.scss'
 import '../../Main/Main.scss'
 import { AiOutlineArrowLeft, AiOutlineCloudDownload } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 
 export default function AccountDetails() {
@@ -10,9 +11,9 @@ export default function AccountDetails() {
         <div className='main-content account-detail-content'>
             <div className='account-wrapper'>
                 <div className="account-header border-0 p-4 w-100 d-flex align-items-center">
-                    <a href="">
+                    <Link to='/settings'>
                         <AiOutlineArrowLeft className='goback-icon' />
-                    </a>
+                    </Link>
                     <h4 style={{ fontWeight: 600 }} className='ms-4 mb-0'>Account Details</h4>
                 </div>
                 <div className="account-content border-0 p-lg-5 p-4 d-flex align-items-center justify-content-center">
@@ -36,7 +37,7 @@ export default function AccountDetails() {
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Last Name</label>
-                                        <input  className='d-block form-control' type="text" />
+                                        <input className='d-block form-control' type="text" />
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +49,7 @@ export default function AccountDetails() {
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Phone</label>
-                                        <input  className='d-block form-control' type="text" />
+                                        <input className='d-block form-control' type="text" />
                                     </div>
                                 </div>
                             </div>
@@ -72,26 +73,26 @@ export default function AccountDetails() {
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">PostCode</label>
-                                        <input  className='d-block form-control' type="text" />
+                                        <input className='d-block form-control' type="text" />
                                     </div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-lg-12 mb-3 mt-3 ">
-                                    <input hidden  className='d-block form-control' id='file' type="file" />
+                                    <input hidden className='d-block form-control' id='file' type="file" />
                                     <label className='p-4 w-100 d-flex flex-column align-items-center drag-label' htmlFor="file">
-                                        <AiOutlineCloudDownload style={{fontSize:40}} className='d-block text-center'/>
+                                        <AiOutlineCloudDownload style={{ fontSize: 40 }} className='d-block text-center' />
                                         <span>Drag and drop or click to replace</span>
                                     </label>
                                 </div>
                                 <div className="col-lg-12 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Description</label>
-                                        <textarea  className='d-block form-control p-3' placeholder='Write your description'/>
+                                        <textarea className='d-block form-control p-3' placeholder='Write your description' />
                                     </div>
                                 </div>
                                 <div className="col-lg-12 mb-3">
-                                   <a className='save-btn' href="">Save</a>
+                                    <a className='save-btn' href="">Save</a>
                                 </div>
                             </div>
                         </form>
