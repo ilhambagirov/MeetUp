@@ -1,7 +1,10 @@
 import React from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
+import CreatePost from "../Main/CreatePost";
 import '../Main/Main.scss'
+import PopularEvents from "../Main/PopularEvents";
+import PostWithPhoto from "../Main/PostWithPhoto";
 import './UserProfile.scss'
 
 
@@ -65,8 +68,13 @@ export default function UserProfile() {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-xl-4 col-xxl-3 col-lg-4 userprofile-left'></div>
-                        <div className='col-xl-8 col-xxl-9 col-lg-8 userprofile-right'></div>
+                        <div className='col-xl-4 col-xxl-4 col-lg-4 userprofile-left'>
+                            <PopularEvents/>
+                        </div>
+                        <div className='col-xl-8 col-xxl-8 col-lg-8 userprofile-right mt-3'>
+                            <CreatePost />
+                            <PostWithPhoto/>
+                        </div>
                     </div>
                 </div>
             </div>
