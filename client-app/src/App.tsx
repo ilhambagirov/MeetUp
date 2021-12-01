@@ -22,6 +22,7 @@ import SavedAddress from './components/Layout/Account/SavedAddress/SavedAddress'
 import SocialAccount from './components/Layout/Account/SocialAccounts/SocialAccount';
 import PasswordChange from './components/Layout/Account/PasswordChange/PasswordChange';
 import Help from './components/Layout/Settings/Help/Help';
+import UserProfile from './components/Layout/UserProfile/UserProfile';
 
 export default observer(function App() {
 
@@ -49,6 +50,7 @@ export default observer(function App() {
             <Route path='/socialaccount' component={SocialAccount} />
             <Route path='/passwordchange' component={PasswordChange} />
             <Route path='/help' component={Help} />
+            <Route path='/userprofile' component={UserProfile} />
           </>
         )} />
       }

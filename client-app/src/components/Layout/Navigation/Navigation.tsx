@@ -62,12 +62,12 @@ export default observer(function Navigation() {
                                 </a>
                             </li>
                             <li>
-                                <a className='nav-wrap-sidebar-feed' href="">
+                                <Link to='/userprofile' className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#64392e, #e4b0a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
                                         <CgProfile />
                                     </span>
                                     <span className={navWrapInfos}>My Profile</span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

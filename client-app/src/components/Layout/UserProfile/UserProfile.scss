@@ -1,0 +1,201 @@
+.UserProfile-wrapper{
+    width: 100%;
+    padding: 20px 0 10px 0;
+    .UserProfile-body{
+    padding-right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 960px;
+    width: 100%;
+    .userprofile-header{
+        width: 100%;
+        height: 469px;
+        .header-content{
+            background-color: #fff;
+            border-bottom-left-radius: 10px ;
+            border-bottom-right-radius: 10px ;
+            border-top-left-radius: 10px ;
+            border-top-right-radius: 10px ;
+        }
+        .background-image-profile{
+            height: 240px;
+            background-image: url(../../../assets/images/bb-9.jpg);
+            background-position: center;
+            background-size: cover;
+            border-top-left-radius: 10px ;
+            border-top-right-radius: 10px ;
+        }
+        .header-body{
+            position: relative;
+            text-align: center;
+            padding: 1rem;
+            padding-top: 1.5rem;
+           
+            .user-prof-image{
+                width: 120px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: -4.2rem ;
+                img{
+                    border-radius: 30px;
+                    background-color: #fff;
+                    padding: 0.25rem;
+                }
+            }
+            .username-user-profile{
+                color: #adb5bd;
+                font-size: 13.5px;
+                font-weight: 500;
+            }
+
+            .features-following{
+                top: 10px;
+                left: 15px;
+                h4{
+                     color: #adb5bd;
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+                text-align: center;
+                b{
+                    font-size: 21px;
+                    font-weight: 700;
+                    color: #212529;
+                    margin-right: 5px;
+                }
+                span{
+                    font-size: 13px;
+                }
+                }
+               
+            }
+
+            .follow-btn{
+                font-weight: 700;
+                border-radius: 0.3rem;
+                background-color: #10d876;
+                color: #fff;
+                padding: 1rem;
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+            .follow-btn-left{
+                font-weight: 700;
+                border-radius: 0.3rem;
+                background-color: #10d876;
+                color: #fff;
+                padding: 1rem;
+                font-size: 12px;
+                letter-spacing: 1px;
+                display: none;
+            }
+            .feature-btns{
+                top: 10px;
+                right: 15px;
+            }
+            .other-btns-user-profile{
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                background-color: #f5f5f5;
+                margin-left: 0.5rem;
+                border-radius: 0.3rem;
+                color: #495057;
+                svg{
+                    font-size: 25px;
+                }
+            }
+
+            
+        }
+
+        .header-footer{
+            border-top: 1px solid #f1f1f1;
+            width: 100%;
+            ul{
+                li{
+                    a{
+                        color: #adb5bd;
+                        font-weight: 700;
+                        font-size: 13px;
+                        letter-spacing: 0.4px;
+                    }
+                }
+                li:first-child{
+                    a{
+                        color: #000;
+                        font-weight: 700;
+                        font-size: 13px;
+                        letter-spacing: 0.4px;
+                    }
+                }
+            }
+        }
+    }
+    .userprofile-left{
+        height: 469px;
+        background-color: blue;
+    }
+    .userprofile-right{
+        height: 1000px;
+        background-color: green;
+    }
+    }
+}
+
+@media screen and(max-width:1200px) {
+    .row-custom-user-profile{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media screen and(max-width:992px) {
+    .features-following{
+        top: 118px !important;
+        left: 15px;
+        margin-top: 20px !important;
+        justify-content: center;
+        width: 100%;
+    }
+    .header-body{
+        padding-bottom: 35px !important;
+    }
+
+    .follow-btn{
+       display: none;
+    }
+    .follow-btn-left{
+        display: block !important;
+        top: 19px;
+    }
+}
+@media screen and(max-width:576px) {
+    .features-following{
+        b{
+            font-size: 15px !important;
+        }
+        span{
+            font-size: 10px !important;
+        }
+       
+    }
+}
+
+@media screen and(max-width:450px) {
+    .other-btns-user-profile{
+        width: 35px !important;
+        height: 35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        svg{
+            font-size: 17px !important;
+        }
+    }
+
+    .follow-btn-left{
+        font-weight: 600 !important;
+        padding: 0.5rem !important;
+    }
+}
