@@ -10,25 +10,23 @@ namespace MeetUp.Persistence.DataContext
         {
 
         }
-
         public DbSet<Post> Posts { get; set; }
-        public DbSet<UserPost> UserPosts { get; set; }
+        public DbSet<SavedPost> SavedPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<UserPost>(x => x.HasKey(aa => new { aa.AppUserId, aa.PostId }));
+            builder.Entity<SavedPost>(x => x.HasKey(aa => new { aa.AppUserId, aa.PostId }));
 
-            builder.Entity<UserPost>()
+            builder.Entity<SavedPost>()
                                              .HasOne(u => u.AppUser)
-                                             .WithMany(a => a.UserPosts)
+                                             .WithMany(a => a.SavedPosts)
                                              .HasForeignKey(aa => aa.AppUserId);
-
-            builder.Entity<UserPost>()
-                                             .HasOne(u => u.Post)
-                                             .WithMany(a => a.Users)
-                                             .HasForeignKey(aa => aa.PostId);
+            builder.Entity<SavedPost>()
+                                            .HasOne(u => u.Post)
+                                            .WithMany(a => a.PostsSavedByUser)
+                                            .HasForeignKey(aa => aa.PostId);
         }
 
     }

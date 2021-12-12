@@ -3,9 +3,10 @@ import './AccountDetails.scss'
 import '../../Main/Main.scss'
 import { AiOutlineArrowLeft, AiOutlineCloudDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 
-export default function AccountDetails() {
+export default observer(function AccountDetails() {
 
     return (
         <div className='main-content account-detail-content'>
@@ -101,4 +102,4 @@ export default function AccountDetails() {
             </div>
         </div>
     )
-}
+})

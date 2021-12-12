@@ -10,12 +10,9 @@ import Main from './components/Layout/Main/Main';
 import classNames from 'classnames';
 import ChatList from './components/Layout/ChatBox/ChatList';
 import { useDarkMode } from './app/stores/store';
-import ChatDisable from './components/Layout/ChatBox/ChatDisable';
 import Login from './components/Layout/Login/Login';
 import Register from './components/Layout/Register/Register';
-import { Route, useLocation } from 'react-router-dom';
-import HomePage from './components/UI/HomePage';
-import { Container } from 'semantic-ui-react';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 import Settings from './components/Layout/Settings/Settings';
 import AccountDetails from './components/Layout/Account/AccountDetails/AccountDetails';
 import SavedAddress from './components/Layout/Account/SavedAddress/SavedAddress';
@@ -26,7 +23,7 @@ import UserProfile from './components/Layout/UserProfile/UserProfile';
 
 export default observer(function App() {
 
-  const { activitystore } = useDarkMode()
+  const { activitystore, userStore } = useDarkMode()
   const { darkMode } = activitystore
 
   const wrapper = classNames("wrapper", { containerdark: darkMode })
@@ -43,14 +40,14 @@ export default observer(function App() {
             <Header />
             <Navigation />
             <ChatList />
-            <Route exact path='/feed' component={Main} />
-            <Route path='/settings' component={Settings} />
-            <Route path='/accountdetails' component={AccountDetails} />
-            <Route path='/savedaddress' component={SavedAddress} />
-            <Route path='/socialaccount' component={SocialAccount} />
-            <Route path='/passwordchange' component={PasswordChange} />
-            <Route path='/help' component={Help} />
-            <Route path='/userprofile' component={UserProfile} />
+            <Route exact path='/home' render = {() => (userStore.isLoggedIn ?  (<Main />) : (<Redirect to="/" />))}/>
+            <Route path='/settings' render = {() => (userStore.isLoggedIn ?  (<Settings />) : (<Redirect to="/" />))} />
+            <Route path='/accountdetails' render = {() => (userStore.isLoggedIn ?  (<AccountDetails />) : (<Redirect to="/" />))} />
+            <Route path='/savedaddress' render = {() => (userStore.isLoggedIn ?  (<SavedAddress />) : (<Redirect to="/" />))} />
+            <Route path='/socialaccount' render = {() => (userStore.isLoggedIn ?  (<SocialAccount />) : (<Redirect to="/" />))} />
+            <Route path='/passwordchange' render = {() => (userStore.isLoggedIn ?  (<PasswordChange />) : (<Redirect to="/" />))}/>
+            <Route path='/help' render = {() => (userStore.isLoggedIn ?  (<Help />) : (<Redirect to="/" />))} />
+            <Route path='/userprofile' render = {() => (userStore.isLoggedIn ?  (<UserProfile />) : (<Redirect to="/" />))} />
           </>
         )} />
       }

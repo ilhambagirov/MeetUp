@@ -6,7 +6,6 @@ namespace MeetUp.Domain.Models.Entities
     {
         public string Title { get; set; }
         public string FilePath { get; set; }
-        public bool IsDeleted { get; set; }
-        public ICollection<UserPost> Users { get; set; } = new List<UserPost>();
+        public virtual ICollection<SavedPost> PostsSavedByUser { get; set; }
     }
 }

@@ -9,9 +9,11 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsTwitter } from "react-icons/bs";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { BiBell, BiHelpCircle } from "react-icons/bi";
+import { useDarkMode } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-export default function Settings() {
-
+export default observer(function Settings() {
+    const { userStore: { user, logout } } = useDarkMode()
     return (
         <div className='main-content settings-content'>
             <div className='settings-wrapper'>
@@ -88,7 +90,7 @@ export default function Settings() {
                                             <span style={{ background: `linear-gradient(#e44d26,#f16529)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <AiOutlineLogout />
                                             </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Logout</h4>
+                                            <h4 onClick={logout} style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Logout</h4>
                                         </div>
                                         <MdKeyboardArrowRight className='arrow-settings' />
                                     </Link>
@@ -100,4 +102,4 @@ export default function Settings() {
             </div>
         </div>
     )
-}
+})
