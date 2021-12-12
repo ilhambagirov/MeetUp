@@ -73,7 +73,7 @@ export default function UserProfile() {
                         </div>
                         <div className='col-xl-8 col-xxl-8 col-lg-8 userprofile-right mt-3'>
                             <CreatePost />
-                            <PostWithPhoto/>
+                            {/* <PostWithPhoto/> */}
                         </div>
                     </div>
                 </div>

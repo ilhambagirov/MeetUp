@@ -33,7 +33,7 @@ export default observer(function Main() {
                         <div className='main-content-left col-xl-8 col-lg-9 col-12 '>
                             <StorySlider />
                             <CreatePost />
-                            <PostWithPhoto />
+                            <PostWithPhoto postRegistry= {postStore.postRegistry} />
                             <PeopleRecomended />
                         </div>
                         <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>

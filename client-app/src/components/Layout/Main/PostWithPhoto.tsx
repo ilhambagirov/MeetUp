@@ -8,15 +8,21 @@ import { observer } from "mobx-react-lite";
 import './Main.scss'
 import PostsSettings from "./PostsSettings";
 import PostShareDropdown from "./PostsShareDropDown";
+import { Profile } from "../../../app/models/profile";
+import { Post } from "../../../app/models/post";
 
-export default observer(function PostWithPhoto() {
+interface Props{
+    postRegistry : Post[]
+}
+
+export default observer(function PostWithPhoto({postRegistry} : Props) {
 
     //built in hooks
     const [postsdrop, setPostsDrop] = useState(0)
     const [postsShareDrop, setpostsShareDrop] = useState(0)
 
     //custom hooks
-    const { activitystore, postStore } = useDarkMode()
+    const { activitystore } = useDarkMode()
     const { darkMode } = activitystore
 
     //classnames
@@ -34,9 +40,10 @@ export default observer(function PostWithPhoto() {
         postsShareDrop !== id ? setpostsShareDrop(id) : setpostsShareDrop(0)
     }
     let id = 0
+    {console.log(postRegistry)}
     return (
         <>
-            {postStore.postRegistry.map(post => (
+            {postRegistry.map(post => (
                 <div key={post.id} className={posts}>
                     {console.log(post.createdDate)}
                     <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
@@ -46,7 +53,8 @@ export default observer(function PostWithPhoto() {
                             </span>
                             <div className='d-flex flex-column post-with-photo-header-left'>
                                 <h4 style={{ fontWeight: 700 }} className={Names}>
-                                    {post.createdByUser.displayName}
+                                    {post.createdByUser.dsiplayName}
+                                    {console.log(post.createdByUser.dsiplayName)}
                                 </h4>
                                 <span>
                                    2 hours ago
