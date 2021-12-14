@@ -59,7 +59,6 @@ namespace MeetUp.API
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

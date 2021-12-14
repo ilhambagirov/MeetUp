@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Post } from "../models/post";
+import { Post, PostFormValues } from "../models/post";
 import { User, UserFormValues } from "../models/user";
 import { dark } from "../stores/store";
 
@@ -33,7 +33,9 @@ const request = {
     delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 const Posts = {
-    list: () => request.get<Post[]>('/home/posts')
+    list: () => request.get<Post[]>('/home/posts'),
+    create: (post: PostFormValues) => request.post<void>('/home/posts', post),
+    delete: (id: number) => request.delete<void>(`/home/posts/${id}`),
 }
 const Account = {
     Current: () => request.get<User>('/account'),

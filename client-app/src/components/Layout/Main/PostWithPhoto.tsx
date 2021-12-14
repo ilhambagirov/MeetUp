@@ -11,11 +11,11 @@ import PostShareDropdown from "./PostsShareDropDown";
 import { Profile } from "../../../app/models/profile";
 import { Post } from "../../../app/models/post";
 
-interface Props{
-    postRegistry : Post[]
-}
 
-export default observer(function PostWithPhoto({postRegistry} : Props) {
+
+
+export default observer(function PostWithPhoto() {
+    const {postStore } = useDarkMode()
 
     //built in hooks
     const [postsdrop, setPostsDrop] = useState(0)
@@ -40,12 +40,11 @@ export default observer(function PostWithPhoto({postRegistry} : Props) {
         postsShareDrop !== id ? setpostsShareDrop(id) : setpostsShareDrop(0)
     }
     let id = 0
-    {console.log(postRegistry)}
     return (
         <>
-            {postRegistry.map(post => (
-                <div key={post.id} className={posts}>
-                    {console.log(post.createdDate)}
+            {postStore.groupedPosts.map((post) => (
+                <div key={post.value.id} className={posts}>
+                    {console.log(post.value.createdDate)}
                     <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                         <div className='d-flex align-items-center'>
                             <span className='post-with-photo-user-photo me-3'>
@@ -53,8 +52,7 @@ export default observer(function PostWithPhoto({postRegistry} : Props) {
                             </span>
                             <div className='d-flex flex-column post-with-photo-header-left'>
                                 <h4 style={{ fontWeight: 700 }} className={Names}>
-                                    {post.createdByUser.dsiplayName}
-                                    {console.log(post.createdByUser.dsiplayName)}
+                                    {post.value.createdByUser.dsiplayName}
                                 </h4>
                                 <span>
                                    2 hours ago
@@ -66,15 +64,16 @@ export default observer(function PostWithPhoto({postRegistry} : Props) {
                         </span>
 
                         {postsdrop === post.id &&
-                            <PostsSettings />
+                            <PostsSettings postId = {post.id} />
                         }
                     </div>
 
                     <div className='post-with-photo-quote'>
-                        <p>{post.title}
+                                   
+                        <p>{post.value.title}
                             <a href="">See More</a></p>
                     </div>
-                    {post.image &&
+                    {post.value.image &&
                         <div className='post-with-photo-pic'>
                             <div className='row'>
                                 <div className='col-sm-12'>

@@ -1,3 +1,4 @@
+import { render } from "@testing-library/react";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
@@ -11,7 +12,6 @@ import PostWithPhoto from "./PostWithPhoto";
 import StorySlider from "./StrorySlider";
 
 export default observer(function Main() {
-
     //custom hooks
     const { chatstore } = UseChatMode()
     const { activitystore, postStore } = useDarkMode()
@@ -24,7 +24,8 @@ export default observer(function Main() {
     useEffect(() => {
         postStore.loadActivities()
     }, [postStore.loadActivities])
-    { console.log(postStore.postRegistry) }
+
+    // const components = [StorySlider, CreatePost, PostWithPhoto, PeopleRecomended]
     return (
         <div className={menuContent}>
             <div className='main-content-wrapper'>
@@ -33,7 +34,7 @@ export default observer(function Main() {
                         <div className='main-content-left col-xl-8 col-lg-9 col-12 '>
                             <StorySlider />
                             <CreatePost />
-                            <PostWithPhoto postRegistry= {postStore.postRegistry} />
+                            <PostWithPhoto />
                             <PeopleRecomended />
                         </div>
                         <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>

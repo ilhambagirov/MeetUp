@@ -8,3 +8,22 @@ export interface Post {
     createdDate : Date,
     createdByUser: Profile
 }
+
+export class Post implements Post {
+
+    constructor(init?: PostFormValues) {
+        Object.assign(this, init)
+    }
+}
+
+export class PostFormValues {
+    id?: string = undefined
+    title: string = '';
+    constructor(activity?: PostFormValues) {
+        if (activity) {
+            this.id = activity?.id
+            this.title = activity?.title
+        }
+
+    }
+}
