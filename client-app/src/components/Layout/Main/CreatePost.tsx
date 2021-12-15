@@ -9,7 +9,6 @@ import { Formik } from "formik";
 import * as Yup from 'yup'
 import { PostFormValues } from "../../../app/models/post";
 import { v4 as uuid } from 'uuid';
-import MyTextArea from "../../../app/common/MyTextArea";
 import MyTextInput from "../../../app/common/MyTextInput";
 
 
@@ -29,23 +28,25 @@ export default observer(function CreatePost() {
             title: Yup.string().required("The title is required"),
         }
     )
-
+    const initialValues = { title: '' }
     function handleFormSubmit(post: PostFormValues) {
         let newActivity = {
             ...post,
             id: uuid()
         }
         createActivity(newActivity)
-
         console.log('salam')
     }
     return (
         <div className={postAdd}>
 
             <Formik validationSchema={validationSchema}
-                onSubmit={values => handleFormSubmit(values)}
+                onSubmit={async (values,actions) => {
+                    await handleFormSubmit(values)
+                    actions.resetForm()
+                }}
                 enableReinitialize
-                initialValues={{ title: '' }}
+                initialValues={initialValues}
             >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <form onSubmit={handleSubmit} >

@@ -1,12 +1,23 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Post, PostFormValues } from "../models/post";
+import { Profile } from "../models/profile";
+import { dark } from "./store";
 
 export default class PostStore {
     postRegistry = new Map<number, Post>();
+    editMode = 0
+    postDrop = 0
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    setEditMode = (id : number)=>{
+        this.editMode = id
+    }
+    setPostDropDown = (id : number)=>{
+        this.postDrop = id
     }
 
     loadActivities = async () => {
@@ -38,15 +49,37 @@ export default class PostStore {
     }
 
     createActivity = async (post: PostFormValues) => {
+        const user = dark.userStore.user
+        const createdUser = new Profile(user!)
         try {
             await agent.Posts.create(post);
             const newPost = new Post(post)
+            newPost.createdByUser = createdUser
             this.setActivity(newPost)
         }
         catch (error) {
             console.log(error)
         }
 
+    }
+
+    updateActivity = async (post: PostFormValues) => {
+        try {
+            await agent.Posts.edit(post)
+            runInAction(() => {
+                if (post.id) {
+                    console.log('salam aue')
+                    let updatedActivity = { ...this.getPost(post.id as number), ...post }
+                    this.postRegistry.set(post.id as number, updatedActivity as Post)
+                }
+            })
+        }
+        catch (error) {
+        }
+    }
+
+    private getPost = (id: number) => {
+        return this.postRegistry.get(id)
     }
 
     private setActivity = (a: Post) => {

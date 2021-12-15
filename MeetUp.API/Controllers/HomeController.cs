@@ -54,9 +54,27 @@ namespace MeetUp.API.Controllers
                     FilePath = post.FilePath,
                     CreatedByUserId = user.Result.Id,
                     CreatedDate = DateTime.Now,
-            };
+                };
             }
             db.Posts.Add(createdEntity);
+            db.SaveChanges(); 
+
+            return Ok();
+        }
+
+        [HttpPut("posts/{id}")]
+        public IActionResult PostEdit([FromRoute] int id, PostDto post)
+        {
+            var foundPost = db.Posts.FirstOrDefault(x => x.Id == id);
+
+            if (foundPost == null) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                foundPost.Title = post.Title;
+                foundPost.FilePath = post.FilePath;
+            }
+            db.Posts.Update(foundPost);
             db.SaveChanges();
 
             return Ok();

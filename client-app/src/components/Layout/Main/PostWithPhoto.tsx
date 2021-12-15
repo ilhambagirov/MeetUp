@@ -9,20 +9,22 @@ import './Main.scss'
 import PostsSettings from "./PostsSettings";
 import PostShareDropdown from "./PostsShareDropDown";
 import { Profile } from "../../../app/models/profile";
-import { Post } from "../../../app/models/post";
-
-
-
+import { Post, PostFormValues } from "../../../app/models/post";
+import MyTextInput from "../../../app/common/MyTextInput";
+import * as Yup from 'yup'
+import { Formik } from "formik";
+import { Label } from "semantic-ui-react";
 
 export default observer(function PostWithPhoto() {
-    const {postStore } = useDarkMode()
+    const { postStore } = useDarkMode()
 
     //built in hooks
-    const [postsdrop, setPostsDrop] = useState(0)
     const [postsShareDrop, setpostsShareDrop] = useState(0)
+    const [editError, setEditError] = useState(false)
 
     //custom hooks
     const { activitystore } = useDarkMode()
+    const { postDrop, setPostDropDown } = postStore
     const { darkMode } = activitystore
 
     //classnames
@@ -30,21 +32,34 @@ export default observer(function PostWithPhoto() {
     const Names = classNames("mb-0 post-with-photo-user-name", { "post-with-photo-user-name-dark": darkMode })
     const Footer = classNames("likes-count", { "likes-count-dark": darkMode })
 
-
-
     //local methods
     const handledropforposts = (id: number) => {
-        postsdrop !== id ? setPostsDrop(id) : setPostsDrop(0)
+        postDrop !== id ? setPostDropDown(id) : setPostDropDown(0)
     }
     const handleSharedropforposts = (id: number) => {
         postsShareDrop !== id ? setpostsShareDrop(id) : setpostsShareDrop(0)
     }
+
+    const handleClickUpdate = (post: PostFormValues, n: number) => {
+        post.id = n
+        console.log(post)
+        postStore.updateActivity(post!)
+        postStore.setEditMode(0)
+    }
     let id = 0
+    const validationSchema = Yup.object(
+        {
+            title: Yup.string().required("The title is required"),
+        }
+    )
+    const initialValues = { title: '' }
+    const ErrorFuncEditPost = (valueLength: boolean) => {
+        valueLength ? setEditError(false) : setEditError(true)
+    }
     return (
         <>
             {postStore.groupedPosts.map((post) => (
                 <div key={post.value.id} className={posts}>
-                    {console.log(post.value.createdDate)}
                     <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                         <div className='d-flex align-items-center'>
                             <span className='post-with-photo-user-photo me-3'>
@@ -52,10 +67,10 @@ export default observer(function PostWithPhoto() {
                             </span>
                             <div className='d-flex flex-column post-with-photo-header-left'>
                                 <h4 style={{ fontWeight: 700 }} className={Names}>
-                                    {post.value.createdByUser.dsiplayName}
+                                    {post.value.createdByUser.dsiplayName!}
                                 </h4>
                                 <span>
-                                   2 hours ago
+                                    2 hours ago
                                 </span>
                             </div>
                         </div>
@@ -63,15 +78,41 @@ export default observer(function PostWithPhoto() {
                             <BsThreeDots onClick={() => handledropforposts(post.id)} />
                         </span>
 
-                        {postsdrop === post.id &&
-                            <PostsSettings postId = {post.id} />
+                        {postDrop === post.id &&
+                            <PostsSettings post={post.value} />
                         }
                     </div>
 
                     <div className='post-with-photo-quote'>
-                                   
-                        <p>{post.value.title}
-                            <a href="">See More</a></p>
+
+                        {postStore.editMode != post.id &&
+                            <p>{post.value.title}
+                                <a href="">See More</a></p>}
+                        {
+                            postStore.editMode == post.id &&
+                            <Formik validationSchema={validationSchema}
+                                onSubmit={(values) => {
+                                    handleClickUpdate(values, post.id)
+                                }}
+                                enableReinitialize
+                                initialValues={initialValues}
+                            >
+                                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                                    <form className="d-flex editform" onSubmit={handleSubmit}>
+                                        {console.log(post.value.title)}
+                                        {/* <MyTextInput name='title' style="editinp" values={post.value.title} placeholder="Edit your post title" /> */}
+                                        <input className='editinp' defaultValue={post.value.title} name='title' onChange={(e) => ErrorFuncEditPost(e.target.value != '')} />
+                                        {editError &&
+                                         <Label basic color='red'>Title can not be empty!</Label>
+                                        }
+                                        <div className="d-flex justify-content-end">
+                                            <button className="editbtns ms-2 bg-success" type="submit">Save</button>
+                                            <button onClick={() => postStore.setEditMode(0)} className="editbtns ms-2 bg-warning" type="submit">Cancel</button>
+                                        </div>
+                                    </form>
+                                )}
+                            </Formik>
+                        }
                     </div>
                     {post.value.image &&
                         <div className='post-with-photo-pic'>

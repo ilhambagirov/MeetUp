@@ -29,12 +29,13 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data
 const request = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
-    put: <T>(url: string, id: string, body: {}) => axios.put<T>(url, id, body).then(responseBody),
+    put: <T>(id: string, body: {}) => axios.put<T>(id, body).then(responseBody),
     delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 const Posts = {
     list: () => request.get<Post[]>('/home/posts'),
     create: (post: PostFormValues) => request.post<void>('/home/posts', post),
+    edit: (post: PostFormValues) => request.put<void>(`/home/posts/${post.id}`, post),
     delete: (id: number) => request.delete<void>(`/home/posts/${id}`),
 }
 const Account = {

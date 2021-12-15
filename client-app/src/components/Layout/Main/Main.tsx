@@ -19,8 +19,6 @@ export default observer(function Main() {
     const { darkMode } = activitystore
 
     const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode, "darkmode-maincontent": darkMode })
-    console.log(ChatMode)
-
     useEffect(() => {
         postStore.loadActivities()
     }, [postStore.loadActivities])

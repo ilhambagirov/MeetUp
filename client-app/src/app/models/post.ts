@@ -17,7 +17,7 @@ export class Post implements Post {
 }
 
 export class PostFormValues {
-    id?: string = undefined
+    id?: number | string
     title: string = '';
     constructor(activity?: PostFormValues) {
         if (activity) {
