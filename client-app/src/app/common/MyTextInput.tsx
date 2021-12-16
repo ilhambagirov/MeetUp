@@ -9,15 +9,15 @@ interface Props {
     label?: string
     type?: string
     style?: string
-    values?: string
+    defaultValue?: string
 }
 
-export default function MyTextInput({ style,values, ...props }: Props) {
-    const [field, meta] = useField(props)
+export default function MyTextInput({ style, ...props }: Props) {
+        const [field, meta] = useField(props)
     return (
         <Form.Field error={meta.touched && !!meta.error}>
             <label>{props.label}</label>
-            <input className={style} {...field} {...field.value=''} defaultValue={values} {...props} />
+            <input className={style} {...field}   {...props} />
             {meta.touched && meta.error ? (
                 <Label basic color='red'>{meta.error}</Label>
             ) : null

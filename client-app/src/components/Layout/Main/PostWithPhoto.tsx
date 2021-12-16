@@ -52,10 +52,6 @@ export default observer(function PostWithPhoto() {
             title: Yup.string().required("The title is required"),
         }
     )
-    const initialValues = { title: '' }
-    const ErrorFuncEditPost = (valueLength: boolean) => {
-        valueLength ? setEditError(false) : setEditError(true)
-    }
     return (
         <>
             {postStore.groupedPosts.map((post) => (
@@ -92,19 +88,15 @@ export default observer(function PostWithPhoto() {
                             postStore.editMode == post.id &&
                             <Formik validationSchema={validationSchema}
                                 onSubmit={(values) => {
+                                    console.log("salamun Aleyki")
                                     handleClickUpdate(values, post.id)
                                 }}
                                 enableReinitialize
-                                initialValues={initialValues}
+                                initialValues={{ title: ({ ...post.value }).title }}
                             >
                                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                                     <form className="d-flex editform" onSubmit={handleSubmit}>
-                                        {console.log(post.value.title)}
-                                        {/* <MyTextInput name='title' style="editinp" values={post.value.title} placeholder="Edit your post title" /> */}
-                                        <input className='editinp' defaultValue={post.value.title} name='title' onChange={(e) => ErrorFuncEditPost(e.target.value != '')} />
-                                        {editError &&
-                                         <Label basic color='red'>Title can not be empty!</Label>
-                                        }
+                                        <MyTextInput name='title' style="editinp" placeholder="Edit your post title" />
                                         <div className="d-flex justify-content-end">
                                             <button className="editbtns ms-2 bg-success" type="submit">Save</button>
                                             <button onClick={() => postStore.setEditMode(0)} className="editbtns ms-2 bg-warning" type="submit">Cancel</button>
@@ -200,3 +192,7 @@ export default observer(function PostWithPhoto() {
         </>
     )
 })
+
+function FormikValues(title: string): any {
+    throw new Error("Function not implemented.");
+}
