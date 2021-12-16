@@ -41,6 +41,7 @@ export default class UserStore {
     }
 
     logout = () => {
+        console.log("salamun aleykum")
         dark.commonStore.setToken(null)
         window.localStorage.removeItem('jwt')
         this.user = null
@@ -60,8 +61,7 @@ export default class UserStore {
         try {
             const user = await agent.Account.register(creds)
             dark.commonStore.setToken(user.data.token)
-            runInAction(() => this.user = user.data)
-            history.push("/activities")
+            history.push("/")
         } catch (error) {
             throw error;
         }

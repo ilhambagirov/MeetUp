@@ -17,7 +17,9 @@ export default observer(function Login() {
     const { darkMode } = activitystore
 
     const container = classNames("container-fluid", { containerdark: darkMode })
+    console.log(userStore.isLoggedIn)
     return (
+        
         <div className={container}>
             <div className='login-nav'>
                 <a className='d-flex text-decoration-none logo-Link' href="#">

@@ -272,9 +272,9 @@ export default observer(function Header() {
                                 </div>
                             </div>
                         }
-                        <a className=' text-decoration-none nav-right-link' href="#">
+                        <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
                             <img className='profile-img' src={profile4} alt="" />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

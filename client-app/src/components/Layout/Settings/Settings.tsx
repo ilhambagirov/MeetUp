@@ -84,16 +84,16 @@ export default observer(function Settings() {
                                         <MdKeyboardArrowRight className='arrow-settings' />
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='' >
+                                <li onClick={() => logout()}>
+                                    <a  className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' >
                                         <div className='d-flex align-items-center justify-content-center' >
                                             <span style={{ background: `linear-gradient(#e44d26,#f16529)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <AiOutlineLogout />
                                             </span>
-                                            <h4 onClick={logout} style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Logout</h4>
+                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Logout</h4>
                                         </div>
                                         <MdKeyboardArrowRight className='arrow-settings' />
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
