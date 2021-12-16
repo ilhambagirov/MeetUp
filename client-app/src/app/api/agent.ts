@@ -12,6 +12,7 @@ const sleep = (delay: number) => {
 axios.defaults.baseURL = 'https://localhost:44395/api'
 axios.interceptors.request.use(config => {
     const token = dark.commonStore.token
+   
     if (!config?.headers) {
         throw new Error(`Expected 'config' and 'config.headers' not to be undefined`);
     }

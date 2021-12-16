@@ -40,7 +40,7 @@ export default observer(function App() {
             <Header />
             <Navigation />
             <ChatList />
-            <Route exact path='/home' component={Main}/>
+            <Route exact path='/home'render = {() => (userStore.isLoggedIn ?  (<Main />) : (<Redirect to="/" />))}/>
             <Route path='/settings' render = {() => (userStore.isLoggedIn ?  (<Settings />) : (<Redirect to="/" />))} />
             <Route path='/accountdetails' render = {() => (userStore.isLoggedIn ?  (<AccountDetails />) : (<Redirect to="/" />))} />
             <Route path='/savedaddress' render = {() => (userStore.isLoggedIn ?  (<SavedAddress />) : (<Redirect to="/" />))} />

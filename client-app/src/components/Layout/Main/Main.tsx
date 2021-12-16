@@ -14,7 +14,7 @@ import StorySlider from "./StrorySlider";
 export default observer(function Main() {
     //custom hooks
     const { chatstore } = UseChatMode()
-    const { activitystore, postStore } = useDarkMode()
+    const { activitystore, postStore , userStore} = useDarkMode()
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
 
@@ -26,6 +26,7 @@ export default observer(function Main() {
     // const components = [StorySlider, CreatePost, PostWithPhoto, PeopleRecomended]
     return (
         <div className={menuContent}>
+            {console.log(userStore.isLoggedIn)}
             <div className='main-content-wrapper'>
                 <div className='main-content-container'>
                     <div className='row feed-body'>

@@ -8,14 +8,14 @@ interface Store {
     activitystore: DarkModeStore,
     commonStore: commonStore,
     userStore: UserStore
-    postStore : PostStore
+    postStore: PostStore
 }
 
 export const dark: Store = {
     activitystore: new DarkModeStore(),
-    commonStore: new commonStore(),
     userStore: new UserStore(),
-    postStore : new PostStore()
+    commonStore: new commonStore(),
+    postStore: new PostStore()
 }
 
 export const DarkContext = createContext(dark)

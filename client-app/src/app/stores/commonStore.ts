@@ -2,7 +2,7 @@ import axios from "axios";
 import { makeAutoObservable, reaction } from "mobx";
 
 export default class ServerErrorStore {
-    token: string | null = window.localStorage.getItem('jwt')
+    token: string | null = window.localStorage.getItem('jwt') ? window.localStorage.getItem('jwt') : null
     appLoaded = false
 
     constructor() {
