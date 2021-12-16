@@ -1,15 +1,14 @@
-﻿using AutoMapper;
-using MeetUp.API.Dtos;
+﻿using MediatR;
 using MeetUp.Application.Interfaces;
+using MeetUp.Application.Modules.PostModules;
 using MeetUp.Domain.Models.Entities;
 using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MeetUp.API.Controllers
 {
@@ -18,76 +17,39 @@ namespace MeetUp.API.Controllers
     public class HomeController : Controller
     {
         private readonly AppDbContext db;
+        private readonly IMediator mediator;
         private readonly IUserAccessor getUser;
         private readonly UserManager<AppUser> userManager;
 
-        public HomeController(AppDbContext db, IUserAccessor getUser, UserManager<AppUser> userManager)
+        public HomeController(AppDbContext db, IMediator mediator, IUserAccessor getUser, UserManager<AppUser> userManager)
         {
             this.db = db;
+            this.mediator = mediator;
             this.getUser = getUser;
             this.userManager = userManager;
         }
         [HttpGet("posts")]
-        public IActionResult PostList()
+        public async Task<IActionResult> PostList()
         {
-            var posts = db.Posts
-                .Include(x => x.CreatedByUser)
-                .Where(x => x.DeletedDate == null)
-                .AsNoTracking()
-                .ToList();
-            return Ok(posts);
+            return Ok(await mediator.Send(new PostListQuery()));
         }
 
         [HttpPost("posts")]
-        public IActionResult PostCreate(PostDto post)
+        public async Task<IActionResult> PostCreateAsync(PostCreateCommand command)
         {
-            var createdEntity = new Post();
-            if (ModelState.IsValid)
-            {
-                var username = getUser.GetUsername();
-                var user = userManager.FindByEmailAsync(username);
-
-
-                createdEntity = new()
-                {
-                    Title = post.Title,
-                    FilePath = post.FilePath,
-                    CreatedByUserId = user.Result.Id,
-                    CreatedDate = DateTime.Now,
-                };
-            }
-            db.Posts.Add(createdEntity);
-            db.SaveChanges(); 
-
-            return Ok();
+            return Ok(await mediator.Send(command));
         }
 
         [HttpPut("posts/{id}")]
-        public IActionResult PostEdit([FromRoute] int id, PostDto post)
+        public async Task<IActionResult> PostEditAsync([FromRoute]int id, PostDto post )
         {
-            var foundPost = db.Posts.FirstOrDefault(x => x.Id == id);
-
-            if (foundPost == null) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                foundPost.Title = post.Title;
-                foundPost.FilePath = post.FilePath;
-            }
-            db.Posts.Update(foundPost);
-            db.SaveChanges();
-
-            return Ok();
+            return Ok(await mediator.Send(new PostEditCommand { Id =id, Title= post.Title, FilePath= post.FilePath }));
         }
 
         [HttpDelete("posts/{id}")]
-        public IActionResult PostDelete([FromRoute] int id)
+        public async Task<IActionResult> PostDeleteAsync([FromRoute] PostDeleteCommand command)
         {
-            var a = db.Posts.FirstOrDefault(x => x.Id == id);
-            a.DeletedDate = DateTime.Now;
-            db.SaveChanges();
-
-            return Ok(a);
+            return Ok(await mediator.Send(command));
         }
     }
 }
