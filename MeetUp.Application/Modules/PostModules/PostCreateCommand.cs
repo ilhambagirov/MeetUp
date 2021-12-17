@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using MeetUp.Application.Interfaces;
 using MeetUp.Domain.Models.Entities;
 using MeetUp.Persistence.DataContext;

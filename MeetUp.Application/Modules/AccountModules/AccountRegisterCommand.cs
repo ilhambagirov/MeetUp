@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +15,16 @@ namespace MeetUp.Application.Modules.AccountModules
 {
     public class AccountRegisterCommand : IRequest<UserDto>
     {
-        public RegisterDto RegisterDto { get; set; }
+        [Required]
+        public string DisplayName { get; set; }
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", ErrorMessage = "Password must be complex!")]
+        public string Password { get; set; }
     }
     public class AccountRegisterCommandHandler : IRequestHandler<AccountRegisterCommand, UserDto>
     {
@@ -33,13 +43,13 @@ namespace MeetUp.Application.Modules.AccountModules
         public async Task<UserDto> Handle(AccountRegisterCommand request, CancellationToken cancellationToken)
         {
 
-            if (await userManager.Users.AnyAsync(u => u.Email == request.RegisterDto.Email))
+            if (await userManager.Users.AnyAsync(u => u.Email == request.Email))
             {
                 ctx.IsModelState().AddModelError("email", "Email Taken");
                 return null;
             }
 
-            if (await userManager.Users.AnyAsync(u => u.NormalizedUserName == request.RegisterDto.UserName.ToUpper()))
+            if (await userManager.Users.AnyAsync(u => u.NormalizedUserName == request.UserName.ToUpper()))
             {
                 ctx.IsModelState().AddModelError("username", "Username Taken");
                 return null;
@@ -47,12 +57,12 @@ namespace MeetUp.Application.Modules.AccountModules
 
             var user = new AppUser
             {
-                DsiplayName = request.RegisterDto.DisplayName,
-                UserName = request.RegisterDto.UserName,
-                Email = request.RegisterDto.Email
+                DsiplayName = request.DisplayName,
+                UserName = request.UserName,
+                Email = request.Email
             };
 
-            var result = await userManager.CreateAsync(user, request.RegisterDto.Password);
+            var result = await userManager.CreateAsync(user, request.Password);
 
             if (result.Succeeded)
             {
