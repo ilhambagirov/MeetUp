@@ -1,15 +1,17 @@
 ﻿using MediatR;
 using MeetUp.Application.Infrastructure;
 using MeetUp.Application.Interfaces;
+using MeetUp.Application.Services;
 using MeetUp.Persistence.DataContext;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 using System;
 using System.Linq;
 
-namespace MeetUp.API.Extensions
+namespace MeetUp.Application.Extensions
 {
     public static class ApplicationServiceExtension
     {
@@ -21,11 +23,6 @@ namespace MeetUp.API.Extensions
                 cfg.UseSqlServer(config.GetConnectionString("cString"));
             });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
-
             var asmbls = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.FullName.StartsWith("MeetUp")).ToArray();
 
             services.AddMediatR(asmbls);
@@ -33,6 +30,10 @@ namespace MeetUp.API.Extensions
             /*services.AddAutoMapper(typeof(MappingProfiles).Assembly);*/
 
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
 
             services.AddCors(cfg =>
             {

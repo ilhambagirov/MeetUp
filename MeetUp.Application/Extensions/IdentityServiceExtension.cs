@@ -1,14 +1,14 @@
-﻿using MeetUp.Domain.Models.Entities;
+﻿using MeetUp.Application.Services;
+using MeetUp.Domain.Models.Entities;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace MeetUp.API.Extensions
+namespace MeetUp.Application.Extensions
 {
     public static class IdentityServiceExtension
     {

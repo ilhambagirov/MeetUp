@@ -1,4 +1,4 @@
-﻿namespace API.Dtos
+﻿namespace MeetUp.Domain.Models.EntityDtos
 {
     public class UserDto
     {

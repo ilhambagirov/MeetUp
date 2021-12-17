@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Dtos
+namespace MeetUp.Domain.Models.EntityDtos
 {
     public class RegisterDto
     {
