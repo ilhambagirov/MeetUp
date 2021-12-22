@@ -10,11 +10,11 @@ namespace MeetUp.Application.Modules.PostModules
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Title is required");
-
+/*
             RuleFor(x => x.FilePath)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("FilePath is required");
+                .WithMessage("FilePath is required");*/
 
         }
     }

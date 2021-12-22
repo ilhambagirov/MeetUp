@@ -33,18 +33,18 @@ export default observer(function PostWithPhoto() {
     const Footer = classNames("likes-count", { "likes-count-dark": darkMode })
 
     //local methods
-    const handledropforposts = (id: number) => {
-        postDrop !== id ? setPostDropDown(id) : setPostDropDown(0)
+    const handledropforposts = (id: string) => {
+        postDrop !== id ? setPostDropDown(id) : setPostDropDown('')
     }
     const handleSharedropforposts = (id: number) => {
         postsShareDrop !== id ? setpostsShareDrop(id) : setpostsShareDrop(0)
     }
 
-    const handleClickUpdate = (post: PostFormValues, n: number) => {
+    const handleClickUpdate = (post: PostFormValues, n: string) => {
         post.id = n
         console.log(post)
         postStore.updateActivity(post!)
-        postStore.setEditMode(0)
+        postStore.setEditMode('')
     }
     let id = 0
     const validationSchema = Yup.object(
@@ -75,7 +75,8 @@ export default observer(function PostWithPhoto() {
                         </span>
 
                         {postDrop === post.id &&
-                            <PostsSettings post={post.value} />
+                            <>  {console.log(post.id)}
+                                <PostsSettings postId={post.id} /></>
                         }
                     </div>
 
@@ -88,7 +89,6 @@ export default observer(function PostWithPhoto() {
                             postStore.editMode == post.id &&
                             <Formik validationSchema={validationSchema}
                                 onSubmit={(values) => {
-                                    console.log("salamun Aleyki")
                                     handleClickUpdate(values, post.id)
                                 }}
                                 enableReinitialize
@@ -99,7 +99,7 @@ export default observer(function PostWithPhoto() {
                                         <MyTextInput name='title' style="editinp" placeholder="Edit your post title" />
                                         <div className="d-flex justify-content-end">
                                             <button className="editbtns ms-2 bg-success" type="submit">Save</button>
-                                            <button onClick={() => postStore.setEditMode(0)} className="editbtns ms-2 bg-warning" type="submit">Cancel</button>
+                                            <button onClick={() => postStore.setEditMode('')} className="editbtns ms-2 bg-warning" type="submit">Cancel</button>
                                         </div>
                                     </form>
                                 )}
@@ -193,6 +193,3 @@ export default observer(function PostWithPhoto() {
     )
 })
 
-function FormikValues(title: string): any {
-    throw new Error("Function not implemented.");
-}

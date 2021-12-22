@@ -12,7 +12,7 @@ const sleep = (delay: number) => {
 axios.defaults.baseURL = 'https://localhost:44395/api'
 axios.interceptors.request.use(config => {
     const token = dark.commonStore.token
-   
+
     if (!config?.headers) {
         throw new Error(`Expected 'config' and 'config.headers' not to be undefined`);
     }
@@ -35,9 +35,9 @@ const request = {
 }
 const Posts = {
     list: () => request.get<Post[]>('/home/posts'),
-    create: (post: PostFormValues) => request.post<void>('/home/posts', post),
-    edit: (post: PostFormValues) => request.put<void>(`/home/posts/${post.id}`, post),
-    delete: (id: number) => request.delete<void>(`/home/posts/${id}`),
+    create: (post: PostFormValues) => request.post<Post>('/home/posts', post),
+    edit: ( post: PostFormValues) => request.put<void>(`/home/posts/${post.id}`, post),
+    delete: (id: string) => request.delete<void>(`/home/posts/${id}`),
 }
 const Account = {
     Current: () => request.get<User>('/account'),

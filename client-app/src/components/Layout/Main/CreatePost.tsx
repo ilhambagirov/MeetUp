@@ -35,7 +35,7 @@ export default observer(function CreatePost() {
             id: uuid()
         }
         createActivity(newActivity)
-        console.log('salam')
+        console.log(postStore.groupedPosts)
     }
     return (
         <div className={postAdd}>
@@ -51,7 +51,7 @@ export default observer(function CreatePost() {
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <form onSubmit={handleSubmit} >
                         <div className='post-header'>
-                            <button type="submit" className='d-flex align-items-center'>
+                            <button type="submit" className='create-post-btn d-flex align-items-center'>
                                 <MdOutlineCreate className='create-button-post me-1' />
                                 <span className='create-post-link'>Create Post</span>
                             </button>

@@ -1,3 +1,4 @@
+import responsiveObserve from "antd/lib/_util/responsiveObserve";
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Post, PostFormValues } from "../models/post";
@@ -5,28 +6,28 @@ import { Profile } from "../models/profile";
 import { dark } from "./store";
 
 export default class PostStore {
-    postRegistry = new Map<number, Post>();
-    editMode = 0
-    postDrop = 0
+    postRegistry = new Map<string, Post>();
+    editMode = ''
+    postDrop = ''
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    setEditMode = (id : number)=>{
+    setEditMode = (id: string) => {
         this.editMode = id
     }
-    setPostDropDown = (id : number)=>{
+    setPostDropDown = (id: string) => {
         this.postDrop = id
     }
 
     loadActivities = async () => {
         try {
             const activities = await agent.Posts.list();
-
             activities.forEach(a => {
                 this.setActivity(a)
             })
+            console.log(this.groupedPosts)
         } catch (error) {
             console.log(error)
         }
@@ -37,7 +38,7 @@ export default class PostStore {
         return array
     }
 
-    deletePost = async (id: number) => {
+    deletePost = async (id: string) => {
         try {
             const post = await agent.Posts.delete(id);
             runInAction(() => {
@@ -47,15 +48,13 @@ export default class PostStore {
             console.log(error)
         }
     }
-
     createActivity = async (post: PostFormValues) => {
         const user = dark.userStore.user
         const createdUser = new Profile(user!)
         try {
-            await agent.Posts.create(post);
-            const newPost = new Post(post)
-            newPost.createdByUser = createdUser
-            this.setActivity(newPost)
+           var createdPost = await agent.Posts.create(post);
+           createdPost.createdByUser = createdUser
+            this.setActivity(createdPost)
         }
         catch (error) {
             console.log(error)
@@ -68,9 +67,8 @@ export default class PostStore {
             await agent.Posts.edit(post)
             runInAction(() => {
                 if (post.id) {
-                    console.log('salam aue')
-                    let updatedActivity = { ...this.getPost(post.id as number), ...post }
-                    this.postRegistry.set(post.id as number, updatedActivity as Post)
+                    let updatedActivity = { ...this.getPost(post.id), ...post }
+                    this.postRegistry.set(post.id, updatedActivity as Post)
                 }
             })
         }
@@ -78,11 +76,12 @@ export default class PostStore {
         }
     }
 
-    private getPost = (id: number) => {
+    private getPost = (id: string) => {
         return this.postRegistry.get(id)
     }
 
     private setActivity = (a: Post) => {
         this.postRegistry.set(a.id, a);
+        console.log(this.groupedPosts)
     }
 }

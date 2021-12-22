@@ -12,9 +12,9 @@ import './Main.scss'
 
 
 interface Props {
-    post: Post
+    postId: string
 }
-export default observer(function PostsSettings({ post }: Props) {
+export default observer(function PostsSettings({ postId }: Props) {
 
     const { activitystore, postStore } = useDarkMode()
     const { darkMode } = activitystore
@@ -25,7 +25,7 @@ export default observer(function PostsSettings({ post }: Props) {
 
     const handleClick = (e: any) => {
         e.preventDefault();
-        deletePost(post.id)
+        deletePost(postId)
     }
 
 
@@ -61,8 +61,8 @@ export default observer(function PostsSettings({ post }: Props) {
                 </h4>
             </a>
             <a onClick={() => {
-                postStore.setEditMode(post.id)
-                setPostDropDown(0)
+                postStore.setEditMode(postId)
+                setPostDropDown('')
             }} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                 <FiEdit2 className='me-3' />
                 <h4 className='mb-0 me-4'>

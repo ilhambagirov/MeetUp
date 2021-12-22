@@ -2,6 +2,7 @@
 using MeetUp.Application.Modules.PostModules;
 using MeetUp.Domain.Models.EntityDtos;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace MeetUp.API.Controllers
@@ -18,7 +19,8 @@ namespace MeetUp.API.Controllers
         [HttpGet("posts")]
         public async Task<IActionResult> PostList()
         {
-            return Ok(await mediator.Send(new PostListQuery()));
+            var posts = await mediator.Send(new PostListQuery());
+            return Ok(posts);
         }
 
         [HttpPost("posts")]
@@ -27,7 +29,7 @@ namespace MeetUp.API.Controllers
             return Ok(await mediator.Send(command));
         }
         [HttpPut("posts/{id}")]
-        public async Task<IActionResult> PostEditAsync([FromRoute]int id, PostDto post )
+        public async Task<IActionResult> PostEditAsync([FromRoute]Guid id, PostDto post )
         {
             return Ok(await mediator.Send(new PostEditCommand { Id =id, Title= post.Title, FilePath= post.FilePath }));
         }
