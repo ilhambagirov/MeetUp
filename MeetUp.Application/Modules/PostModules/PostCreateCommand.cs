@@ -1,6 +1,6 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using MeetUp.Application.Interfaces;
+using MeetUp.Application.Modules.Responses;
 using MeetUp.Domain.Models.Entities;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Identity;
@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.PostModules
 {
-    public class PostCreateCommand : IRequest<Post>
+    public class PostCreateCommand : IRequest<Result<Post>>
     {
         public string Title { get; set; }
         public string FilePath { get; set; }
     }
-    public class PostCreateCommandHandler : IRequestHandler<PostCreateCommand, Post>
+    public class PostCreateCommandHandler : IRequestHandler<PostCreateCommand, Result<Post>>
     {
         private readonly AppDbContext db;
         private readonly IUserAccessor getUser;
@@ -27,14 +27,12 @@ namespace MeetUp.Application.Modules.PostModules
             this.getUser = getUser;
             this.userManager = userManager;
         }
-        public async Task<Post> Handle(PostCreateCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Post>> Handle(PostCreateCommand request, CancellationToken cancellationToken)
         {
-            var post = new Post();
-
             var username = getUser.GetUsername();
             var user = userManager.FindByEmailAsync(username);
 
-            post = new()
+            var post = new Post()
             {
                 Title = request.Title,
                 FilePath = request.FilePath,
@@ -43,8 +41,11 @@ namespace MeetUp.Application.Modules.PostModules
             };
 
             await db.Posts.AddAsync(post);
-            await db.SaveChangesAsync();
-            return post;
+            var result = await db.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!result) return Result<Post>.Failure("Failed to Create Post");
+
+            return Result<Post>.Success(post);
         }
     }
 }

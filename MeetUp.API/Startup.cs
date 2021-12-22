@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MeetUp.API.Middleware;
 using MeetUp.Application.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -56,10 +57,10 @@ namespace MeetUp.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
+            app.UseMiddleware<ExceptionMiddleware>();
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetUp.API v1"));
             }

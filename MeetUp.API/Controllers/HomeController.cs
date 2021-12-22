@@ -7,37 +7,28 @@ using System.Threading.Tasks;
 
 namespace MeetUp.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HomeController : Controller
+    public class HomeController : BaseApiController
     {
-        private readonly IMediator mediator;
-        public HomeController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
         [HttpGet("posts")]
         public async Task<IActionResult> PostList()
         {
-            var posts = await mediator.Send(new PostListQuery());
-            return Ok(posts);
+            return HandleResult(await Mediator.Send(new PostListQuery()));
         }
-
         [HttpPost("posts")]
         public async Task<IActionResult> PostCreateAsync(PostCreateCommand command)
         {
-            return Ok(await mediator.Send(command));
+            return HandleResult(await Mediator.Send(command));
         }
         [HttpPut("posts/{id}")]
-        public async Task<IActionResult> PostEditAsync([FromRoute]Guid id, PostDto post )
+        public async Task<IActionResult> PostEditAsync([FromRoute] Guid id, PostDto post)
         {
-            return Ok(await mediator.Send(new PostEditCommand { Id =id, Title= post.Title, FilePath= post.FilePath }));
+            return HandleResult(await Mediator.Send(new PostEditCommand { Id = id, Title = post.Title, FilePath = post.FilePath }));
         }
 
         [HttpDelete("posts/{id}")]
         public async Task<IActionResult> PostDeleteAsync([FromRoute] PostDeleteCommand command)
         {
-            return Ok(await mediator.Send(command));
+            return HandleResult(await Mediator.Send(command));
         }
     }
 }

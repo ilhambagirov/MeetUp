@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MeetUp.Application.Modules.Responses;
 using MeetUp.Domain.Models.Entities;
 using MeetUp.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.PostModules
 {
-    public class PostDeleteCommand : IRequest<Post>
+    public class PostDeleteCommand : IRequest<Result<Unit>>
     {
         public Guid Id { get; set; }
     }
-    public class PostDeleteCommandHandler : IRequestHandler<PostDeleteCommand, Post>
+    public class PostDeleteCommandHandler : IRequestHandler<PostDeleteCommand, Result<Unit>>
     {
         private readonly AppDbContext db;
         public PostDeleteCommandHandler(AppDbContext db)
@@ -20,13 +21,17 @@ namespace MeetUp.Application.Modules.PostModules
             this.db = db;
         }
 
-        public async Task<Post> Handle(PostDeleteCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(PostDeleteCommand request, CancellationToken cancellationToken)
         {
             var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == request.Id);
-            post.DeletedDate = DateTime.Now;
-            db.SaveChanges();
+            if (post == null) return null;
 
-            return post;
+            post.DeletedDate = DateTime.Now;
+            var result = await db.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!result) return Result<Unit>.Failure("Failed to Delete the Post");
+
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

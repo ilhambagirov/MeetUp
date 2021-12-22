@@ -10,8 +10,6 @@ import { Button, Header, Label } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import { values } from "mobx";
 import MyTextInput from "../../../app/common/MyTextInput";
-
-
 export default observer(function Login() {
     const { activitystore, userStore } = useDarkMode();
     const { darkMode } = activitystore

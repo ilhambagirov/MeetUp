@@ -52,8 +52,10 @@ export default class PostStore {
         const user = dark.userStore.user
         const createdUser = new Profile(user!)
         try {
-           var createdPost = await agent.Posts.create(post);
-           createdPost.createdByUser = createdUser
+            var createdPost = await agent.Posts.create(post);
+            console.log(createdPost)
+            createdPost.createdByUser = createdUser
+           
             this.setActivity(createdPost)
         }
         catch (error) {
