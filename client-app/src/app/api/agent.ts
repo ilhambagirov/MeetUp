@@ -1,4 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
+import { history } from "../..";
 import { Post, PostFormValues } from "../models/post";
 import { User, UserFormValues } from "../models/user";
 import { dark } from "../stores/store";
@@ -22,7 +24,30 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async response => {
     await sleep(200);
     return response;
-}
+},
+    (error: AxiosError) => {
+        const { data, status } = error.response!
+
+        switch (status) {
+            case 400:
+                toast.error('Bad Request')
+                break;
+            case 401:
+                toast.error('UnAuthorized')
+                break;
+            case 404:
+                dark.commonStore.setServerError(data)
+                history.push('/server-error')
+                break;
+            case 500:
+                dark.commonStore.setServerError(data)
+                history.push('/server-error')
+                break;
+            default:
+                break;
+        }
+        return Promise.reject(error)
+    }
 )
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data
@@ -36,7 +61,7 @@ const request = {
 const Posts = {
     list: () => request.get<Post[]>('/home/posts'),
     create: (post: PostFormValues) => request.post<Post>('/home/posts', post),
-    edit: ( post: PostFormValues) => request.put<void>(`/home/posts/${post.id}`, post),
+    edit: (post: PostFormValues) => request.put<void>(`/home/posts/${post.id}`, post),
     delete: (id: string) => request.delete<void>(`/home/posts/${id}`),
 }
 const Account = {

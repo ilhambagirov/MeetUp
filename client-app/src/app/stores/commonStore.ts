@@ -1,9 +1,11 @@
 import axios from "axios";
 import { makeAutoObservable, reaction } from "mobx";
+import { ServerError } from "../models/ServerError";
 
 export default class ServerErrorStore {
     token: string | null = window.localStorage.getItem('jwt') ? window.localStorage.getItem('jwt') : null
     appLoaded = false
+    error: ServerError | null = null
 
     constructor() {
         makeAutoObservable(this)
@@ -26,5 +28,9 @@ export default class ServerErrorStore {
 
     setAppLoaded = () => {
         this.appLoaded = true
+    }
+
+    setServerError(error: ServerError) {
+        this.error = error
     }
 }
