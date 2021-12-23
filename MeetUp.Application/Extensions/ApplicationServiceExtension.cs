@@ -27,7 +27,7 @@ namespace MeetUp.Application.Extensions
 
             services.AddMediatR(asmbls);
 
-            /*services.AddAutoMapper(typeof(MappingProfiles).Assembly);*/
+            services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<ITokenService, TokenService>();

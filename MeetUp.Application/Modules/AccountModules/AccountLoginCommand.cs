@@ -20,7 +20,7 @@ namespace MeetUp.Application.Modules.AccountModules
         private readonly UserManager<AppUser> userManager;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AccountLoginCommandHandler( SignInManager<AppUser> signInManager,
+        public AccountLoginCommandHandler(SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
            IHttpContextAccessor httpContextAccessor)
         {

@@ -1,5 +1,4 @@
-﻿using MeetUp.API.Dtos;
-using System;
+﻿using System;
 
 namespace MeetUp.Domain.Models.Entities
 {

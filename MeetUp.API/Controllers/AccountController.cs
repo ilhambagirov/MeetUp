@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace MeetUp.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseApiController
     {
         private readonly IMediator mediator;
 
@@ -32,6 +30,12 @@ namespace MeetUp.API.Controllers
             var response = await mediator.Send(command);
             if (response == null) return ValidationProblem();
             return Ok(response);
+        }
+        [AllowAnonymous]
+        [HttpGet("SearchUser/{DisplayName}")]
+        public async Task<ActionResult<UserDto>> SearchUser(string DisplayName)
+        {
+            return HandleResult(await Mediator.Send(new UserSearchQuery() { DisplayName = DisplayName }));
         }
 
         [HttpGet]
