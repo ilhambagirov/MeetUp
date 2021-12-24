@@ -2,7 +2,7 @@ import { Profile } from "./profile";
 import { User } from "./user";
 
 export interface Post {
-    id: string;
+    id: number;
     title: string,
     image?: string,
     createdDate : Date,
@@ -17,7 +17,7 @@ export class Post implements Post {
 }
 
 export class PostFormValues {
-    id?: string
+    id?:number | string
     title: string = '';
     constructor(activity?: PostFormValues) {
         if (activity) {

@@ -20,7 +20,7 @@ namespace MeetUp.API.Controllers
             return HandleResult(await Mediator.Send(command));
         }
         [HttpPut("posts/{id}")]
-        public async Task<IActionResult> PostEditAsync([FromRoute] Guid id, PostDto post)
+        public async Task<IActionResult> PostEditAsync([FromRoute] int id, PostDto post)
         {
             return HandleResult(await Mediator.Send(new PostEditCommand { Id = id, Title = post.Title, FilePath = post.FilePath }));
         }

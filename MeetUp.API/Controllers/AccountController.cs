@@ -15,6 +15,7 @@ namespace MeetUp.API.Controllers
         {
             this.mediator = mediator;
         }
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UserDto>> Login(AccountLoginCommand command)

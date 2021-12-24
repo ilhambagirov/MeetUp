@@ -4,7 +4,7 @@ namespace MeetUp.Domain.Models.Entities
 {
     public class BaseEntity
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedByUserId { get; set; }
         public virtual AppUser CreatedByUser { get; set; }

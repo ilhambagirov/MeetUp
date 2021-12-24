@@ -11,7 +11,7 @@ namespace MeetUp.Application.Modules.PostModules
 {
     public class PostDeleteCommand : IRequest<Result<Unit>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
     public class PostDeleteCommandHandler : IRequestHandler<PostDeleteCommand, Result<Unit>>
     {

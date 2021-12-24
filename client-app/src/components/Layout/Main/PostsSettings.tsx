@@ -12,7 +12,7 @@ import './Main.scss'
 
 
 interface Props {
-    postId: string
+    postId: number
 }
 export default observer(function PostsSettings({ postId }: Props) {
 
@@ -62,7 +62,7 @@ export default observer(function PostsSettings({ postId }: Props) {
             </a>
             <a onClick={() => {
                 postStore.setEditMode(postId)
-                setPostDropDown('')
+                setPostDropDown(1)
             }} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                 <FiEdit2 className='me-3' />
                 <h4 className='mb-0 me-4'>

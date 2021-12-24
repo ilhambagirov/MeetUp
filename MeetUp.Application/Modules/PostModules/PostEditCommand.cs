@@ -10,7 +10,7 @@ namespace MeetUp.Application.Modules.PostModules
 {
     public class PostEditCommand : IRequest<Result<Unit>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string FilePath { get; set; }
     }

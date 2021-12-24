@@ -2,8 +2,8 @@
 {
     public class AppUserDto
     {
-        public string DisplayName { get; set; }
-        public string Username { get; set; }
-        public string Image { get; set; }
+        public string DsiplayName { get; set; }
+        public string UserName { get; set; }
+        public string Bio { get; set; }
     }
 }
