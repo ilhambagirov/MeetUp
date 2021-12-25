@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { history } from "../..";
 import { Post, PostFormValues } from "../models/post";
 import { User, UserFormValues } from "../models/user";
+import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";
 
 const sleep = (delay: number) => {
@@ -27,10 +28,9 @@ axios.interceptors.response.use(async response => {
 },
     (error: AxiosError) => {
         const { data, status } = error.response!
-
         switch (status) {
             case 400:
-                toast.error('Bad Request')
+                toast.error(data.errors[Object.keys(data.errors)[0]][0])
                 break;
             case 401:
                 toast.error('UnAuthorized')
@@ -68,6 +68,7 @@ const Account = {
     Current: () => request.get<User>('/account'),
     login: (user: UserFormValues) => request.post<User>(`/account`, user),
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
+    changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),
 }
 
 const agent = {

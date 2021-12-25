@@ -13,9 +13,9 @@ namespace MeetUp.Application.Modules.AccountModules
 {
     public class ChangePasswordCommand : IRequest<Result<Unit>>
     {
-        public string CurrentPassword { get; set; }
-        public string NewPassword { get; set; }
-        public string NewPasswordConfirm { get; set; }
+        public string Current { get; set; }
+        public string New { get; set; }
+        public string NewConfirm { get; set; }
     }
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, Result<Unit>>
     {
@@ -38,13 +38,18 @@ namespace MeetUp.Application.Modules.AccountModules
             if (userEmail == null) return null;
             var user = await userManager.FindByEmailAsync(userEmail);
 
-            if (request.NewPassword != request.NewPasswordConfirm)
+            if (request.New != request.NewConfirm)
             {
                 ctx.IsModelState().AddModelError("Password", "Password not valid!");
                 return null;
             }
 
-            await userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            var result = await userManager.ChangePasswordAsync(user, request.Current, request.New);
+            if (!result.Succeeded)
+            {
+                ctx.IsModelState().AddModelError("Password", "Current Password not valid!");
+                return null;
+            }
 
             return Result<Unit>.Success(Unit.Value);
         }

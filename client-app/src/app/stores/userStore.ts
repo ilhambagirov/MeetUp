@@ -4,6 +4,8 @@ import agent from "../api/agent";
 import { User, UserFormValues } from "../models/user";
 import { dark } from "./store";
 import jwt_decode from "jwt-decode";
+import { ChangePassword } from "../models/userPasswordChange";
+import { toast } from "react-toastify";
 
 export default class UserStore {
 
@@ -46,6 +48,16 @@ export default class UserStore {
         window.localStorage.removeItem('jwt')
         this.user = null
         history.push("/")
+    }
+
+    changeUserPassword = async (creds: ChangePassword) => {
+        try {
+            await agent.Account.changePassword(creds)
+            history.push("/home")
+            toast.success("Password Changed!")
+        } catch (error) {
+            throw error;
+        }
     }
 
     getUser = async () => {
