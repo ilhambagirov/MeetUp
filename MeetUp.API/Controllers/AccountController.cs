@@ -32,11 +32,19 @@ namespace MeetUp.API.Controllers
             if (response == null) return ValidationProblem();
             return Ok(response);
         }
-        [AllowAnonymous]
+
         [HttpGet("SearchUser/{DisplayName}")]
         public async Task<ActionResult<UserDto>> SearchUser(string DisplayName)
         {
             return HandleResult(await Mediator.Send(new UserSearchQuery() { DisplayName = DisplayName }));
+        }
+
+        [HttpPost("changepassword")]
+        public async Task<ActionResult<UserDto>> ChangePassword(ChangePasswordCommand  command)
+        {
+            var response = await mediator.Send(command);
+            if (response == null) return ValidationProblem();
+            return Ok(response);
         }
 
         [HttpGet]

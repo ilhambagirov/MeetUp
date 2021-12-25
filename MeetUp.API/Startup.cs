@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Linq;
@@ -42,10 +43,13 @@ namespace MeetUp.API
              });
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        
+
+            services.AddSingleton<ILogger>(svc => svc.GetRequiredService<ILogger<Program>>());
 
             services.AddApplicationServices(Configuration);
             services.AddIdentityServices(Configuration);
+
+           
 
             services.AddSwaggerGen(c =>
             {

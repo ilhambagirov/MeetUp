@@ -24,7 +24,6 @@ import UserProfile from './components/Layout/UserProfile/UserProfile';
 import { ToastContainer } from 'react-toastify'
 import { Container } from 'semantic-ui-react';
 import ServerError from './components/Layout/Errors/ServerError';
-
 export default observer(function App() {
 
   const { activitystore, userStore } = useDarkMode()
