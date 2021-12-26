@@ -1,4 +1,3 @@
-import { render } from "@testing-library/react";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
@@ -14,7 +13,7 @@ import StorySlider from "./StrorySlider";
 export default observer(function Main() {
     //custom hooks
     const { chatstore } = UseChatMode()
-    const { activitystore, postStore , userStore} = useDarkMode()
+    const { activitystore, postStore, userStore } = useDarkMode()
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
 
@@ -23,7 +22,6 @@ export default observer(function Main() {
         postStore.loadActivities()
     }, [postStore.loadActivities])
 
-    // const components = [StorySlider, CreatePost, PostWithPhoto, PeopleRecomended]
     return (
         <div className={menuContent}>
             {console.log(userStore.isLoggedIn)}
@@ -33,7 +31,9 @@ export default observer(function Main() {
                         <div className='main-content-left col-xl-8 col-lg-9 col-12 '>
                             <StorySlider />
                             <CreatePost />
-                            <PostWithPhoto />
+                            {postStore.groupedPosts.map((post) => (
+                                <PostWithPhoto key={post.id} post={post.value} />
+                            ))}
                             <PeopleRecomended />
                         </div>
                         <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>

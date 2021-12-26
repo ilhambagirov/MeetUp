@@ -7,15 +7,17 @@ import UserStore from "./userStore";
 interface Store {
     activitystore: DarkModeStore,
     commonStore: commonStore,
-    userStore: UserStore
     postStore: PostStore
+    userStore: UserStore
+    
 }
 
 export const dark: Store = {
     activitystore: new DarkModeStore(),
+    postStore: new PostStore(),
     userStore: new UserStore(),
     commonStore: new commonStore(),
-    postStore: new PostStore()
+    
 }
 
 export const DarkContext = createContext(dark)

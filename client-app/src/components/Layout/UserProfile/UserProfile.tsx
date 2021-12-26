@@ -1,6 +1,8 @@
-import React from "react";
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
+import { useDarkMode } from "../../../app/stores/store";
 import CreatePost from "../Main/CreatePost";
 import '../Main/Main.scss'
 import PopularEvents from "../Main/PopularEvents";
@@ -8,8 +10,9 @@ import PostWithPhoto from "../Main/PostWithPhoto";
 import './UserProfile.scss'
 
 
-export default function UserProfile() {
-
+export default observer(function UserProfile() {
+    const { postStore, userStore } = useDarkMode();
+    const { groupedPosts } = postStore
     return (
         <div className='main-content'>
             <div className='UserProfile-wrapper'>
@@ -22,18 +25,18 @@ export default function UserProfile() {
                                     <figure className='user-prof-image'>
                                         <img className='w-100' src={require('../../../assets/images/pt-1.jpg').default} alt="" />
                                     </figure>
-                                    <h4 style={{fontWeight:700,letterSpacing:0.4,fontSize:18}} className='mb-0'>Ilham Baghirov</h4>
-                                    <span className='username-user-profile'>@ilhambagirov</span>
+                                    <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{userStore.user?.dsiplayName}</h4>
+                                    <span className='username-user-profile'>{userStore.user?.userName}</span>
                                     <div className='features-following d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-3 ms-1'>
-                                        <h4 style={{fontWeight:600}}>
+                                        <h4 style={{ fontWeight: 600 }}>
                                             <b>456</b>
                                             <span>Posts</span>
                                         </h4>
-                                        <h4 style={{fontWeight:600}}>
+                                        <h4 style={{ fontWeight: 600 }}>
                                             <b>25.2m</b>
                                             <span>Followers</span>
                                         </h4>
-                                        <h4 style={{fontWeight:600}}>
+                                        <h4 style={{ fontWeight: 600 }}>
                                             <b>237</b>
                                             <span>Following</span>
                                         </h4>
@@ -43,10 +46,10 @@ export default function UserProfile() {
                                     <div className='feature-btns d-flex align-items-center justify-content-center position-absolute right-15 top-10 mt-2 me-2'>
                                         <a href="" className='follow-btn'>Follow</a>
                                         <a href="" className='other-btns-user-profile'>
-                                            <BsEnvelope/>
+                                            <BsEnvelope />
                                         </a>
                                         <a className='other-btns-user-profile' href="">
-                                            <BiDotsHorizontalRounded/>
+                                            <BiDotsHorizontalRounded />
                                         </a>
                                     </div>
                                 </div>
@@ -69,11 +72,13 @@ export default function UserProfile() {
                             </div>
                         </div>
                         <div className='col-xl-4 col-xxl-4 col-lg-4 userprofile-left'>
-                            <PopularEvents/>
+                            <PopularEvents />
                         </div>
                         <div className='col-xl-8 col-xxl-8 col-lg-8 userprofile-right mt-3'>
                             <CreatePost />
-                            {/* <PostWithPhoto/> */}
+                            {groupedPosts.map((post) => (
+                                <PostWithPhoto key={post.id} post={post.value} />
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -81,4 +86,4 @@ export default function UserProfile() {
         </div>
 
     )
-}
+})

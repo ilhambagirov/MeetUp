@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { Post, PostFormValues } from "../models/post";
+import { Profile } from "../models/profile";
 import { User, UserFormValues } from "../models/user";
 import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";

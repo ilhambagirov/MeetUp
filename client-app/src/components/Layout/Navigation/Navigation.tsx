@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 export default observer(function Navigation() {
 
     //custom hooks
-    const { activitystore } = useDarkMode();
+    const { activitystore, userStore } = useDarkMode();
     const { darkMode } = activitystore
     const { sidestore } = UseSideBar();
     const { SideBarCollapseMode } = sidestore
@@ -61,7 +61,7 @@ export default observer(function Navigation() {
                                     <span className={navWrapInfos}>Groups</span>
                                 </a>
                             </li>
-                            <li>
+                            <li onClick={() => userStore.getUser()}>
                                 <Link to='/userprofile' className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#64392e, #e4b0a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
                                         <CgProfile />

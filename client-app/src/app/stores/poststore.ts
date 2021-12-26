@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Post, PostFormValues } from "../models/post";
 import { Profile } from "../models/profile";
+import { User } from "../models/user";
 import { dark } from "./store";
 
 export default class PostStore {
@@ -49,8 +50,10 @@ export default class PostStore {
     }
     createActivity = async (post: PostFormValues) => {
         const user = dark.userStore.user
+        console.log(user)
         const createdUser = new Profile(user!)
         try {
+            console.log(user)
             var createdPost = await agent.Posts.create(post);
             console.log(createdPost)
             createdPost.createdByUser = createdUser
@@ -62,6 +65,18 @@ export default class PostStore {
         }
 
     }
+    // getUser = async () => {
+    //     try {
+    //         const user = await agent.Account.Current()
+    //         runInAction(() => this.user = user)
+    //         this.postRegistry.clear()
+    //         user.posts?.forEach((a: Post) => this.setActivity(a))
+
+    //         return user
+    //     } catch (error) {
+    //         throw error
+    //     }
+    // }
 
     updateActivity = async (post: PostFormValues) => {
         try {
@@ -81,7 +96,7 @@ export default class PostStore {
         return this.postRegistry.get(id)
     }
 
-    private setActivity = (a: Post) => {
+     setActivity = (a: Post) => {
         this.postRegistry.set(a.id, a);
         console.log(this.groupedPosts)
     }

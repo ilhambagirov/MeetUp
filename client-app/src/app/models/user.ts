@@ -1,10 +1,13 @@
+import { Post } from "./post";
 import { Profile } from "./profile";
 
 export interface User {
     userName: string,
-    displayName: string,
+    dsiplayName: string,
     token: string,
     image?: string,
+    posts?: Post[] 
+
 }
 
 export interface UserFormValues {

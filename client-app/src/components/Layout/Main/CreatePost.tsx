@@ -14,7 +14,7 @@ import MyTextInput from "../../../app/common/MyTextInput";
 
 export default observer(function CreatePost() {
     //custom hooks
-    const { activitystore, postStore } = useDarkMode()
+    const { activitystore, postStore, userStore } = useDarkMode()
     const { darkMode } = activitystore
     const { createActivity } = postStore
 
@@ -34,14 +34,16 @@ export default observer(function CreatePost() {
             ...post,
             id: uuid()
         }
-        createActivity(newActivity)
+        // window.location.pathname === '/userprofile' ? 
+        // userStore.createPostFromProfile(newActivity) :
+            createActivity(newActivity)
         console.log(postStore.groupedPosts)
     }
     return (
         <div className={postAdd}>
 
             <Formik validationSchema={validationSchema}
-                onSubmit={async (values,actions) => {
+                onSubmit={async (values, actions) => {
                     await handleFormSubmit(values)
                     actions.resetForm()
                 }}

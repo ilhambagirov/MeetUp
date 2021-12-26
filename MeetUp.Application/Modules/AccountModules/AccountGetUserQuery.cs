@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MeetUp.Application.Modules.Responses;
 using MeetUp.Domain.Models.Entities;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Http;
@@ -11,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.AccountModules
 {
-    public class AccountGetUserQuery : IRequest<AppUser>
+    public class AccountGetUserQuery : IRequest<Result<AppUser>>
     {
     }
-    public class AccountGetUserQueryHandler : IRequestHandler<AccountGetUserQuery, AppUser>
+    public class AccountGetUserQueryHandler : IRequestHandler<AccountGetUserQuery, Result<AppUser>>
     {
         private readonly UserManager<AppUser> userManager;
         private readonly AppDbContext db;
@@ -28,12 +29,12 @@ namespace MeetUp.Application.Modules.AccountModules
             this.db = db;
             this.httpContextAccessor = httpContextAccessor;
         }
-        public async Task<AppUser> Handle(AccountGetUserQuery request, CancellationToken cancellationToken)
+        public async Task<Result<AppUser>> Handle(AccountGetUserQuery request, CancellationToken cancellationToken)
         {
-            var userEmail =httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            var userEmail = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
             if (userEmail == null) return null;
             var user = await userManager.FindByEmailAsync(userEmail);
-            return await db.Users.Include(x=>x.Posts.Where(x=>x.CreatedByUserId == user.Id)).FirstOrDefaultAsync(x=> x.Email == userEmail);
+            return Result<AppUser>.Success(await db.Users.Include(x => x.Posts.Where(x => x.CreatedByUserId == user.Id && x.DeletedDate == null)).FirstOrDefaultAsync(x => x.Email == userEmail));
         }
     }
 }

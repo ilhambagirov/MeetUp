@@ -48,11 +48,9 @@ namespace MeetUp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<UserDto>> GetCurrenUser()
+        public async Task<IActionResult> GetCurrenUser()
         {
-            var response = await mediator.Send(new AccountGetUserQuery());
-            if (response == null) return NotFound("User Not Found");
-            return Ok(response);
+            return HandleResult(await Mediator.Send(new AccountGetUserQuery()));
         }
 
     }

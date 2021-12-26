@@ -10,7 +10,7 @@ export interface Profile{
 export class Profile implements Profile{
     constructor(user :User) {
        this.username = user.userName
-       this.dsiplayName = user.displayName
+       this.dsiplayName = user.dsiplayName
        this.image = user.image
     }
 }

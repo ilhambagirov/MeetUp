@@ -3,30 +3,44 @@ import { history } from "../..";
 import agent from "../api/agent";
 import { User, UserFormValues } from "../models/user";
 import { dark } from "./store";
-import jwt_decode from "jwt-decode";
 import { ChangePassword } from "../models/userPasswordChange";
 import { toast } from "react-toastify";
+import { Post } from "../models/post";
 
 export default class UserStore {
+    // Jwt: string | null = window.localStorage.getItem('jwt')
+    // token: string = this.Jwt == null ? '' : this.Jwt
+    // DecodedJwt: User | null = this.token == '' ? null : jwt_decode(this.token)
+    // postRegistryByUser: Post[] = [];
 
-    Jwt: string | null = window.localStorage.getItem('jwt')
-    token: string = this.Jwt == null ? '' : this.Jwt
-    DecodedJwt: User | null = this.token == '' ? null : jwt_decode(this.token)
+    user: User | null = null
 
-    user: User | null =this.DecodedJwt ==null? null : {
-        displayName: this.DecodedJwt.displayName,
-        userName: this.DecodedJwt.userName,
-        token: window.localStorage.getItem('jwt')!}
-
-
+    // this.DecodedJwt == null ? null : {
+    //     dsiplayName: this.DecodedJwt.dsiplayName,
+    //     userName: this.DecodedJwt.userName,
+    //     token: window.localStorage.getItem('jwt')!
+    // }
     constructor() {
         makeAutoObservable(this)
-        this.Jwt = window.localStorage.getItem('jwt')
+        if (window.location.pathname === '/userprofile') this.getUser()
+        // this.Jwt = window.localStorage.getItem('jwt')
+        console.log(this.user)
+    }
+    get isLoggedIn() {
+        // console.log(this.DecodedJwt)
+        return !!this.user
     }
 
-    get isLoggedIn() {
-        console.log(this.DecodedJwt)
-        return !!this.user
+
+    getUser = async () => {
+        try {
+            const user = await agent.Account.Current()
+            runInAction(() => this.user = user)
+            dark.postStore.postRegistry.clear()
+            user.posts?.forEach((a: Post) => dark.postStore.setActivity(a))
+        } catch (error) {
+            throw error
+        }
     }
 
     login = async (creds: UserFormValues) => {
@@ -47,6 +61,7 @@ export default class UserStore {
         dark.commonStore.setToken(null)
         window.localStorage.removeItem('jwt')
         this.user = null
+        dark.postStore.postRegistry.clear()
         history.push("/")
     }
 
@@ -57,15 +72,6 @@ export default class UserStore {
             toast.success("Password Changed!")
         } catch (error) {
             throw error;
-        }
-    }
-
-    getUser = async () => {
-        try {
-            const user = await agent.Account.Current()
-            runInAction(() => this.user = user)
-        } catch (error) {
-            throw error
         }
     }
 

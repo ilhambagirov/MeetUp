@@ -25,6 +25,7 @@ export default observer(function PostsSettings({ postId }: Props) {
 
     const handleClick = (e: any) => {
         e.preventDefault();
+        console.log(postId)
         deletePost(postId)
     }
 
