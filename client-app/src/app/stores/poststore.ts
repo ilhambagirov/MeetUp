@@ -15,10 +15,14 @@ export default class PostStore {
     }
 
     setEditMode = (id: number) => {
-        this.editMode = id
+        runInAction(() => {
+            this.editMode = id
+        })
     }
     setPostDropDown = (id: number) => {
-        this.postDrop = id
+        runInAction(() => {
+            this.postDrop = id
+        })
     }
 
     loadActivities = async () => {
@@ -27,7 +31,6 @@ export default class PostStore {
             activities.forEach(a => {
                 this.setActivity(a)
             })
-            console.log(this.groupedPosts)
         } catch (error) {
             console.log(error)
         }
@@ -50,10 +53,8 @@ export default class PostStore {
     }
     createActivity = async (post: PostFormValues) => {
         const user = dark.userStore.user
-        console.log(user)
-        const createdUser = new Profile(user!)
+        const createdUser = new Profile(user! as User)
         try {
-            console.log(user)
             var createdPost = await agent.Posts.create(post);
             console.log(createdPost)
             createdPost.createdByUser = createdUser
@@ -98,6 +99,5 @@ export default class PostStore {
 
      setActivity = (a: Post) => {
         this.postRegistry.set(a.id, a);
-        console.log(this.groupedPosts)
     }
 }

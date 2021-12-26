@@ -6,28 +6,27 @@ import { dark } from "./store";
 import { ChangePassword } from "../models/userPasswordChange";
 import { toast } from "react-toastify";
 import { Post } from "../models/post";
+import jwt_decode from "jwt-decode";
 
 export default class UserStore {
     // Jwt: string | null = window.localStorage.getItem('jwt')
     // token: string = this.Jwt == null ? '' : this.Jwt
     // DecodedJwt: User | null = this.token == '' ? null : jwt_decode(this.token)
-    // postRegistryByUser: Post[] = [];
-
-    user: User | null = null
-
+    user: User | Promise<User> | null = null
     // this.DecodedJwt == null ? null : {
+    //     id: this.DecodedJwt.id,
     //     dsiplayName: this.DecodedJwt.dsiplayName,
     //     userName: this.DecodedJwt.userName,
     //     token: window.localStorage.getItem('jwt')!
     // }
+
     constructor() {
         makeAutoObservable(this)
-        if (window.location.pathname === '/userprofile') this.getUser()
+       runInAction((()=> this.user = this.getUser()))
         // this.Jwt = window.localStorage.getItem('jwt')
         console.log(this.user)
     }
     get isLoggedIn() {
-        // console.log(this.DecodedJwt)
         return !!this.user
     }
 
@@ -38,6 +37,7 @@ export default class UserStore {
             runInAction(() => this.user = user)
             dark.postStore.postRegistry.clear()
             user.posts?.forEach((a: Post) => dark.postStore.setActivity(a))
+            return user;
         } catch (error) {
             throw error
         }
@@ -50,6 +50,7 @@ export default class UserStore {
             dark.commonStore.setToken(user.token)
             runInAction(() => this.user = user)
             history.push("/home")
+            console.log(this.user)
         } catch (error) {
             console.log('partladi')
             throw error;

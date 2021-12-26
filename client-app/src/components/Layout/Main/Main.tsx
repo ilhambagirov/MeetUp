@@ -21,10 +21,10 @@ export default observer(function Main() {
     useEffect(() => {
         postStore.loadActivities()
     }, [postStore.loadActivities])
+    console.log(postStore.groupedPosts.map((post) => post.value))
 
     return (
         <div className={menuContent}>
-            {console.log(userStore.isLoggedIn)}
             <div className='main-content-wrapper'>
                 <div className='main-content-container'>
                     <div className='row feed-body'>

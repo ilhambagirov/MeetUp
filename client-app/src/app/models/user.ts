@@ -1,7 +1,7 @@
 import { Post } from "./post";
 import { Profile } from "./profile";
-
 export interface User {
+    id: string
     userName: string,
     dsiplayName: string,
     token: string,

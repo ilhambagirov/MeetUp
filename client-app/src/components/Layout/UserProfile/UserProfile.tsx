@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
+import { User } from "../../../app/models/user";
 import { useDarkMode } from "../../../app/stores/store";
 import CreatePost from "../Main/CreatePost";
 import '../Main/Main.scss'
@@ -13,6 +14,8 @@ import './UserProfile.scss'
 export default observer(function UserProfile() {
     const { postStore, userStore } = useDarkMode();
     const { groupedPosts } = postStore
+    let { user } = userStore 
+    user = user as  User
     return (
         <div className='main-content'>
             <div className='UserProfile-wrapper'>
@@ -25,8 +28,8 @@ export default observer(function UserProfile() {
                                     <figure className='user-prof-image'>
                                         <img className='w-100' src={require('../../../assets/images/pt-1.jpg').default} alt="" />
                                     </figure>
-                                    <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{userStore.user?.dsiplayName}</h4>
-                                    <span className='username-user-profile'>{userStore.user?.userName}</span>
+                                    <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{user?.dsiplayName}</h4>
+                                    <span className='username-user-profile'>{user?.userName}</span>
                                     <div className='features-following d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-3 ms-1'>
                                         <h4 style={{ fontWeight: 600 }}>
                                             <b>456</b>

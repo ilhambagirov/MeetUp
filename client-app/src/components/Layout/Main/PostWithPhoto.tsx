@@ -13,17 +13,17 @@ import { Post, PostFormValues } from "../../../app/models/post";
 import MyTextInput from "../../../app/common/MyTextInput";
 import * as Yup from 'yup'
 import { Formik } from "formik";
+import { User } from "../../../app/models/user";
 
 interface Props {
     post: Post
 }
 export default observer(function PostWithPhoto({ post }: Props) {
     const { postStore, userStore } = useDarkMode()
-    const { user } = userStore
-
+    let { user } = userStore 
+    user = user as User
     //built in hooks
     const [postsShareDrop, setpostsShareDrop] = useState(0)
-    const [editError, setEditError] = useState(false)
 
     //custom hooks
     const { activitystore } = useDarkMode()
@@ -78,7 +78,7 @@ export default observer(function PostWithPhoto({ post }: Props) {
 
                     {postDrop === post.id &&
                         <>  {console.log(post.id)}
-                            <PostsSettings postId={post.id} /></>
+                            <PostsSettings post={post} /></>
                     }
                 </div>
 
