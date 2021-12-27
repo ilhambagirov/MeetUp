@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import './AccountDetails.scss'
 import '../../Main/Main.scss'
 import { AiOutlineArrowLeft, AiOutlineCloudDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import Select from 'react-select'
+import Select, { GroupBase } from 'react-select'
 import agent from "../../../../app/api/agent";
+import { useDarkMode } from "../../../../app/stores/store";
+import { values } from "mobx";
+import { Event } from "react-toastify/dist/core";
 
 
 export default observer(function AccountDetails() {
 
-    const universities: { value: any; label: any; }[] = []
-    const response = agent.Universities.get().then(data => {
+    const universities: { value: any; label: any }[] = []
+    agent.Universities.get().then(data => {
         data.map((item: any) => {
             universities.push({ value: item.name, label: item.name })
         })
     })
 
+    const { userStore } = useDarkMode()
+    const { user } = userStore
+    const u = JSON.parse(JSON.stringify(user))
+    console.log(u)
     return (
         <div className='main-content account-detail-content'>
             <div className='account-wrapper'>
@@ -38,35 +45,35 @@ export default observer(function AccountDetails() {
                             </div>
                         </div>
 
-                        <form action="">
+                        <form className="details-form" action="">
                             <div className="row">
                                 <div className="col-lg-6 mb-3">
                                     <label htmlFor="">Display Name</label>
-                                    <input className='d-block form-control' type="text" />
+                                    <input className='d-block form-control' defaultValue={u.dsiplayName} type="text" />
                                 </div>
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Userame</label>
-                                        <input className='d-block form-control' type="text" />
+                                        <input className='d-block form-control' defaultValue={u?.userName} type="text" />
                                     </div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-lg-6 mb-3">
                                     <label htmlFor="">Email</label>
-                                    <input className='d-block form-control' type="text" />
+                                    <input className='d-block form-control' defaultValue={u?.email} type="text" />
                                 </div>
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Phone</label>
-                                        <input className='d-block form-control' type="text" />
+                                        <input className='d-block form-control' defaultValue={u?.phoneNumber} type="text" />
                                     </div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="mb-3">
                                     <label htmlFor="">School</label>
-                                    <input className='d-block form-control' type="text" />
+                                    <input className='d-block form-control' defaultValue={u?.school} type="text" />
                                 </div>
                             </div>
                             <div className="row">
@@ -77,14 +84,14 @@ export default observer(function AccountDetails() {
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Academic Degree</label>
-                                        <input className='d-block form-control' type="text" />
+                                        <input className='d-block form-control' defaultValue={u?.academicDegree} type="text" />
                                     </div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="mb-3">
                                     <label htmlFor="">Profession</label>
-                                    <input className='d-block form-control' type="text" />
+                                    <input className='d-block form-control' defaultValue={u?.profession} type="text" />
                                 </div>
                             </div>
                             <div className="row">
@@ -98,7 +105,7 @@ export default observer(function AccountDetails() {
                                 <div className="col-lg-12 mb-3">
                                     <div className="form-group">
                                         <label htmlFor="">Bio</label>
-                                        <textarea className='d-block form-control p-3' placeholder='Write your description' />
+                                        <textarea className='d-block form-control p-3' defaultValue={u?.bio} placeholder='Write your description' />
                                     </div>
                                 </div>
                                 <div className="col-lg-12 mb-3">
@@ -112,3 +119,5 @@ export default observer(function AccountDetails() {
         </div>
     )
 })
+
+

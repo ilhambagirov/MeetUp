@@ -5,9 +5,15 @@ export interface User {
     userName: string,
     dsiplayName: string,
     token: string,
+    email: string,
+    phoneNumber: string,
+    bio: string,
     image?: string,
+    School?: string,
+    university?: string,
+    academicDegree?: string,
+    profession?: string,
     posts?: Post[] 
-
 }
 
 export interface UserFormValues {
