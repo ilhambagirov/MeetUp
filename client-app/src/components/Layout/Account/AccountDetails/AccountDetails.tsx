@@ -4,9 +4,18 @@ import '../../Main/Main.scss'
 import { AiOutlineArrowLeft, AiOutlineCloudDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import Select from 'react-select'
+import agent from "../../../../app/api/agent";
 
 
 export default observer(function AccountDetails() {
+
+    const universities: { value: any; label: any; }[] = []
+    const response = agent.Universities.get().then(data => {
+        data.map((item: any) => {
+            universities.push({ value: item.name, label: item.name })
+        })
+    })
 
     return (
         <div className='main-content account-detail-content'>
@@ -32,12 +41,12 @@ export default observer(function AccountDetails() {
                         <form action="">
                             <div className="row">
                                 <div className="col-lg-6 mb-3">
-                                    <label htmlFor="">First Name</label>
+                                    <label htmlFor="">Display Name</label>
                                     <input className='d-block form-control' type="text" />
                                 </div>
                                 <div className="col-lg-6 mb-3">
                                     <div className="form-group">
-                                        <label htmlFor="">Last Name</label>
+                                        <label htmlFor="">Userame</label>
                                         <input className='d-block form-control' type="text" />
                                     </div>
                                 </div>
@@ -56,26 +65,26 @@ export default observer(function AccountDetails() {
                             </div>
                             <div className="row">
                                 <div className="mb-3">
-                                    <label htmlFor="">Country</label>
+                                    <label htmlFor="">School</label>
                                     <input className='d-block form-control' type="text" />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-6 mb-3">
+                                    <label htmlFor="">University</label>
+                                    <Select options={universities} />
+                                </div>
+                                <div className="col-lg-6 mb-3">
+                                    <div className="form-group">
+                                        <label htmlFor="">Academic Degree</label>
+                                        <input className='d-block form-control' type="text" />
+                                    </div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="mb-3">
-                                    <label htmlFor="">Address</label>
+                                    <label htmlFor="">Profession</label>
                                     <input className='d-block form-control' type="text" />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-lg-6 mb-3">
-                                    <label htmlFor="">Town/City</label>
-                                    <input className='d-block form-control' type="text" />
-                                </div>
-                                <div className="col-lg-6 mb-3">
-                                    <div className="form-group">
-                                        <label htmlFor="">PostCode</label>
-                                        <input className='d-block form-control' type="text" />
-                                    </div>
                                 </div>
                             </div>
                             <div className="row">
@@ -88,7 +97,7 @@ export default observer(function AccountDetails() {
                                 </div>
                                 <div className="col-lg-12 mb-3">
                                     <div className="form-group">
-                                        <label htmlFor="">Description</label>
+                                        <label htmlFor="">Bio</label>
                                         <textarea className='d-block form-control p-3' placeholder='Write your description' />
                                     </div>
                                 </div>

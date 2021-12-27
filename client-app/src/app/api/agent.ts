@@ -51,7 +51,12 @@ axios.interceptors.response.use(async response => {
     }
 )
 
+
 const responseBody = <T>(response: AxiosResponse<T>) => response.data
+
+const Universities = {
+    get:() => axios.get( 'http://universities.hipolabs.com/search?country=azerbaijan').then(responseBody),
+}
 
 const request = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
@@ -74,7 +79,8 @@ const Account = {
 
 const agent = {
     Account,
-    Posts
+    Posts,
+    Universities
 }
 
 export default agent

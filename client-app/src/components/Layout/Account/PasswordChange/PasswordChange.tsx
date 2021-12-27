@@ -19,7 +19,6 @@ export default function SavedAddress() {
             newconfirm: Yup.string().required("Confirm password is required"),
         }
     )
-
     return (
         <div className='main-content password-change-content'>
             <div className='password-change-wrapper'>
