@@ -53,5 +53,10 @@ namespace MeetUp.API.Controllers
             return HandleResult(await Mediator.Send(new AccountGetUserQuery()));
         }
 
+        [HttpPost("updateuserdetails")]
+        public async Task<IActionResult> UpdateUserDetails(AppUserDto user)
+        {
+            return HandleResult(await Mediator.Send(new AccountUserDetailsUpdate { UserDto = user }));
+        }
     }
 }

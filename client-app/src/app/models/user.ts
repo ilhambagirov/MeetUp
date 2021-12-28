@@ -6,19 +6,25 @@ export interface User {
     dsiplayName: string,
     token: string,
     email: string,
-    phoneNumber: string,
-    bio: string,
+    phoneNumber?: string,
+    bio?: string,
     image?: string,
-    School?: string,
+    school?: string,
     university?: string,
     academicDegree?: string,
     profession?: string,
     posts?: Post[] 
 }
-
 export interface UserFormValues {
     email: string,
-    displayName?: string,
-    password: string,
+    dsiplayName?: string,
+    password?: string,
     userName?: string,
+    phoneNumber?: string,
+    bio?: string,
+    image?: string,
+    school?: string,
+    university?: string,
+    academicDegree?: string,
+    profession?: string,
 }

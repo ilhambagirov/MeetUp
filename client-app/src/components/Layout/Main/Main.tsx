@@ -21,8 +21,6 @@ export default observer(function Main() {
     useEffect(() => {
         postStore.loadActivities()
     }, [postStore.loadActivities])
-    console.log(postStore.groupedPosts.map((post) => post.value))
-
     return (
         <div className={menuContent}>
             <div className='main-content-wrapper'>

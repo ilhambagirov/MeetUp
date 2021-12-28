@@ -4,21 +4,23 @@ import { Form, Label } from "semantic-ui-react";
 
 
 interface Props {
-    placeholder: string
+    placeholder?: string
     name: string
     label?: string
     type?: string
     style?: string
     defaultValue?: string
+    key?: string
+    normal?: boolean
 }
 
-export default function MyTextInput({ style, ...props }: Props) {
-        const [field, meta] = useField(props)
+export default function MyTextInput({ style, normal, ...props }: Props) {
+    const [field, meta] = useField(props)
     return (
         <Form.Field error={meta.touched && !!meta.error}>
-            <label>{props.label}</label>
+            {props.label !== null && <label>{props.label}</label>}
             <input className={style} {...field}   {...props} />
-            {meta.touched && meta.error ? (
+            {normal == false && meta.touched && meta.error ? (
                 <Label basic color='red'>{meta.error}</Label>
             ) : null
             }
