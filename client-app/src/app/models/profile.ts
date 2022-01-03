@@ -6,7 +6,6 @@ export interface Profile{
     image? :string;
     bio?: string
 }
-
 export class Profile implements Profile{
     constructor(user :User) {
        this.userName = user.userName

@@ -4,6 +4,7 @@ using MeetUp.Domain.Models.Entities;
 using MeetUp.Domain.Models.EntityDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +32,8 @@ namespace MeetUp.Application.Modules.AccountModules
         public async Task<UserDto> Handle(AccountLoginCommand request, CancellationToken cancellationToken)
         {
 
-            var user = await userManager.FindByEmailAsync(request.Email);
+            var user = await userManager.Users.Include(p=>p.Photos)
+                .FirstOrDefaultAsync(x=>x.Email == request.Email);
 
             if (user == null) return null;
 

@@ -71,7 +71,7 @@ const Posts = {
     delete: (id: number) => request.delete<void>(`/home/posts/${id}`),
 }
 const Account = {
-    Current: () => request.get<User>('/account'),
+    Current: () => request.get<User>('/account/bob'),
     login: (user: UserFormValues) => request.post<User>(`/account`, user),
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),

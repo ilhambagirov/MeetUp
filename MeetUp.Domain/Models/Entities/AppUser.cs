@@ -13,5 +13,6 @@ namespace MeetUp.Domain.Models.Entities
         public string Profession { get; set; }
         public virtual ICollection<SavedPost> SavedPosts { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
     }
 }

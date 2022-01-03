@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MeetUp.Application.Infrastructure;
+using MeetUp.Application.Infrastructure.Photos;
 using MeetUp.Application.Interfaces;
 using MeetUp.Application.Services;
 using MeetUp.Persistence.DataContext;
@@ -32,6 +33,7 @@ namespace MeetUp.Application.Extensions
 
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddHttpContextAccessor();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
            
@@ -43,6 +45,7 @@ namespace MeetUp.Application.Extensions
                     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             });
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;
         }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MeetUp.Domain.Models.Entities;
 using MeetUp.Domain.Models.EntityDtos;
+using System.Linq;
 
 namespace MeetUp.Application.Infrastructure
 {
@@ -9,7 +10,8 @@ namespace MeetUp.Application.Infrastructure
         public MappingProfiles()
         {
             CreateMap<Post, PostDto>();
-            CreateMap<AppUser, AppUserDto>().ReverseMap();
+            CreateMap<AppUser, AppUserDto>()
+                .ForMember(i => i.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url));
         }
     }
 }

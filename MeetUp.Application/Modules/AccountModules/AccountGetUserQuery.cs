@@ -1,40 +1,39 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using MeetUp.Application.Modules.Responses;
 using MeetUp.Domain.Models.Entities;
+using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.AccountModules
 {
-    public class AccountGetUserQuery : IRequest<Result<AppUser>>
+    public class AccountGetUserQuery : IRequest<Result<AppUserDto>>
     {
+        public string UserName { get; set; }
     }
-    public class AccountGetUserQueryHandler : IRequestHandler<AccountGetUserQuery, Result<AppUser>>
+    public class AccountGetUserQueryHandler : IRequestHandler<AccountGetUserQuery, Result<AppUserDto>>
     {
-        private readonly UserManager<AppUser> userManager;
         private readonly AppDbContext db;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IMapper mapper;
 
-        public AccountGetUserQueryHandler(UserManager<AppUser> userManager,
-            AppDbContext db,
-           IHttpContextAccessor httpContextAccessor)
+        public AccountGetUserQueryHandler(AppDbContext db,
+           IMapper mapper)
         {
-            this.userManager = userManager;
             this.db = db;
-            this.httpContextAccessor = httpContextAccessor;
+            this.mapper = mapper;
         }
-        public async Task<Result<AppUser>> Handle(AccountGetUserQuery request, CancellationToken cancellationToken)
+        public async Task<Result<AppUserDto>> Handle(AccountGetUserQuery request, CancellationToken cancellationToken)
         {
-            var userEmail = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-            if (userEmail == null) return null;
-            var user = await userManager.FindByEmailAsync(userEmail);
-            return Result<AppUser>.Success(await db.Users.Include(x => x.Posts.Where(x => x.CreatedByUserId == user.Id && x.DeletedDate == null)).FirstOrDefaultAsync(x => x.Email == userEmail));
+            var user = await db.Users.ProjectTo<AppUserDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync(x => x.UserName == request.UserName);
+            if (user == null) return null;
+
+            return Result<AppUserDto>.Success(user);
         }
     }
 }

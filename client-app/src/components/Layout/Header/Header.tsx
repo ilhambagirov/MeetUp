@@ -17,6 +17,7 @@ import { UseChatMode } from "../../../app/stores/chatboxstore";
 import { useDarkMode } from "../../../app/stores/store";
 import { UseSideBar } from "../../../app/stores/sidebarstore";
 import { Link } from "react-router-dom";
+import { User } from "../../../app/models/user";
 
 export default observer(function Header() {
     // built-in hooks
@@ -27,12 +28,13 @@ export default observer(function Header() {
     const [menuBackground, SetmenuBackground] = useState("");
 
     //custom hooks
-    const { activitystore } = useDarkMode();
+    const { activitystore, userStore } = useDarkMode();
     const { chatstore } = UseChatMode();
     const { sidestore } = UseSideBar();
     const { darkMode, setDarkMode } = activitystore
     const { setChatMode } = chatstore
     const { setSideBarCollapseMode } = sidestore
+    const user = userStore.user as User
 
     //custom local methods
     function handleMenuBackColor(color: string) {
@@ -273,7 +275,7 @@ export default observer(function Header() {
                             </div>
                         }
                         <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
-                            <img className='profile-img' src={profile4} alt="" />
+                            <img className='profile-img' src={user.image || profile4} alt="" />
                         </Link>
                     </div>
                 </div>

@@ -10,6 +10,7 @@ import * as Yup from 'yup'
 import { PostFormValues } from "../../../app/models/post";
 import { v4 as uuid } from 'uuid';
 import MyTextInput from "../../../app/common/MyTextInput";
+import { User } from "../../../app/models/user";
 
 
 export default observer(function CreatePost() {
@@ -17,6 +18,8 @@ export default observer(function CreatePost() {
     const { activitystore, postStore, userStore } = useDarkMode()
     const { darkMode } = activitystore
     const { createActivity } = postStore
+    let { user } = userStore 
+    const user1 = user as User
 
     //classnames
     const postAdd = classNames("post-add", { "postadd-dark-mode": darkMode })
@@ -60,7 +63,7 @@ export default observer(function CreatePost() {
                         </div>
                         <div className='post-content'>
                             <span className='me-2 my-profile-img-add-post-wrapper'>
-                                <img className='my-profile-img-add-post' src={require('../../../assets/images/user-11.png').default} alt="" />
+                                <img className='my-profile-img-add-post' src={user1.image || require('../../../assets/images/user-12.png').default} alt="" />
                             </span>
                             <MyTextInput name='title' style={postAddTextArea} placeholder='Create your post' />
                         </div>
