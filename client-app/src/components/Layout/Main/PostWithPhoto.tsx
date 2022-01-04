@@ -45,7 +45,7 @@ export default observer(function PostWithPhoto({ post }: Props) {
 
     const handleClickUpdate = (post: PostFormValues, n: number) => {
         post.id = n
-        console.log(post)
+        console.log(n)
         postStore.updateActivity(post!)
         postStore.setEditMode(0)
     }
@@ -61,7 +61,7 @@ export default observer(function PostWithPhoto({ post }: Props) {
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
                         <span className='post-with-photo-user-photo me-3'>
-                            <img className='user-profile-pic' src={post.createdByUser.image! || require('../../../assets/images/user-12.png').default} alt="" />
+                            <img className='user-profile-pic' src={post.createdByUser?.image || require('../../../assets/images/user-12.png').default} alt="" />
                         </span>
                         <div className='d-flex flex-column post-with-photo-header-left'>
                             <h4 style={{ fontWeight: 700 }} className={Names}>
@@ -77,8 +77,7 @@ export default observer(function PostWithPhoto({ post }: Props) {
                     </span>
 
                     {postDrop === post.id &&
-                        <>  {console.log(post.id)}
-                            <PostsSettings post={post} /></>
+                        <PostsSettings post={post} />
                     }
                 </div>
 

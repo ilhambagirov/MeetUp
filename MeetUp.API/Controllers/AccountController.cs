@@ -47,10 +47,10 @@ namespace MeetUp.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{username}")]
-        public async Task<IActionResult> GetCurrenUser([FromRoute]string username)
+        [HttpGet]
+        public async Task<IActionResult> GetCurrenUser()
         {
-            return HandleResult(await Mediator.Send(new AccountGetUserQuery { UserName = username }));
+            return HandleResult(await Mediator.Send(new AccountGetUserQuery()));
         }
 
         [HttpPost("updateuserdetails")]

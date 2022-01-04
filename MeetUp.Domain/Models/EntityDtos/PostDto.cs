@@ -4,6 +4,7 @@ namespace MeetUp.Domain.Models.EntityDtos
 {
     public class PostDto
     {
+        public string Id { get; set; }
         public string Title { get; set; }
         public string FilePath { get; set; }
         public string CreatedByUserId { get; set; }

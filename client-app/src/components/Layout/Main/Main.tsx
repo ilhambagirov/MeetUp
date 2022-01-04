@@ -30,7 +30,10 @@ export default observer(function Main() {
                             <StorySlider />
                             <CreatePost />
                             {postStore.groupedPosts.map((post) => (
-                                <PostWithPhoto key={post.id} post={post.value} />
+                                <>
+                                   { console.log(postStore.groupedPosts)}
+                                    <PostWithPhoto key={post.id} post={post.value} />
+                                </>
                             ))}
                             <PeopleRecomended />
                         </div>

@@ -55,7 +55,7 @@ export default observer(function App() {
               <Route path='/socialaccount' render={() => (userStore.isLoggedIn ? (<SocialAccount />) : (<Redirect to="/" />))} />
               <Route path='/passwordchange' render={() => (userStore.isLoggedIn ? (<PasswordChange />) : (<Redirect to="/" />))} />
               <Route path='/help' render={() => (userStore.isLoggedIn ? (<Help />) : (<Redirect to="/" />))} />
-              <Route path='/userprofile' render={() => (userStore.isLoggedIn ? (<UserProfile />) : (<Redirect to="/" />))} />
+              <Route path='/userprofile/' render={() => (userStore.isLoggedIn ? (<UserProfile />) : (<Redirect to="/" />))} />
               <Route path='/server-error' component={ServerError} />
               <Container>
                 <Route component={NotFound} />

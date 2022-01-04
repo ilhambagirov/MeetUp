@@ -28,6 +28,7 @@ export default class PostStore {
     loadActivities = async () => {
         try {
             const activities = await agent.Posts.list();
+            this.postRegistry.clear()
             activities.forEach(a => {
                 this.setActivity(a)
             })

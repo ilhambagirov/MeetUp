@@ -34,7 +34,7 @@ export default observer(function PostsSettings({ post }: Props) {
     }
 
     console.log(user?.userName)
-    console.log(post.createdByUser?.userName)
+    console.log(post)
 
 
 
