@@ -18,12 +18,12 @@ import { User } from "../../../app/models/user";
 export default observer(function Navigation() {
 
     //custom hooks
-    const { activitystore, userStore } = useDarkMode();
+    const { activitystore, userStore, profileStore } = useDarkMode();
     const { darkMode } = activitystore
     const { sidestore } = UseSideBar();
     const { SideBarCollapseMode } = sidestore
     let { user } = userStore
-    user = user as User
+    const user1 = user as User
 
     //classnames
     const navigation = classNames("navigation scroll-bar", { darkmodeNavigation: darkMode, "navigation-dark": SideBarCollapseMode })
@@ -64,8 +64,8 @@ export default observer(function Navigation() {
                                     <span className={navWrapInfos}>Groups</span>
                                 </a>
                             </li>
-                            <li onClick={() => userStore.getUser()}>
-                                <Link to={`/userprofile/${user.userName}`} className='nav-wrap-sidebar-feed' href="">
+                            <li onClick={() => profileStore.loadProfile(user1.userName)}>
+                                <Link to={`/userprofile/${user1.userName}`} className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#64392e, #e4b0a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
                                         <CgProfile />
                                     </span>

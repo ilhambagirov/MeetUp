@@ -5,6 +5,7 @@ using MeetUp.Application.Modules.Responses;
 using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,10 +27,12 @@ namespace MeetUp.Application.Modules.AccountModules
         }
         public async Task<Result<AppUserDto>> Handle(UserProfileQuery request, CancellationToken cancellationToken)
         {
-            var user = await db.Users.ProjectTo<AppUserDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync(x => x.UserName == request.UserName);
+            var user = await db.Users.Include(x => x.Posts.Where(p => p.DeletedDate == null))
+               .Include(x => x.Photos)
+               .SingleOrDefaultAsync(x => x.UserName == request.UserName);
             if (user == null) return null;
 
-            return Result<AppUserDto>.Success(user);
+            return Result<AppUserDto>.Success(mapper.Map<AppUserDto>(user));
         }
     }
 }

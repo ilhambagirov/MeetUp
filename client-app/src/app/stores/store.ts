@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import commonStore from "./commonStore";
 import DarkModeStore from "./darkmodestore";
 import PostStore from "./poststore";
+import ProfileStore from "./profileStore";
 import UserStore from "./userStore";
 
 interface Store {
@@ -9,7 +10,7 @@ interface Store {
     commonStore: commonStore,
     postStore: PostStore
     userStore: UserStore
-    
+    profileStore: ProfileStore
 }
 
 export const dark: Store = {
@@ -17,7 +18,7 @@ export const dark: Store = {
     postStore: new PostStore(),
     userStore: new UserStore(),
     commonStore: new commonStore(),
-    
+    profileStore: new ProfileStore()
 }
 
 export const DarkContext = createContext(dark)

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import { User } from "../../../app/models/user";
@@ -13,10 +13,15 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 
 
 export default observer(function UserProfile() {
-    const { postStore, userStore } = useDarkMode();
+    const { postStore, profileStore } = useDarkMode();
     const { groupedPosts } = postStore
-    let { user } = userStore
-    user = user as User
+    const { profile } = profileStore
+    // let { user } = userStore
+    const user = profile as User
+    useEffect(() => {
+        var point = window.location.pathname.lastIndexOf('/')
+        profileStore.loadProfile(window.location.pathname.substring(point + 1))
+    }, [profileStore.loadProfile])
     return (
         <div className='main-content'>
             <div className='UserProfile-wrapper'>
@@ -28,13 +33,13 @@ export default observer(function UserProfile() {
                                     <div className='background-image-profile '></div>
                                     <div className="header-body">
                                         <figure className='user-prof-image'>
-                                            <img className='w-100' src={user.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                            <img className='w-100' src={user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                         </figure>
                                         <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{user?.dsiplayName}</h4>
                                         <span className='username-user-profile'>{user?.userName}</span>
                                         <div className='features-following d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-3 ms-1'>
                                             <h4 style={{ fontWeight: 600 }}>
-                                                <b>456</b>
+                                                <b>5</b>
                                                 <span>Posts</span>
                                             </h4>
                                             <h4 style={{ fontWeight: 600 }}>
@@ -59,23 +64,9 @@ export default observer(function UserProfile() {
                                         </div>
                                     </div>
                                     <div className='header-footer'>
-                                        {/* <ul className='ps-4 d-flex'>
-                                        <li className='me-5'>
-                                            <a className=' pt-3 pb-3 ls-1 d-inline-block' href="">About</a>
-                                        </li>
-                                        <li className='me-5'>
-                                            <a className=' pt-3 pb-3 ls-1 d-inline-block' href="">Media</a>
-                                        </li>
-                                        <li className='me-5'>
-                                            <a className=' pt-3 pb-3 ls-1 d-inline-block' href="">Events</a>
-                                        </li>
-                                        <li className='me-5'>
-                                            <a className=' pt-3 pb-3 ls-1 d-inline-block' href="">Groups</a>
-                                        </li>
-                                    </ul> */}
-                                        <TabList>
-                                            <Tab>Title 1</Tab>
-                                            <Tab>Title 2</Tab>
+                                        <TabList className='ps-4 d-flex'>
+                                            <Tab className='me-5 pt-3 pb-3 ls-1 d-inline-block'>All</Tab>
+                                            <Tab className='me-5 pt-3 pb-3 ls-1 d-inline-block'>Gallery</Tab>
                                         </TabList>
                                     </div>
                                 </div>
@@ -87,7 +78,13 @@ export default observer(function UserProfile() {
                                 <TabPanel>
                                     <CreatePost />
                                     {groupedPosts.map((post) => (
-                                        <PostWithPhoto key={post.id} post={post.value} />
+                                        <>
+                                            {console.log(post)}
+                                            <PostWithPhoto key={post.id}
+                                                post={post.value}
+                                                userImage={user?.image}
+                                                displayName={user?.dsiplayName} />
+                                        </>
                                     ))}
                                 </TabPanel>
                                 <TabPanel>

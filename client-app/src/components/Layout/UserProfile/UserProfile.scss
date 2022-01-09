@@ -1,3 +1,6 @@
+.react-tabs__tab--selected{
+    color: grey !important;
+}
 .UserProfile-wrapper{
     width: 100%;
     padding: 20px 0 10px 0;
@@ -114,20 +117,11 @@
             width: 100%;
             ul{
                 li{
-                    a{
-                        color: #adb5bd;
-                        font-weight: 700;
-                        font-size: 13px;
-                        letter-spacing: 0.4px;
-                    }
-                }
-                li:first-child{
-                    a{
-                        color: #000;
-                        font-weight: 700;
-                        font-size: 13px;
-                        letter-spacing: 0.4px;
-                    }
+                    color: #000;
+                    font-weight: 700;
+                    font-size: 13px;
+                    letter-spacing: 0.4px;
+                    cursor: pointer;
                 }
             }
         }

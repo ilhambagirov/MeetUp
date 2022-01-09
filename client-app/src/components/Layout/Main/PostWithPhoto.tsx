@@ -8,20 +8,22 @@ import { observer } from "mobx-react-lite";
 import './Main.scss'
 import PostsSettings from "./PostsSettings";
 import PostShareDropdown from "./PostsShareDropDown";
-import { Profile } from "../../../app/models/profile";
 import { Post, PostFormValues } from "../../../app/models/post";
 import MyTextInput from "../../../app/common/MyTextInput";
 import * as Yup from 'yup'
 import { Formik } from "formik";
 import { User } from "../../../app/models/user";
+import { Link } from "react-router-dom";
+import { profile } from "console";
 
 interface Props {
     post: Post
+    userImage?: string
+    displayName?: string
 }
-export default observer(function PostWithPhoto({ post }: Props) {
-    const { postStore, userStore } = useDarkMode()
-    let { user } = userStore
-    user = user as User
+export default observer(function PostWithPhoto({ post, userImage, displayName }: Props) {
+    const { postStore, profileStore } = useDarkMode()
+    let { loadProfile } = profileStore
     //built in hooks
     const [postsShareDrop, setpostsShareDrop] = useState(0)
 
@@ -59,18 +61,22 @@ export default observer(function PostWithPhoto({ post }: Props) {
         <>
             <div className={posts}>
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
-                    <div className='d-flex align-items-center'>
-                        <span className='post-with-photo-user-photo me-3'>
-                            <img className='user-profile-pic' src={post.createdByUser?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
-                        </span>
-                        <div className='d-flex flex-column post-with-photo-header-left'>
-                            <h4 style={{ fontWeight: 700 }} className={Names}>
-                                {post.createdByUser ? post.createdByUser.dsiplayName : user?.dsiplayName}
-                            </h4>
-                            <span>
-                                2 hours ago
+                    <div className='d-flex align-items-center' onClick={() => loadProfile(post.createdByUser?.userName)}>
+                        <Link to={`/userprofile/${post.createdByUser?.userName}`}>
+                            <span className='post-with-photo-user-photo me-3'>
+                                <img className='user-profile-pic' src={post.createdByUser?.image || userImage || require('../../../assets/images/avatar3.jpg').default} alt="" />
                             </span>
-                        </div>
+                        </Link>
+                        <Link to={`/userprofile/${post.createdByUser?.userName}`} >
+                            <div className='d-flex flex-column post-with-photo-header-left'>
+                                <h4 style={{ fontWeight: 700 }} className={Names}>
+                                    {post.createdByUser?.dsiplayName || displayName}
+                                </h4>
+                                <span>
+                                    2 hours ago
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                     <span className='post-with-photo-menu'>
                         <BsThreeDots onClick={() => handledropforposts(post.id)} />

@@ -1,5 +1,5 @@
 import { Post } from "./post";
-import { Profile } from "./profile";
+import { Photo, Profile } from "./profile";
 export interface User {
     id: string
     userName: string,
@@ -14,6 +14,7 @@ export interface User {
     academicDegree?: string,
     profession?: string,
     posts?: Post[] 
+    photos? : Photo[]
 }
 export interface UserFormValues {
     email: string,

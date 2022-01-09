@@ -72,7 +72,7 @@ const Posts = {
 }
 const Account = {
     Current: () => request.get<User>('/account'),
-    userProfile: (userName: string) => request.get<User>(`/account/${userName}`),
+    userProfile: (userName: string) => request.get<User>(`/account/userProfile/${userName}`),
     login: (user: UserFormValues) => request.post<User>(`/account`, user),
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),

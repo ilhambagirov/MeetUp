@@ -4,7 +4,8 @@ export interface Profile{
     userName: string;
     dsiplayName:string;
     image? :string;
-    bio?: string
+    bio?: string;
+    photos : Photo[]
 }
 export class Profile implements Profile{
     constructor(user :User) {
@@ -12,4 +13,10 @@ export class Profile implements Profile{
        this.dsiplayName = user.dsiplayName
        this.image = user.image
     }
+}
+
+export interface Photo{
+    id: number;
+    url:string;
+    isMain? :boolean;
 }
