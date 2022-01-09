@@ -82,8 +82,7 @@ export default observer(function UserProfile() {
                                             {console.log(post)}
                                             <PostWithPhoto key={post.id}
                                                 post={post.value}
-                                                userImage={user?.image}
-                                                displayName={user?.dsiplayName} />
+                                                user={user}/>
                                         </>
                                     ))}
                                 </TabPanel>

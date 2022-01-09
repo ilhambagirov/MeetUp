@@ -19,18 +19,15 @@ export default class UserStore {
     //     userName: this.DecodedJwt.userName,
     //     token: window.localStorage.getItem('jwt')!
     // }
-
     constructor() {
         makeAutoObservable(this)
-       runInAction((()=> this.user = this.loadUser()))
-        // this.Jwt = window.localStorage.getItem('jwt')
-        console.log(this.user)
+        if (window.location.pathname !== '/' && window.location.pathname !== '/register') {
+            runInAction(() => this.user = this.loadUser())
+        }
     }
     get isLoggedIn() {
         return !!this.user
     }
-
-
     getUser = async () => {
         try {
             const user = await agent.Account.Current()
@@ -42,18 +39,19 @@ export default class UserStore {
             throw error
         }
     }
-    
+
     loadUser = async () => {
         try {
             const user = await agent.Account.Current()
             runInAction(() => this.user = user)
             return user;
         } catch (error) {
+            console.log("boom")
             throw error
         }
     }
 
-  
+
     login = async (creds: UserFormValues) => {
         console.log(creds)
         try {

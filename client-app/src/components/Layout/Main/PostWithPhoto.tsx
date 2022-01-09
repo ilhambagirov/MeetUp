@@ -18,10 +18,9 @@ import { profile } from "console";
 
 interface Props {
     post: Post
-    userImage?: string
-    displayName?: string
+    user?: User
 }
-export default observer(function PostWithPhoto({ post, userImage, displayName }: Props) {
+export default observer(function PostWithPhoto({ post, user }: Props) {
     const { postStore, profileStore } = useDarkMode()
     let { loadProfile } = profileStore
     //built in hooks
@@ -61,23 +60,39 @@ export default observer(function PostWithPhoto({ post, userImage, displayName }:
         <>
             <div className={posts}>
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
-                    <div className='d-flex align-items-center' onClick={() => loadProfile(post.createdByUser?.userName)}>
-                        <Link to={`/userprofile/${post.createdByUser?.userName}`}>
+                    {window.location.pathname.includes('/userprofile') ?
+                        <div className='d-flex align-items-center'>
                             <span className='post-with-photo-user-photo me-3'>
-                                <img className='user-profile-pic' src={post.createdByUser?.image || userImage || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                <img className='user-profile-pic' src={post.createdByUser?.image || user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                             </span>
-                        </Link>
-                        <Link to={`/userprofile/${post.createdByUser?.userName}`} >
                             <div className='d-flex flex-column post-with-photo-header-left'>
                                 <h4 style={{ fontWeight: 700 }} className={Names}>
-                                    {post.createdByUser?.dsiplayName || displayName}
+                                    {post.createdByUser?.dsiplayName || user?.dsiplayName}
                                 </h4>
                                 <span>
                                     2 hours ago
                                 </span>
                             </div>
-                        </Link>
-                    </div>
+                        </div>
+                        :
+                        <div className='d-flex align-items-center' onClick={() => loadProfile(post.createdByUser?.userName)}>
+                            <Link to={`/userprofile/${post.createdByUser?.userName}`}>
+                                <span className='post-with-photo-user-photo me-3'>
+                                    <img className='user-profile-pic' src={post.createdByUser?.image || user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                </span>
+                            </Link>
+                            <Link to={`/userprofile/${post.createdByUser?.userName}`} >
+                                <div className='d-flex flex-column post-with-photo-header-left'>
+                                    <h4 style={{ fontWeight: 700 }} className={Names}>
+                                        {post.createdByUser?.dsiplayName || user?.dsiplayName}
+                                    </h4>
+                                    <span>
+                                        2 hours ago
+                                    </span>
+                                </div>
+                            </Link>
+                        </div>
+                    }
                     <span className='post-with-photo-menu'>
                         <BsThreeDots onClick={() => handledropforposts(post.id)} />
                     </span>
@@ -113,7 +128,8 @@ export default observer(function PostWithPhoto({ post, userImage, displayName }:
                         </Formik>
                     }
                 </div>
-                {post.image &&
+                {
+                    post.image &&
                     <div className='post-with-photo-pic'>
                         <div className='row'>
                             <div className='col-sm-12'>
@@ -143,7 +159,7 @@ export default observer(function PostWithPhoto({ post, userImage, displayName }:
                         <PostShareDropdown />
                     }
                 </div>
-            </div>
+            </div >
             {/* <div className={posts}>
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
