@@ -15,6 +15,6 @@ namespace MeetUp.Domain.Models.EntityDtos
         public string AcademicDegree { get; set; }
         public string Profession { get; set; }
         public ICollection<Photo> Photos { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        public ICollection<PostDto> Posts { get; set; }
     }
 }

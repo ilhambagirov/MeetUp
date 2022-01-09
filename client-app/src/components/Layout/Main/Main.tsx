@@ -13,7 +13,7 @@ import StorySlider from "./StrorySlider";
 export default observer(function Main() {
     //custom hooks
     const { chatstore } = UseChatMode()
-    const { activitystore, postStore, userStore } = useDarkMode()
+    const { activitystore, postStore} = useDarkMode()
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
 

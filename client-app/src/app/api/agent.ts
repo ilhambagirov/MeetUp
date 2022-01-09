@@ -55,7 +55,7 @@ axios.interceptors.response.use(async response => {
 const responseBody = <T>(response: AxiosResponse<T>) => response.data
 
 const Universities = {
-    get:() => axios.get( 'http://universities.hipolabs.com/search?country=azerbaijan').then(responseBody),
+    get: () => axios.get('http://universities.hipolabs.com/search?country=azerbaijan').then(responseBody),
 }
 
 const request = {
@@ -72,6 +72,7 @@ const Posts = {
 }
 const Account = {
     Current: () => request.get<User>('/account'),
+    userProfile: (userName: string) => request.get<User>(`/account/${userName}`),
     login: (user: UserFormValues) => request.post<User>(`/account`, user),
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),

@@ -7,6 +7,7 @@ export interface Post {
     image?: string,
     createdDate : Date,
     createdByUser: Profile
+    createdByUserId: string
 }
 
 export class Post implements Post {

@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite";
 import { UseSideBar } from "../../../app/stores/sidebarstore";
 import '../../../App.css';
 import { Link } from "react-router-dom";
+import { User } from "../../../app/models/user";
 
 export default observer(function Navigation() {
 
@@ -21,6 +22,8 @@ export default observer(function Navigation() {
     const { darkMode } = activitystore
     const { sidestore } = UseSideBar();
     const { SideBarCollapseMode } = sidestore
+    let { user } = userStore
+    user = user as User
 
     //classnames
     const navigation = classNames("navigation scroll-bar", { darkmodeNavigation: darkMode, "navigation-dark": SideBarCollapseMode })
@@ -62,7 +65,7 @@ export default observer(function Navigation() {
                                 </a>
                             </li>
                             <li onClick={() => userStore.getUser()}>
-                                <Link to='/userprofile' className='nav-wrap-sidebar-feed' href="">
+                                <Link to={`/userprofile/${user.userName}`} className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#64392e, #e4b0a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
                                         <CgProfile />
                                     </span>

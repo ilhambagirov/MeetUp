@@ -20,7 +20,7 @@ export default observer(function PostsSettings({ post }: Props) {
     const { activitystore, postStore, userStore } = useDarkMode()
     const { darkMode } = activitystore
     const { deletePost, updateActivity, setPostDropDown } = postStore
-    let { user } = userStore 
+    let { user } = userStore
     user = user as User
     console.log(post)
 
@@ -33,9 +33,8 @@ export default observer(function PostsSettings({ post }: Props) {
         deletePost(post.id)
     }
 
-    console.log(user?.userName)
-    console.log(post)
-
+    // console.log(user?.userName)
+    // console.log(post)
 
 
     return (
@@ -62,7 +61,7 @@ export default observer(function PostsSettings({ post }: Props) {
                 </h4>
             </a>
             {
-              ( user?.userName === post.createdByUser?.userName || window.location.pathname === '/userprofile') && 
+                (user?.userName === post.createdByUser?.userName || window.location.pathname === `/userprofile/${user.userName}`) &&
                 <><a onClick={handleClick} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                     <AiOutlineDelete className='me-3' />
                     <h4 className='mb-0 me-4'>
@@ -81,7 +80,7 @@ export default observer(function PostsSettings({ post }: Props) {
                         </h4>
                     </a>
                 </>
-             }
+            }
         </div>
     )
 })

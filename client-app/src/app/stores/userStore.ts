@@ -24,7 +24,7 @@ export default class UserStore {
         makeAutoObservable(this)
        runInAction((()=> this.user = this.loadUser()))
         // this.Jwt = window.localStorage.getItem('jwt')
-        if (window.location.pathname == '/userprofile') {
+        if (window.location.pathname.includes('userprofile')) {
             runInAction((()=> this.user = this.getUser()))
         }
         console.log(this.user)
