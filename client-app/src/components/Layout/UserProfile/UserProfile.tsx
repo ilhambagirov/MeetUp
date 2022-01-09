@@ -26,7 +26,7 @@ export default observer(function UserProfile() {
                                 <div className='background-image-profile '></div>
                                 <div className="header-body">
                                     <figure className='user-prof-image'>
-                                        <img className='w-100' src={user.image || require('../../../assets/images/pt-1.jpg').default} alt="" />
+                                        <img className='w-100' src={user.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                     </figure>
                                     <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{user?.dsiplayName}</h4>
                                     <span className='username-user-profile'>{user?.userName}</span>

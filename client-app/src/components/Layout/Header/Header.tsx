@@ -6,7 +6,7 @@ import { BsCameraVideo } from "react-icons/bs";
 import { MdChatBubbleOutline } from "react-icons/md";
 import { BiBell } from "react-icons/bi";
 import { VscSettingsGear } from "react-icons/vsc";
-import profile4 from '../../../assets/images/profile-4.png'
+import profile4 from '../../../assets/images/avatar3.jpg'
 import user8 from '../../../assets/images/user-8.png'
 import { Switch } from "antd"
 import './Header.scss';

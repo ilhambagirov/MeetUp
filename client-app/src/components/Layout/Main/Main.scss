@@ -74,7 +74,8 @@
         margin-top:0.25rem ;
         margin-left:0.5rem;
         .my-profile-img-add-post{
-        width: 30px;
+            border-radius: 50%;
+            width: 30px;
     }
     }
     .post-textarea-dark{
@@ -396,6 +397,7 @@
         z-index: 10;
         display: flex;
         .user-profile-pic{
+            border-radius: 50%;
             width: 100%;
         }
     }
