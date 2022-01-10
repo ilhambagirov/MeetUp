@@ -8,6 +8,7 @@ namespace MeetUp.Domain.Models.EntityDtos
         public string DsiplayName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public string Bio { get; set; }
         public string School { get; set; }
         public string Image { get; set; }

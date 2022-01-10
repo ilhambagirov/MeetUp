@@ -19,7 +19,7 @@ namespace MeetUp.Application.Helpers
 
                 return new UserDto
                 {
-                    DisplayName = user.DsiplayName,
+                    DsiplayName = user.DsiplayName,
                     Token = ts.CreateToken(user),
                     Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
                     UserName = user.UserName,

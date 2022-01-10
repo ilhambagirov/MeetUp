@@ -13,7 +13,7 @@ namespace MeetUp.Application.Modules.AccountModules
 {
     public class AccountUserDetailsUpdate : IRequest<Result<AppUser>>
     {
-        public AppUserDto UserDto { get; set; }
+        public UserDto UserDto { get; set; }
     }
     public class AccountUserDetailsUpdateHandler : IRequestHandler<AccountUserDetailsUpdate, Result<AppUser>>
     {
@@ -34,10 +34,12 @@ namespace MeetUp.Application.Modules.AccountModules
             var userEmail = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
             if (userEmail == null) return null;
             var user = await userManager.FindByEmailAsync(userEmail);
+
             request.UserDto.UserName = user.UserName;
-            var result = mapper.Map(request.UserDto, user);
-            var r= await userManager.UpdateAsync(result);
-            return Result<AppUser>.Success(result);
+            var currentUser = mapper.Map(request.UserDto, user);
+
+            await userManager.UpdateAsync(currentUser);
+            return Result<AppUser>.Success(currentUser);
         }
     }
 }

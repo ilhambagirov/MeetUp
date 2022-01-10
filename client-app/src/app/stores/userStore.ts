@@ -87,7 +87,8 @@ export default class UserStore {
 
     updateUserDetails = async (creds: UserFormValues) => {
         try {
-            await agent.Account.updateUserDetails(creds)
+            const user = await agent.Account.updateUserDetails(creds)
+            runInAction(() => this.user = user)
             toast.success("Account Saved!")
         } catch (error) {
             throw error;

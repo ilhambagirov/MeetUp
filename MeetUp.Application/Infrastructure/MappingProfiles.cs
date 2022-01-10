@@ -10,6 +10,7 @@ namespace MeetUp.Application.Infrastructure
         public MappingProfiles()
         {
             CreateMap<Post, PostDto>();
+            CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<AppUser, AppUserDto>()
                 .ForMember(i => i.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url));
         }
