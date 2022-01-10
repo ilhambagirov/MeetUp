@@ -76,7 +76,7 @@ const Account = {
     login: (user: UserFormValues) => request.post<User>(`/account`, user),
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),
-    updateUserDetails: (user: UserFormValues) => axios.post<void>('/account/updateuserdetails', user),
+    updateUserDetails: (user: UserFormValues) => request.post<User>('/account/updateuserdetails', user),
 }
 
 const agent = {
