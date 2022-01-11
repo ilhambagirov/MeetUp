@@ -10,6 +10,13 @@
     margin-left: auto;
     max-width: 960px;
     width: 100%;
+
+    .userprofile-pics img{
+        width: 220px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
     .userprofile-header{
         width: 100%;
         .header-content{

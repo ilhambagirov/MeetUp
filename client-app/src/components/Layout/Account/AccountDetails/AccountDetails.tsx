@@ -13,7 +13,6 @@ import { Formik } from "formik";
 import MyTextInput from "../../../../app/common/MyTextInput";
 import { User } from "../../../../app/models/user";
 
-
 export default observer(function AccountDetails() {
 
     const universities: { value: any; label: any }[] = []
@@ -24,13 +23,9 @@ export default observer(function AccountDetails() {
     })
     const [editModeDetails, setEditModeDetails] = useState(false)
 
-
-
     const { userStore } = useDarkMode()
     const { user } = userStore
     const u = user as User
-    console.log(u)
-
     return (
         <div className='main-content account-detail-content'>
             <div className='account-wrapper'>
@@ -45,7 +40,7 @@ export default observer(function AccountDetails() {
                         <div className="row justify-content-center">
                             <div className="col-lg-4 text-center">
                                 <figure className='ms-auto me-auto mb-0 mt-2 w100'>
-                                    <img className='w-100' src={require('../../../../assets/images/pt-1.jpg').default} alt="" />
+                                    <img className='w-100' src={u?.image || require('../../../../assets/images/avatar3.jpg').default} alt="" />
                                 </figure>
                                 <h2 style={{ fontWeight: 700, fontSize: 20, color: '#212529' }} className='mt-2'>{u?.dsiplayName}</h2>
                                 <h4 className='location-account'>Neftchala</h4>

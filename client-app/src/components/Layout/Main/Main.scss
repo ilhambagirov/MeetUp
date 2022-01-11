@@ -170,6 +170,66 @@
     }
     
 }
+
+.cancel-upload-photo{
+    position: absolute;
+    right: 0;
+    height: 25px;
+    width: 25px;
+}
+.imagePreview {
+    width: 100%;
+    height: 180px;
+  background-color:rgb(255, 250, 250);
+    display: inline-block;
+  box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  position: relative;
+}
+.drop-upload-photo{
+    margin-top: 2.7rem;
+    width: 85px;
+    height: 70px;
+    color: #0d6efd;
+}
+.btn-primary1
+{
+  display:block;
+  box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
+  margin-top:-5px;
+  border-radius: 8px;
+}
+.imgUp
+{
+  margin-bottom:15px;
+}
+.del
+{
+  position:absolute;
+  top:0px;
+  right:15px;
+  width:30px;
+  height:30px;
+  text-align:center;
+  line-height:30px;
+  background-color:rgba(255,255,255,0.6);
+  cursor:pointer;
+}
+.imgAdd
+{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background-color:#4bd7ef;
+  color:#fff;
+  box-shadow:0px 0px 2px 1px rgba(0,0,0,0.2);
+  text-align:center;
+  line-height:30px;
+  margin-top:0px;
+  cursor:pointer;
+  font-size:15px;
+ 
+}
 .main-content{
     padding-top: 96px;
     padding-left: 270px;

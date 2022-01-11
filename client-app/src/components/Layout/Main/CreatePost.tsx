@@ -1,6 +1,6 @@
-import React from "react";
-import { MdOutlineCreate } from 'react-icons/md'
-import { FiImage } from 'react-icons/fi'
+import React, { useState } from "react";
+import { MdOutlineCancel, MdOutlineCreate } from 'react-icons/md'
+import { FiDroplet, FiImage } from 'react-icons/fi'
 import './Main.scss'
 import { observer } from "mobx-react-lite";
 import classNames from "classnames";
@@ -11,15 +11,17 @@ import { PostFormValues } from "../../../app/models/post";
 import { v4 as uuid } from 'uuid';
 import MyTextInput from "../../../app/common/MyTextInput";
 import { User } from "../../../app/models/user";
+import PhotoWidgetDropzone from "../../../app/common/imageUpload/PhotoWidgetDropzone";
 
 
 export default observer(function CreatePost() {
     //custom hooks
     const { activitystore, postStore, userStore } = useDarkMode()
     const { darkMode } = activitystore
-    const { createActivity } = postStore
-    let { user } = userStore 
+    const { createActivity, addPhotoMode, setAddPhotoMode } = postStore
+    let { user } = userStore
     const user1 = user as User
+
 
     //classnames
     const postAdd = classNames("post-add", { "postadd-dark-mode": darkMode })
@@ -39,12 +41,11 @@ export default observer(function CreatePost() {
         }
         // window.location.pathname === '/userprofile' ? 
         // userStore.createPostFromProfile(newActivity) :
-            createActivity(newActivity)
+        createActivity(newActivity)
         console.log(postStore.groupedPosts)
     }
     return (
         <div className={postAdd}>
-
             <Formik validationSchema={validationSchema}
                 onSubmit={async (values, actions) => {
                     await handleFormSubmit(values)
@@ -65,17 +66,22 @@ export default observer(function CreatePost() {
                             <span className='me-2 my-profile-img-add-post-wrapper'>
                                 <img className='my-profile-img-add-post' src={user1.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                             </span>
-                            <MyTextInput name='title' style={postAddTextArea} placeholder='Create your post' />
+                            <MyTextInput name='title' style={postAddTextArea} placeholder='What do you think?' />
                         </div>
+                        {addPhotoMode &&
+                            <PhotoWidgetDropzone />
+                        }
                     </form>
                 )}
             </Formik>
-            <div className='post-footer'>
-                <a href="">
-                    <FiImage />
-                    <span className={postAddSpans}>Photo/Video</span>
-                </a>
-            </div>
-        </div>
+            {
+                !addPhotoMode && <div className='post-footer'>
+                    <div onClick={() => setAddPhotoMode(true)}>
+                        <FiImage style={{color: 'green', width: '20px', height: '25px'}} />
+                        <span className={postAddSpans}>Photo</span>
+                    </div>
+                </div>
+            }
+        </div >
     )
 })

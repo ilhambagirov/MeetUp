@@ -9,9 +9,16 @@ export default class PostStore {
     postRegistry = new Map<number, Post>();
     editMode = 0
     postDrop = 0
+    addPhotoMode = false
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    setAddPhotoMode = (bool: boolean) => {
+        runInAction(() => {
+            this.addPhotoMode = bool
+        })
     }
 
     setEditMode = (id: number) => {
@@ -59,7 +66,7 @@ export default class PostStore {
             var createdPost = await agent.Posts.create(post);
             console.log(createdPost)
             createdPost.createdByUser = createdUser
-           
+
             this.setActivity(createdPost)
         }
         catch (error) {
@@ -98,7 +105,7 @@ export default class PostStore {
         return this.postRegistry.get(id)
     }
 
-     setActivity = (a: Post) => {
+    setActivity = (a: Post) => {
         this.postRegistry.set(a.id, a);
     }
 }
