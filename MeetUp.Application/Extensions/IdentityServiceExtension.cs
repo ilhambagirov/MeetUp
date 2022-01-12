@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using static MeetUp.Application.Helpers.Providers.EmailConfirmationProvider;
 
 namespace MeetUp.Application.Extensions
 {
@@ -16,12 +17,15 @@ namespace MeetUp.Application.Extensions
         {
             services.AddIdentityCore<AppUser>(opt =>
             {
+                opt.SignIn.RequireConfirmedEmail = true;
                 opt.Password.RequireNonAlphanumeric = false;
+                opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddUserManager<UserManager<AppUser>>()
-                 .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddTokenProvider<EmailConfirmationTokenProvider<AppUser>>("emailconfirmation");
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["TokenKey"]));
 

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MeetUp.Application.Modules.AccountModules
 {
@@ -71,7 +72,8 @@ namespace MeetUp.Application.Modules.AccountModules
             if (result.Succeeded)
             {
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                string path = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/api/Account/register-email-confirm?token={token}&UserName={request.UserName}";
+                var tokenCrypted=HttpUtility.UrlEncode(token);
+                string path = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/api/Account/register-email-confirm?token={tokenCrypted}&UserName={request.UserName}";
 
                 var mailSent = configuration.SendEmail(request.Email, "Riode Newsletter Subscription", $"Please confirm your Email through this <a href={path}>link</a>");
 

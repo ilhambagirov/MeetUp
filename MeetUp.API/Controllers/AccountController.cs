@@ -68,7 +68,9 @@ namespace MeetUp.API.Controllers
         [HttpGet("register-email-confirm")]
         public async Task<IActionResult> RegisterConfirm([FromQuery] string token, [FromQuery] string username)
         {
-            return HandleResult(await Mediator.Send(new RegisterConfirmCommand { Token = token, UserName = username }));
+            var response = await Mediator.Send(new RegisterConfirmCommand { Token = token, UserName = username });
+            if (response == null) return ValidationProblem();
+            return Ok(response);
         }
     }
 }
