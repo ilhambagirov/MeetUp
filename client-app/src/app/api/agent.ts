@@ -31,6 +31,7 @@ axios.interceptors.response.use(async response => {
         const { data, status } = error.response!
         switch (status) {
             case 400:
+                console.log(data)
                 toast.error(data.errors[Object.keys(data.errors)[0]][0])
                 break;
             case 401:

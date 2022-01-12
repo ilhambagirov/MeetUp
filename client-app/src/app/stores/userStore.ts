@@ -101,6 +101,7 @@ export default class UserStore {
             const user = await agent.Account.register(creds)
             dark.commonStore.setToken(user.data.token)
             history.push("/")
+            toast.success("Email Confirmation link was send to your email address. Please confirm!")
         } catch (error) {
             throw error;
         }
