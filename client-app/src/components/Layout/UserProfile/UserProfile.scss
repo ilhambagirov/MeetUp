@@ -1,6 +1,61 @@
 .react-tabs__tab--selected{
     color: grey !important;
 }
+.photoupload-modal{
+    width: 400px;
+    height: 400px;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+}
+.ReactModal__Content{
+    border-radius: 50% !important;
+}
+// .modal-header-upload{
+
+// }
+
+.icon-drop{
+    position: absolute;
+    bottom: 50px;
+    right: 32%;
+}
+.add-button-wrap{
+    padding:1rem;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: -100px;
+
+    .story-img-down{
+        margin-top: 0 !important;
+    }
+    .add-button{
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        display: inline-block;
+        line-height: 50px;
+        text-align: center;
+        background-color: #fff!important;
+        position: relative;
+        z-index: 10;
+        .add-icon{
+            width: 25px;
+            height: 25px;
+            color: #0d6efd;
+        }
+        .user-profile-pic{
+            width: 100%;
+        }
+    }
+    .story-author{
+        font-size: 14px;
+        position: relative;
+        z-index: 10;
+        color: #eee;
+    }
+}
+
 .UserProfile-wrapper{
     width: 100%;
     padding: 20px 0 10px 0;

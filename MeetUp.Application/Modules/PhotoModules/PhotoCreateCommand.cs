@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using MeetUp.Application.Interfaces;
 using MeetUp.Application.Modules.Responses;
 using MeetUp.Domain.Models.Entities;
+using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -11,25 +13,28 @@ using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.PhotoModules
 {
-    public class PhotoCreateCommand : IRequest<Result<Photo>>
+    public class PhotoCreateCommand : IRequest<Result<AppUserDto>>
     {
         public IFormFile File { get; set; }
     }
-    public class PhotoCreateCommandHandler : IRequestHandler<PhotoCreateCommand, Result<Photo>>
+    public class PhotoCreateCommandHandler : IRequestHandler<PhotoCreateCommand, Result<AppUserDto>>
     {
         private readonly AppDbContext db;
         private readonly IUserAccessor userAccessor;
         private readonly IPhotoAccessor photoAccessor;
+        private readonly IMapper mapper;
 
         public PhotoCreateCommandHandler(AppDbContext db,
             IUserAccessor userAccessor,
-            IPhotoAccessor photoAccessor)
+            IPhotoAccessor photoAccessor,
+            IMapper mapper)
         {
             this.db = db;
             this.userAccessor = userAccessor;
             this.photoAccessor = photoAccessor;
+            this.mapper = mapper;
         }
-        public async Task<Result<Photo>> Handle(PhotoCreateCommand request, CancellationToken cancellationToken)
+        public async Task<Result<AppUserDto>> Handle(PhotoCreateCommand request, CancellationToken cancellationToken)
         {
             var user = await db.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
             if (user == null) return null;
@@ -40,16 +45,18 @@ namespace MeetUp.Application.Modules.PhotoModules
                 Id = photoUploadResult.PublicId,
                 Url = photoUploadResult.Url,
             };
+            var main = user.Photos.FirstOrDefault(x => x.IsMain == true);
+            if (main != null) main.IsMain = false;
 
-            if (!user.Photos.Any(x => x.IsMain)) photo.IsMain = true;
+            photo.IsMain = true;
 
             user.Photos.Add(photo);
 
             var result = await db.SaveChangesAsync(cancellationToken) > 0;
 
-            if (!result) return Result<Photo>.Failure("Failed to Create Photo");
+            if (!result) return Result<AppUserDto>.Failure("Failed to Create Photo");
 
-            return Result<Photo>.Success(photo);
+            return Result<AppUserDto>.Success(mapper.Map<AppUserDto>(user));
 
         }
     }

@@ -87,10 +87,21 @@ const Account = {
     updateUserDetails: (user: UserFormValues) => request.post<User>('/account/updateuserdetails', user),
 }
 
+const Photos = {
+    create: (file: any) => {
+        let formData = new FormData()
+        formData.append('File', file)
+        return axios.post<User>('/Photo', formData, {
+            headers: { 'Content-type': 'multipart/form-data' }
+        })
+    },
+}
+
 const agent = {
     Account,
     Posts,
-    Universities
+    Universities,
+    Photos
 }
 
 export default agent

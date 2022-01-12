@@ -17,11 +17,13 @@ import { useDropzone } from "react-dropzone";
 
 export default observer(function CreatePost() {
     //custom hooks
-    const { activitystore, postStore, userStore } = useDarkMode()
+    const { activitystore, postStore, userStore, profileStore } = useDarkMode()
     const { darkMode } = activitystore
+    const { profile } = profileStore
     const { createActivity, addPhotoMode, setAddPhotoMode } = postStore
     let { user } = userStore
     const user1 = user as User
+    const user2 = profile as User
 
 
     //classnames
@@ -74,6 +76,8 @@ export default observer(function CreatePost() {
             files.forEach((file: any) => URL.revokeObjectURL(file.url))
         }
     })
+
+   
     return (
         <div className={postAdd}>
             <Formik validationSchema={validationSchema}
@@ -94,7 +98,7 @@ export default observer(function CreatePost() {
                         </div>
                         <div className='post-content'>
                             <span className='me-2 my-profile-img-add-post-wrapper'>
-                                <img className='my-profile-img-add-post' src={user1.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                <img className='my-profile-img-add-post' src={ user2?.image || user1.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                             </span>
                             <MyTextInput name='title' style={postAddTextArea} placeholder='What do you think?' />
                         </div>

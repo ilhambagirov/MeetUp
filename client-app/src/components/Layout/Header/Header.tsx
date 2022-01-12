@@ -28,13 +28,15 @@ export default observer(function Header() {
     const [menuBackground, SetmenuBackground] = useState("");
 
     //custom hooks
-    const { activitystore, userStore } = useDarkMode();
+    const { activitystore, userStore, profileStore } = useDarkMode();
     const { chatstore } = UseChatMode();
     const { sidestore } = UseSideBar();
     const { darkMode, setDarkMode } = activitystore
     const { setChatMode } = chatstore
     const { setSideBarCollapseMode } = sidestore
+    const { profile } = profileStore
     const user = userStore.user as User
+    const user1 = profile as User
 
     //custom local methods
     function handleMenuBackColor(color: string) {
@@ -91,7 +93,7 @@ export default observer(function Header() {
                                 <FiSearch className='nav-middle-Logo' />
                             </a>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} className=' nav-middle-link d-none search-991' href="#">
-                                <MdChatBubbleOutline onClick={() => setChatMode()}  className='nav-middle-Logo' />
+                                <MdChatBubbleOutline onClick={() => setChatMode()} className='nav-middle-Logo' />
                             </a>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link lg-show'>
                                 <AiOutlineHistory className='nav-middle-Logo' />
@@ -275,7 +277,7 @@ export default observer(function Header() {
                             </div>
                         }
                         <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
-                            <img className='profile-img' src={user.image || profile4} alt="" />
+                            <img className='profile-img' src={user1?.image || user.image || profile4} alt="" />
                         </Link>
                     </div>
                 </div>

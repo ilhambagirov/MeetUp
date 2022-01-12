@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import { User } from "../../../app/models/user";
@@ -10,18 +10,65 @@ import PopularEvents from "../Main/PopularEvents";
 import PostWithPhoto from "../Main/PostWithPhoto";
 import './UserProfile.scss'
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
+import Modal from "react-modal";
+import { MdOutlineCancel } from "react-icons/md";
+import { useDropzone } from "react-dropzone";
+import { FiDroplet, FiPlus } from "react-icons/fi";
 
 export default observer(function UserProfile() {
     const { postStore, profileStore } = useDarkMode();
     const { groupedPosts } = postStore
-    const { profile } = profileStore
+    const { profile, changeImage } = profileStore
     // let { user } = userStore
     const user = profile as User
+    // modal
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
 
     useEffect(() => {
         var point = window.location.pathname.lastIndexOf('/')
         profileStore.loadProfile(window.location.pathname.substring(point + 1))
     }, [profileStore.loadProfile])
+
+    // photo upload
+
+    const styleDropzone = {
+        borderColor: '#eee',
+        borderRadius: '5px',
+        textAlign: 'center' as 'center',
+        height: 300,
+        position: 'relative' as 'relative'
+    }
+    const styleDropzoneActive = {
+        borderColor: 'green',
+    }
+    const [files, setFiles] = useState([])
+
+    const onDrop = useCallback(acceptedFiles => {
+        setFiles(acceptedFiles.map((item: any) => Object.assign(item, {
+            preview: URL.createObjectURL(item)
+        })))
+    }, [setFiles])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
     return (
         <div className='main-content'>
             <div className='UserProfile-wrapper'>
@@ -31,9 +78,49 @@ export default observer(function UserProfile() {
                             <div className='header-content mb-3 mt-3'>
                                 <div className='background-image-profile '></div>
                                 <div className="header-body">
-                                    <figure className='user-prof-image'>
+                                    <figure onClick={openModal} className='user-prof-image'>
                                         <img className='w-100' src={user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                     </figure>
+                                    <Modal
+                                        isOpen={modalIsOpen}
+                                        onRequestClose={closeModal}
+                                        style={customStyles}
+                                        contentLabel="Example Modal"
+                                    >
+                                        <div className="photoupload-modal">
+                                            <div {...getRootProps()} className='' style={isDragActive ? { ...styleDropzone, ...styleDropzoneActive } : { ...styleDropzone }}>
+                                                {/* <MdOutlineCancel onClick={(e) => {
+                                                    closeModal()
+                                                    e.stopPropagation()
+                                                }} className="cancel-upload-photo" /> */}
+                                                <input {...getInputProps()} />
+                                                {files && files.length > 0 ?
+                                                    <>
+                                                        <img style={{ width: '400px', height: '400px', borderRadius: '50%' }} src={files[0].preview} alt="" />
+                                                        <div className='add-button-wrap'>
+                                                            <div onClick={(e) => {
+                                                                changeImage(files[0])
+                                                                closeModal()
+                                                                e.stopPropagation()
+                                                            }}>
+                                                                <span className='add-button'>
+                                                                    <FiPlus className='add-icon' />
+                                                                </span>
+                                                                <h4 style={{ fontWeight: 700 }} className='mb-1 mt-2 story-author' >Add Photo</h4>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <div className="icon-drop">
+                                                            <FiDroplet className="drop-upload-photo" />
+                                                            <p>Drag & Drop or Upload</p>
+                                                        </div>
+                                                    </>
+                                                }
+                                            </div>
+                                        </div>
+                                    </Modal>
                                     <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{user?.dsiplayName}</h4>
                                     <span className='username-user-profile'>{user?.userName}</span>
                                     <div className='features-following d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-3 ms-1'>

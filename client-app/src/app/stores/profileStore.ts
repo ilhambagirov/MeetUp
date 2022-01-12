@@ -25,4 +25,14 @@ export default class ProfileStore {
             throw error
         }
     }
+
+    changeImage = async (file : any) => {
+        try {
+            const user = await agent.Photos.create(file).then(result => result.data)
+            runInAction(() => this.profile = user)
+            return user;
+        } catch (error) {
+            throw error
+        }
+    }
 }

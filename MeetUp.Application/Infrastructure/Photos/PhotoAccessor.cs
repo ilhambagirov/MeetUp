@@ -44,7 +44,6 @@ namespace MeetUp.Application.Infrastructure.Photos
                     Url = uploadResult.Url.ToString()
                 };
             }
-
             return null;
         }
 

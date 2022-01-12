@@ -47,8 +47,6 @@ namespace MeetUp.Application.Modules.PostModules
                     Id = photoUploadResult.PublicId,
                     Url = photoUploadResult.Url,
                 };
-                if (!user.Photos.Any(x => x.IsMain)) photo.IsMain = true;
-
                 user.Photos.Add(photo);
             }
 
