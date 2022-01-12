@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MdOutlineCancel, MdOutlineCreate } from 'react-icons/md'
 import { FiDroplet, FiImage } from 'react-icons/fi'
 import './Main.scss'
@@ -12,6 +12,7 @@ import { v4 as uuid } from 'uuid';
 import MyTextInput from "../../../app/common/MyTextInput";
 import { User } from "../../../app/models/user";
 import PhotoWidgetDropzone from "../../../app/common/imageUpload/PhotoWidgetDropzone";
+import { useDropzone } from "react-dropzone";
 
 
 export default observer(function CreatePost() {
@@ -35,6 +36,7 @@ export default observer(function CreatePost() {
     )
     const initialValues = { title: '' }
     function handleFormSubmit(post: PostFormValues) {
+        files.length > 0 ? post.filePath = files[0] : post.filePath = null
         let newActivity = {
             ...post,
             id: uuid()
@@ -42,8 +44,36 @@ export default observer(function CreatePost() {
         // window.location.pathname === '/userprofile' ? 
         // userStore.createPostFromProfile(newActivity) :
         createActivity(newActivity)
-        console.log(postStore.groupedPosts)
+        setAddPhotoMode(false)
     }
+
+    // photo upload
+
+    const styleDropzone = {
+        border: 'dashed 3px #eee',
+        borderColor: '#eee',
+        borderRadius: '5px',
+        textAlign: 'center' as 'center',
+        height: 300,
+        position: 'relative' as 'relative'
+    }
+    const styleDropzoneActive = {
+        borderColor: 'green',
+    }
+    const [files, setFiles] = useState([])
+
+    const onDrop = useCallback(acceptedFiles => {
+        setFiles(acceptedFiles.map((item: any) => Object.assign(item, {
+            preview: URL.createObjectURL(item)
+        })))
+    }, [setFiles])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+    useEffect(() => {
+        return () => {
+            files.forEach((file: any) => URL.revokeObjectURL(file.url))
+        }
+    })
     return (
         <div className={postAdd}>
             <Formik validationSchema={validationSchema}
@@ -69,7 +99,25 @@ export default observer(function CreatePost() {
                             <MyTextInput name='title' style={postAddTextArea} placeholder='What do you think?' />
                         </div>
                         {addPhotoMode &&
-                            <PhotoWidgetDropzone />
+                            // <PhotoWidgetDropzone />
+                            <div {...getRootProps()} className='mt-3' style={isDragActive ? { ...styleDropzone, ...styleDropzoneActive } : { ...styleDropzone }}>
+                                <MdOutlineCancel onClick={(e) => {
+                                    setAddPhotoMode(false)
+                                    console.log(e)
+                                    e.stopPropagation()
+                                }} className="cancel-upload-photo" />
+                                <input {...getInputProps()} />
+                                {files && files.length > 0 ?
+                                    <img style={{ width: '359px', height: '295px' }} src={files[0].preview} alt="" />
+                                    :
+                                    <>
+                                        <div style={{ marginTop: '3rem' }}>
+                                            <FiDroplet className="drop-upload-photo" />
+                                            <p>Drag & Drop or Upload</p>
+                                        </div>
+                                    </>
+                                }
+                            </div>
                         }
                     </form>
                 )}
@@ -77,7 +125,7 @@ export default observer(function CreatePost() {
             {
                 !addPhotoMode && <div className='post-footer'>
                     <div onClick={() => setAddPhotoMode(true)}>
-                        <FiImage style={{color: 'green', width: '20px', height: '25px'}} />
+                        <FiImage style={{ color: 'green', width: '20px', height: '25px' }} />
                         <span className={postAddSpans}>Photo</span>
                     </div>
                 </div>

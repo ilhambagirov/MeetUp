@@ -37,8 +37,6 @@ namespace MeetUp.Application.Modules.PhotoModules
             var photo = user.Photos.FirstOrDefault(x => x.Id == request.Id);
 
             if (photo == null) return null;
-            if (photo.IsMain == true) return Result<Unit>.Failure("You can not delete the Main Photo");
-
             var result = await photoAccessor.DeletePhoto(request.Id);
             if (result == null) return Result<Unit>.Failure("Failed to Delete Photo from Cloudinary");
 

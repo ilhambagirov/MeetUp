@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using MeetUp.Application.Interfaces;
 using MeetUp.Application.Modules.Responses;
 using MeetUp.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,16 +14,17 @@ namespace MeetUp.Application.Modules.PostModules
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string FilePath { get; set; }
     }
 
     public class PostEditCommandHandler : IRequestHandler<PostEditCommand, Result<Unit>>
     {
         private readonly AppDbContext db;
+        private readonly IUserAccessor userAccessor;
 
-        public PostEditCommandHandler(AppDbContext db)
+        public PostEditCommandHandler(AppDbContext db, IUserAccessor userAccessor)
         {
             this.db = db;
+            this.userAccessor = userAccessor;
         }
         public async Task<Result<Unit>> Handle(PostEditCommand request, CancellationToken cancellationToken)
         {
@@ -29,7 +32,6 @@ namespace MeetUp.Application.Modules.PostModules
             if (foundPost == null) return null;
 
             foundPost.Title = request.Title;
-            foundPost.FilePath = request.FilePath;
             var result = await db.SaveChangesAsync(cancellationToken) > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to Update the Post");

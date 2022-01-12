@@ -100,6 +100,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                     {postDrop === post.id &&
                         <PostsSettings post={post} />
                     }
+                    {console.log(post)}
                 </div>
 
                 <div className='post-with-photo-quote'>
@@ -129,12 +130,12 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                     }
                 </div>
                 {
-                    post.image &&
+                    post.filePath &&
                     <div className='post-with-photo-pic'>
                         <div className='row'>
                             <div className='col-sm-12'>
                                 <a href="#">
-                                    <img src={require('../../../assets/images/t-31.jpg').default} alt="" />
+                                    <img src={post.filePath} alt="" />
                                 </a>
                             </div>
                         </div>

@@ -63,7 +63,7 @@ export default class PostStore {
         const user = dark.userStore.user
         const createdUser = new Profile(user! as User)
         try {
-            var createdPost = await agent.Posts.create(post);
+            var createdPost = await agent.Posts.create(post).then(result => result.data)
             console.log(createdPost)
             createdPost.createdByUser = createdUser
 

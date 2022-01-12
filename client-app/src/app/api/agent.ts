@@ -64,9 +64,17 @@ const request = {
     put: <T>(id: string, body: {}) => axios.put<T>(id, body).then(responseBody),
     delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
+// request.post<Post>('/home/posts', post)
 const Posts = {
     list: () => request.get<Post[]>('/home/posts'),
-    create: (post: PostFormValues) => request.post<Post>('/home/posts', post),
+    create: (post: PostFormValues) => {
+        let formData = new FormData()
+        formData.append('Title', post.title)
+        formData.append('File', post.filePath)
+        return axios.post<Post>('/home/posts', formData, {
+            headers: { 'Content-type': 'multipart/form-data' }
+        })
+    },
     edit: (post: PostFormValues) => request.put<void>(`/home/posts/${post.id}`, post),
     delete: (id: number) => request.delete<void>(`/home/posts/${id}`),
 }
