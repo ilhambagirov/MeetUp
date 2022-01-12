@@ -40,7 +40,7 @@ namespace MeetUp.API.Controllers
         }
 
         [HttpPost("changepassword")]
-        public async Task<ActionResult<UserDto>> ChangePassword(ChangePasswordCommand  command)
+        public async Task<ActionResult<UserDto>> ChangePassword(ChangePasswordCommand command)
         {
             var response = await mediator.Send(command);
             if (response == null) return ValidationProblem();
@@ -54,7 +54,7 @@ namespace MeetUp.API.Controllers
         }
 
         [HttpGet("userProfile/{UserName}")]
-        public async Task<IActionResult> GetUserProfile([FromRoute]UserProfileQuery query)
+        public async Task<IActionResult> GetUserProfile([FromRoute] UserProfileQuery query)
         {
             return HandleResult(await Mediator.Send(query));
         }
@@ -63,6 +63,12 @@ namespace MeetUp.API.Controllers
         public async Task<IActionResult> UpdateUserDetails(UserDto user)
         {
             return HandleResult(await Mediator.Send(new AccountUserDetailsUpdate { UserDto = user }));
+        }
+        [AllowAnonymous]
+        [HttpGet("register-email-confirm")]
+        public async Task<IActionResult> RegisterConfirm([FromQuery] string token, [FromQuery] string username)
+        {
+            return HandleResult(await Mediator.Send(new RegisterConfirmCommand { Token = token, UserName = username }));
         }
     }
 }

@@ -20,7 +20,8 @@ namespace MeetUp.Application.Extensions
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddSignInManager<SignInManager<AppUser>>()
-                .AddUserManager<UserManager<AppUser>>();
+                .AddUserManager<UserManager<AppUser>>()
+                 .AddDefaultTokenProviders();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["TokenKey"]));
 

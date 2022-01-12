@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,14 +32,17 @@ namespace MeetUp.Application.Modules.AccountModules
         private readonly UserManager<AppUser> userManager;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IActionContextAccessor ctx;
+        private readonly IConfiguration configuration;
 
         public AccountRegisterCommandHandler(UserManager<AppUser> userManager,
            IHttpContextAccessor httpContextAccessor,
-           IActionContextAccessor ctx)
+           IActionContextAccessor ctx,
+           IConfiguration configuration)
         {
             this.userManager = userManager;
             this.httpContextAccessor = httpContextAccessor;
             this.ctx = ctx;
+            this.configuration = configuration;
         }
         public async Task<UserDto> Handle(AccountRegisterCommand request, CancellationToken cancellationToken)
         {
@@ -66,6 +70,11 @@ namespace MeetUp.Application.Modules.AccountModules
 
             if (result.Succeeded)
             {
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                string path = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/api/Account/register-email-confirm?token={token}&UserName={request.UserName}";
+
+                var mailSent = configuration.SendEmail(request.Email, "Riode Newsletter Subscription", $"Please confirm your Email through this <a href={path}>link</a>");
+
                 return user.CreateUserObjectModel(httpContextAccessor.HttpContext);
             }
 
