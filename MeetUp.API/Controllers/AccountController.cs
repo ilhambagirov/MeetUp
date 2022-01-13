@@ -21,8 +21,8 @@ namespace MeetUp.API.Controllers
         public async Task<ActionResult<UserDto>> Login(AccountLoginCommand command)
         {
             var response = await mediator.Send(command);
-            if (response.UserName == null) return ValidationProblem();
             if (response == null) return Unauthorized();
+            if (response.UserName == null) return ValidationProblem();
             return Ok(response);
         }
         [AllowAnonymous]
