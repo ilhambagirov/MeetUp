@@ -13,6 +13,7 @@ namespace MeetUp.Persistence.DataContext
         public DbSet<Post> Posts { get; set; }
         public DbSet<SavedPost> SavedPosts { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -28,6 +29,12 @@ namespace MeetUp.Persistence.DataContext
                                             .HasOne(u => u.Post)
                                             .WithMany(a => a.PostsSavedByUser)
                                             .HasForeignKey(aa => aa.PostId);
+
+            builder.Entity<Comment>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.Comments)
+                .OnDelete(DeleteBehavior.Cascade);
+            
         }
 
     }
