@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MeetUp.Application.Modules.AccountModules
 {
@@ -35,7 +37,8 @@ namespace MeetUp.Application.Modules.AccountModules
         public async Task<UserDto> Handle(RegisterConfirmCommand request, CancellationToken cancellationToken)
         {
             var user = db.Users.FirstOrDefault(s => s.UserName == request.UserName);
-            var token = Uri.UnescapeDataString(request.Token);
+            var token = HttpUtility.UrlDecode(request.Token);
+            token = token.Replace(" ", "+");
             var userConfirmed = await userManager.VerifyUserTokenAsync(user, userManager.Options.Tokens.EmailConfirmationTokenProvider, "EmailConfirmation", token);
 
             if (userConfirmed)

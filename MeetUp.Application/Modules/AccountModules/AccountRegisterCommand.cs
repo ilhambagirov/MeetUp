@@ -73,7 +73,7 @@ namespace MeetUp.Application.Modules.AccountModules
             {
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                 var tokenCrypted=HttpUtility.UrlEncode(token);
-                string path = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/api/Account/register-email-confirm?token={tokenCrypted}&UserName={request.UserName}";
+                string path = $"http://localhost:3000/confirm?token={tokenCrypted}&UserName={request.UserName}";
 
                 var mailSent = configuration.SendEmail(request.Email, "Riode Newsletter Subscription", $"Please confirm your Email through this <a href={path}>link</a>");
 

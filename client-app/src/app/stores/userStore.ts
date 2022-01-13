@@ -107,6 +107,18 @@ export default class UserStore {
         }
     }
 
+    emailConfirm = async (token: string, username: string) => {
+        try {
+            const user = await agent.Account.emailConfirm(token, username)
+            console.log(user)
+            setTimeout(() => {
+                history.push("/")
+            }, 2000)
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
 
 

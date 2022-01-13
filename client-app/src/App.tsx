@@ -24,6 +24,7 @@ import UserProfile from './components/Layout/UserProfile/UserProfile';
 import { ToastContainer } from 'react-toastify'
 import { Container } from 'semantic-ui-react';
 import ServerError from './components/Layout/Errors/ServerError';
+import EmailConfirm from './app/common/EmailConfirm';
 export default observer(function App() {
 
   const { activitystore, userStore } = useDarkMode()
@@ -38,8 +39,9 @@ export default observer(function App() {
       <ToastContainer position='bottom-right' hideProgressBar />
       <Route exact path='/' component={Login} />
       <Route path='/register' component={Register} />
+      <Route path='/confirm' component={EmailConfirm} />
       {
-        path !== '/register' &&
+        path !== '/register' && path !== '/confirm' &&
         <Route path='/(.+)' render={() => (
           <>
             {

@@ -86,6 +86,7 @@ const Account = {
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),
     updateUserDetails: (user: UserFormValues) => request.post<User>('/account/updateuserdetails', user),
+    emailConfirm: (token: string, username: string) => request.get<User>(`/account/register-email-confirm?token=${token}&username=${username}`)
 }
 
 const Photos = {
