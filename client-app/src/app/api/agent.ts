@@ -33,6 +33,7 @@ axios.interceptors.response.use(async response => {
             case 400:
                 console.log(data)
                 toast.error(data.errors[Object.keys(data.errors)[0]][0])
+                dark.userStore.errorData = data.errors[Object.keys(data.errors)[0]][0]
                 break;
             case 401:
                 toast.error('UnAuthorized')

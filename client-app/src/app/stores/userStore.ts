@@ -13,6 +13,7 @@ export default class UserStore {
     // token: string = this.Jwt == null ? '' : this.Jwt
     // DecodedJwt: User | null = this.token == '' ? null : jwt_decode(this.token)
     user: User | Promise<User> | null = null
+    errorData : string
     // this.DecodedJwt == null ? null : {
     //     id: this.DecodedJwt.id,
     //     dsiplayName: this.DecodedJwt.dsiplayName,
@@ -21,7 +22,7 @@ export default class UserStore {
     // }
     constructor() {
         makeAutoObservable(this)
-        if (window.location.pathname !== '/' && window.location.pathname !== '/register') {
+        if (window.location.pathname !== '/' && window.location.pathname !== '/register' && !window.location.pathname.includes('confirm')) {
             runInAction(() => this.user = this.loadUser())
         }
     }
@@ -109,8 +110,8 @@ export default class UserStore {
 
     emailConfirm = async (token: string, username: string) => {
         try {
-            const user = await agent.Account.emailConfirm(token, username)
-            console.log(user)
+            await agent.Account.emailConfirm(token, username)
+            
             setTimeout(() => {
                 history.push("/")
             }, 2000)

@@ -41,9 +41,7 @@ namespace MeetUp.Application.Modules.AccountModules
             token = token.Replace(" ", "+");
             var userConfirmed = await userManager.VerifyUserTokenAsync(user, userManager.Options.Tokens.EmailConfirmationTokenProvider, "EmailConfirmation", token);
 
-            if (userConfirmed)
-            {
-                if (user == null)
+                if (userConfirmed == false)
                 {
                     ctx.IsModelState().AddModelError("Token", "Token Error");
                     return null;
@@ -56,7 +54,6 @@ namespace MeetUp.Application.Modules.AccountModules
 
                 user.EmailConfirmed = true;
                 await db.SaveChangesAsync();
-            }
 
             return mapper.Map<UserDto>(user);
         }
