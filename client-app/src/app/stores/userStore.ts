@@ -74,6 +74,7 @@ export default class UserStore {
         window.localStorage.removeItem('jwt')
         this.user = null
         dark.postStore.postRegistry.clear()
+        dark.commentStore.commentMode = 0
         history.push("/")
     }
 

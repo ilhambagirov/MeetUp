@@ -9,6 +9,27 @@
 .postadd-dark-mode{
     background-color: #293145 !important;
 }
+.user{
+    border: 1px solid #d1c8c8;
+    padding: 5px;
+    width: 100%;
+    border-radius: 8px;
+}
+.comments-btn{
+    cursor: pointer;
+}
+.comment-textarea{
+    border-radius: 8px;
+}
+.username-comment{
+    color: #212529;
+    font-size: 12px;
+    font-weight: 700;
+}
+.comment{
+    color: #adb5bd;
+    font-weight: 500
+}
 .create-post-btn{
     border: none;
     background-color: #fff;

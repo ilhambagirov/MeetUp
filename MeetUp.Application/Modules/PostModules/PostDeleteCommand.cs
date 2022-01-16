@@ -31,22 +31,25 @@ namespace MeetUp.Application.Modules.PostModules
 
         public async Task<Result<Unit>> Handle(PostDeleteCommand request, CancellationToken cancellationToken)
         {
-            var user = await db.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
+            var username = userAccessor.GetUsername();
+            var user = await db.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == username);
             if (user == null) return null;
 
             var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == request.Id);
             if (post == null) return null;
 
-            var photo = user.Photos.FirstOrDefault(x => x.Url == post.FilePath);
-
-            var resultPhoto = await photoAccessor.DeletePhoto(photo.Id);
-            if (resultPhoto == null) return Result<Unit>.Failure("Failed to Delete Photo from Cloudinary");
-
-            user.Photos.Remove(photo);
-            db.Photos.Remove(photo);
+            if (post.FilePath != null)
+            {
+                var photo = user.Photos.FirstOrDefault(x => x.Url == post.FilePath);
+                var resultPhoto = await photoAccessor.DeletePhoto(photo?.Id);
+                if (resultPhoto == null) return Result<Unit>.Failure("Failed to Delete Photo from Cloudinary");
+                user.Photos.Remove(photo);
+                db.Photos.Remove(photo);
+            }
 
             post.DeletedDate = DateTime.Now;
             var result = await db.SaveChangesAsync(cancellationToken) > 0;
+            await db.SaveChangesAsync();
 
             if (!result) return Result<Unit>.Failure("Failed to Delete the Post");
 

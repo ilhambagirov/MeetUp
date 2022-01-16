@@ -1,3 +1,4 @@
+import { PostComment } from "./comment";
 import { Profile } from "./profile";
 import { User } from "./user";
 
@@ -8,6 +9,7 @@ export interface Post {
     createdDate : Date,
     createdByUser: Profile
     createdByUserId: string
+    comments : PostComment[]
 }
 
 export class Post implements Post {

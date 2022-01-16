@@ -7,6 +7,7 @@ using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace MeetUp.Application.Modules.CommentModules
     public class CommentCreateCommand : IRequest<Result<CommentDto>>
     {
         public string Body { get; set; }
-        public int PostId { get; set; }
+        public string PostId { get; set; }
     }
 
     public class CommentCreateCommandHandler : IRequestHandler<CommentCreateCommand, Result<CommentDto>>
@@ -34,7 +35,7 @@ namespace MeetUp.Application.Modules.CommentModules
         }
         public async Task<Result<CommentDto>> Handle(CommentCreateCommand request, CancellationToken cancellationToken)
         {
-            var post = await db.Posts.FindAsync(request.PostId);
+            var post = await db.Posts.Include(x => x.Comments).FirstOrDefaultAsync(x => x.Id == Int32.Parse(request.PostId));
             if (post == null) return null;
 
             var user = await db.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == getUser.GetUsername());
@@ -43,7 +44,9 @@ namespace MeetUp.Application.Modules.CommentModules
             var comment = new Comment
             {
                 CreatedByUser = user,
+                CreatedByUserId = user.Id,
                 Post = post,
+                PostId = post.Id,
                 Body = request.Body
             };
             post.Comments.Add(comment);

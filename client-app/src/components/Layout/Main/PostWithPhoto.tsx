@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
@@ -15,13 +15,15 @@ import { Formik } from "formik";
 import { User } from "../../../app/models/user";
 import { Link } from "react-router-dom";
 import { profile } from "console";
+import CommentStore from "../../../app/stores/commentStore";
+import PostComment from "./PostComment";
 
 interface Props {
     post: Post
     user?: User
 }
 export default observer(function PostWithPhoto({ post, user }: Props) {
-    const { postStore, profileStore } = useDarkMode()
+    const { postStore, profileStore, commentStore } = useDarkMode()
     let { loadProfile } = profileStore
     //built in hooks
     const [postsShareDrop, setpostsShareDrop] = useState(0)
@@ -39,6 +41,10 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
     //local methods
     const handledropforposts = (id: number) => {
         postDrop !== id ? setPostDropDown(id) : setPostDropDown(0)
+    }
+
+    const handleComments = (id: number) => {
+        commentStore.commentMode !== id ? commentStore.setCommentMode(id) : commentStore.setCommentMode(0)
     }
     const handleSharedropforposts = (id: number) => {
         postsShareDrop !== id ? setpostsShareDrop(id) : setpostsShareDrop(0)
@@ -58,6 +64,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
     )
     return (
         <>
+            {console.log(post)}
             <div className={posts}>
                 <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
                     {window.location.pathname.includes('/userprofile') ?
@@ -147,10 +154,10 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                             <FcLike className='likes-icon' />
                             <span className={Footer}>2.8K Like</span>
                         </a>
-                        <a className='likes d-flex align-items-center ' href="">
+                        <div className='likes d-flex align-items-center comments-btn ' onClick={() => handleComments(post.id)}>
                             <AiOutlineComment className='likes-icon' />
-                            <span className={Footer}>22 Comment</span>
-                        </a>
+                            <span className={Footer}>{post.comments?.length} Comment</span>
+                        </div>
                     </div>
                     <label>
                         <AiOutlineShareAlt onClick={() => handleSharedropforposts(1)} className='share-icon me-1' />
@@ -160,56 +167,10 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                         <PostShareDropdown />
                     }
                 </div>
+                {commentStore.commentMode === post.id &&
+                    <PostComment postId={post.id} />
+                }
             </div >
-            {/* <div className={posts}>
-                <div className='post-with-photo-header d-flex align-items-center justify-content-between'>
-                    <div className='d-flex align-items-center'>
-                        <span className='post-with-photo-user-photo me-3'>
-                            <img className='user-profile-pic' src={require('../../../assets/images/user-8.png').default} alt="" />
-                        </span>
-                        <div className='d-flex flex-column post-with-photo-header-left'>
-                            <h4 style={{ fontWeight: 700 }} className={Names}>
-                                Aysel Baghirova
-                            </h4>
-                            <span>
-                                2 hour ago
-                            </span>
-                        </div>
-                    </div>
-                    <span className='post-with-photo-menu'>
-                        <BsThreeDots onClick={() => handledropforposts(2)} />
-                    </span>
-                    {postsdrop == 2 &&
-                        <PostsSettings />
-                    }
-                </div>
-
-                <div className='post-with-photo-quote'>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga tenetur possimus nesciunt neque deleniti dolores, nobis ratione itaque,
-                        adipisci architecto, aspernatur repudiandae aliquid. Nobis alias natus nihil dolore architecto.
-                        Veritatis, amet.
-                        <a href="">See More</a></p>
-                </div>
-                <div className='post-with-photo-footer d-flex align-items-center justify-content-between'>
-                    <div className='d-flex align-items-center'>
-                        <a className='likes d-flex align-items-center me-4' href="">
-                            <FcLike className='likes-icon' />
-                            <span className={Footer}>2.8K Like</span>
-                        </a>
-                        <a className='likes d-flex align-items-center ' href="">
-                            <AiOutlineComment className='likes-icon' />
-                            <span className={Footer}>22 Comment</span>
-                        </a>
-                    </div>
-                    <label >
-                        <AiOutlineShareAlt onClick={() => handleSharedropforposts(2)} className='share-icon me-1' />
-                        <span className={Footer}>Share</span>
-                    </label>
-                    {postsShareDrop === 2 &&
-                        <PostShareDropdown />
-                    }
-                </div>
-            </div> */}
         </>
     )
 })

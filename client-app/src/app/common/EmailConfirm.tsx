@@ -13,8 +13,9 @@ export default observer(function EmailConfirm(this: any) {
     }, [userStore.emailConfirm])
     return (
         <div className="alert alert-primary" role="alert">
+            {console.log(userStore.errorData)}
             {
-                userStore.errorData !== null ?
+                userStore.errorData !== undefined ?
                     userStore.errorData
                     :
                     <p>Your Email is confirmed successfully. Now Log In!!</p>

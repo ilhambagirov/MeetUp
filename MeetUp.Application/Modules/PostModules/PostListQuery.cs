@@ -29,8 +29,9 @@ namespace MeetUp.Application.Modules.PostModules
         public async Task<Result<List<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
             var posts = await db.Posts
+            .Include(x => x.Comments)
             .Include(x => x.CreatedByUser)
-            .ThenInclude(u=>u.Photos)
+            .ThenInclude(u => u.Photos)
             .Where(x => x.DeletedDate == null)
             .AsNoTracking()
             .ToListAsync();

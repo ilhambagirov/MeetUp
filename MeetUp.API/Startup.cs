@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MeetUp.API.Hubs;
 using MeetUp.API.Middleware;
 using MeetUp.Application.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -81,6 +82,7 @@ namespace MeetUp.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
