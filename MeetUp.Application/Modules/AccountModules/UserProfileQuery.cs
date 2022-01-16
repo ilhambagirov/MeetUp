@@ -28,6 +28,8 @@ namespace MeetUp.Application.Modules.AccountModules
         public async Task<Result<AppUserDto>> Handle(UserProfileQuery request, CancellationToken cancellationToken)
         {
             var user = await db.Users.Include(x => x.Posts.Where(p => p.DeletedDate == null))
+               .Include(x => x.Followings)
+               .Include(x => x.Followers)
                .Include(x => x.Photos)
                .SingleOrDefaultAsync(x => x.UserName == request.UserName);
             if (user == null) return null;

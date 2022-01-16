@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import MyTextInput from "../../../app/common/MyTextInput";
 import { User } from "../../../app/models/user";
 import { useDarkMode } from "../../../app/stores/store";
-import { format } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
+import * as Yup from 'yup'
 
 interface Props {
     postId: number
@@ -24,6 +25,12 @@ export default observer(function PostComment({ postId }: Props) {
         }
     }, [commentStore, postId])
 
+    const validationSchema = Yup.object(
+        {
+            body: Yup.string().required("The body is required"),
+        }
+    )
+
     return (
         <>
             {commentStore.comments.map(comment => (
@@ -34,7 +41,7 @@ export default observer(function PostComment({ postId }: Props) {
                     <div className="user d-flex flex-column">
                         <span className="d-flex justify-content-between">
                             <small className="font-weight-bold me-2 username-comment">{comment.dsiplayName}</small>
-                            <small>{format(new Date(comment.createdDate!), ('dd MMM yyyy'))}</small>
+                            <small>{formatDistanceToNow(new Date(comment.createdDate!))+' ago'}</small>
                         </span>
                         <span >
                             <small className="comment">{comment.body}</small>
@@ -47,7 +54,9 @@ export default observer(function PostComment({ postId }: Props) {
             ))}
 
             <div className="mt-3">
-                <Formik onSubmit={(values, { resetForm }) =>
+                <Formik
+                    validationSchema={validationSchema}
+                    onSubmit={(values, { resetForm }) =>
                     commentStore.addComment(values).then(() => resetForm())}
                     initialValues={{ body: '', postId: postId.toString() }}>
                     {({ isSubmitting, isValid, handleSubmit }) => (

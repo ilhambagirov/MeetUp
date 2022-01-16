@@ -27,9 +27,7 @@ namespace MeetUp.Application.Extensions
 
             var asmbls = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.FullName.StartsWith("MeetUp")).ToArray();
 
-            services.AddMediatR(asmbls);
-
-            services.AddAutoMapper(typeof(MappingProfiles));
+           
 
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<ITokenService, TokenService>();
@@ -37,6 +35,10 @@ namespace MeetUp.Application.Extensions
             services.AddHttpContextAccessor();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddSignalR();
+
+            services.AddMediatR(asmbls);
+
+            services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddCors(cfg =>
             {

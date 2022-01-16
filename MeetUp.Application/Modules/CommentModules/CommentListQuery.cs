@@ -35,6 +35,7 @@ namespace MeetUp.Application.Modules.CommentModules
             .Where(x => x.DeletedDate == null && x.Post.Id == request.PostId)
             .OrderBy(x=>x.CreatedDate)
             .ProjectTo<CommentDto>(mapper.ConfigurationProvider)
+            .OrderByDescending(x=>x.CreatedDate)
             .ToListAsync();
 
             return Result<List<CommentDto>>.Success(comment);

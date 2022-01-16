@@ -14,6 +14,7 @@ namespace MeetUp.Persistence.DataContext
         public DbSet<SavedPost> SavedPosts { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<UserFollowing> UserFollowings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,11 +31,24 @@ namespace MeetUp.Persistence.DataContext
                                             .WithMany(a => a.PostsSavedByUser)
                                             .HasForeignKey(aa => aa.PostId);
 
+            builder.Entity<UserFollowing>(x => x.HasKey(aa => new { aa.ObserverId, aa.TargetId }));
+
+            builder.Entity<UserFollowing>()
+                                            .HasOne(u => u.Observer)
+                                            .WithMany(a => a.Followings)
+                                            .HasForeignKey(aa => aa.ObserverId)
+                                            .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<UserFollowing>()
+                                            .HasOne(u => u.Target)
+                                            .WithMany(a => a.Followers)
+                                            .HasForeignKey(aa => aa.TargetId)
+                                            .OnDelete(DeleteBehavior.NoAction);
+
             builder.Entity<Comment>()
                 .HasOne(x => x.Post)
                 .WithMany(x => x.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
         }
 
     }
