@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using MeetUp.Application.Interfaces;
 using MeetUp.Application.Modules.Responses;
@@ -23,7 +24,7 @@ namespace MeetUp.Application.Modules.PostModules
         private readonly IUserAccessor userAccessor;
 
         public PostListQueryHandler(AppDbContext db,
-            IMapper mapper,IUserAccessor userAccessor)
+            IMapper mapper, IUserAccessor userAccessor)
         {
             this.db = db;
             this.mapper = mapper;
@@ -31,16 +32,30 @@ namespace MeetUp.Application.Modules.PostModules
         }
         public async Task<Result<List<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
+            var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Followers.Any(x => x.Observer.Email == userAccessor.GetUsername()));
             var posts = await db.Posts
             .Include(x => x.Comments)
             .Include(x => x.CreatedByUser)
             .ThenInclude(u => u.Photos)
+            .Include(x => x.CreatedByUser)
+            .ThenInclude(u => u.Followers)
+            .ThenInclude(u => u.Observer)
+            .Include(x => x.CreatedByUser)
+            .ThenInclude(u => u.Followings)
             .Where(x => x.DeletedDate == null)
             .AsNoTracking()
             .ToListAsync();
 
-            var result = mapper.Map<List<PostDto>>(posts, opts => opts.Items["currentUserName"] = userAccessor.GetUsername());
-            return Result<List<PostDto>>.Success(result);
+            var postsMapped = new List<PostDto>();
+            foreach (var post in posts)
+            {
+                var postMapped = mapper.Map<PostDto>(post);
+
+                var following = post.CreatedByUser.Followers.Any(x => x.Target.UserName == usersFollowing.UserName);
+                postMapped.CreatedByUser.Following = following;
+                postsMapped.Add(postMapped);
+            }
+            return Result<List<PostDto>>.Success(postsMapped);
 
         }
     }

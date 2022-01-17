@@ -15,6 +15,9 @@ export interface User {
     profession?: string,
     posts?: Post[] 
     photos? : Photo[]
+    following : boolean
+    followersCount : number
+    followingCount : number
 }
 export interface UserFormValues {
     email: string,

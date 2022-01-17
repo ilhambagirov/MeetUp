@@ -6,6 +6,7 @@ export interface Profile{
     image? :string;
     bio?: string;
     photos : Photo[]
+    following : boolean
 }
 export class Profile implements Profile{
     constructor(user :User) {

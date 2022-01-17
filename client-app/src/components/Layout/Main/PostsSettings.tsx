@@ -32,11 +32,6 @@ export default observer(function PostsSettings({ post }: Props) {
         console.log(post.id)
         deletePost(post.id)
     }
-
-    // console.log(user?.userName)
-    // console.log(post)
-
-
     return (
         <div className={postsDrop} >
             <a className='d-flex not-drop d-flex align-items-center mb-0' href="">
@@ -56,12 +51,16 @@ export default observer(function PostsSettings({ post }: Props) {
             <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
                 <RiUserUnfollowLine className='me-3' />
                 <h4 className='mb-0 me-4'>
-                    <span className={desc}>Unfollow</span>
+                    {post.createdByUser.following === true ?
+                        <span className={desc}>Unfollow</span>
+                        :
+                        <span className={desc}>Follow</span>
+                      }
                     <span className='mt-1'>Add this to your saved items</span>
                 </h4>
             </a>
             {
-                (user?.userName === post.createdByUser?.userName || window.location.pathname === `/userprofile/${user.userName}`) &&
+                (user?.userName === post?.createdByUser.userName || window.location.pathname === `/userprofile/${user.userName}`) &&
                 <><a onClick={handleClick} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                     <AiOutlineDelete className='me-3' />
                     <h4 className='mb-0 me-4'>
