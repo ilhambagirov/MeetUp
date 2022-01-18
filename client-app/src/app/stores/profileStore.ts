@@ -62,4 +62,16 @@ export default class ProfileStore {
             throw error
         }
     }
+
+    loadFollow = async (predicate: string) => {
+        try {
+            var profile = this.profile as User
+            var followList = await agent.Account.listFollow(profile.userName, predicate)
+            runInAction(() => {
+               this.followings = followList
+            })
+        } catch (error) {
+            throw error
+        }
+    }
 }

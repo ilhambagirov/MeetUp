@@ -256,3 +256,57 @@
         padding: 0.5rem !important;
     }
 }
+    .person-card{
+        margin-top: 1rem;
+        .person-card-body-dark{
+            background-color: #293145 !important;;
+        }
+        .following{
+            padding-top: 1rem;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-bottom: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            background-color: #fff;
+            .person-card-image{
+                width: 65px;
+                height: 65px;
+                border-radius: 50px;
+                display: inline-block;
+                line-height: 50px;
+                text-align: center;
+                background-color: #fff!important;
+                position: relative;
+                z-index: 10;
+                .user-profile-pic{
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .person-card-username-dark{
+                color: white !important;
+            }
+            .following-name{
+                margin-bottom: 0.25rem;
+                margin-top: 1rem;
+                font-size: 13px;
+            }
+
+            p{
+                color: #adb5bd;
+                font-weight: 500;
+                margin-bottom: 1rem;
+                font-size: 12px;
+            }
+            .followbtn-recommended{
+                padding: 0.5rem 1.8rem;
+                font-weight: 700;
+                background-color: #10d876;
+                color: white;
+                border-radius: 30px;
+                font-size: 13px;
+            }
+        }
+
+    }

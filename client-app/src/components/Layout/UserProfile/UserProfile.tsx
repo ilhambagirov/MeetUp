@@ -13,6 +13,9 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import Modal from "react-modal";
 import { useDropzone } from "react-dropzone";
 import { FiDroplet, FiPlus } from "react-icons/fi";
+import Item from "antd/lib/list/Item";
+import { Link, NavLink } from "react-router-dom";
+import { history } from "../../..";
 
 export default observer(function UserProfile() {
     const { postStore, profileStore, userStore } = useDarkMode();
@@ -159,6 +162,8 @@ export default observer(function UserProfile() {
                                     <TabList className='ps-4 d-flex'>
                                         <Tab className='me-5 pt-3 pb-3 ls-1 d-inline-block'>All</Tab>
                                         <Tab className='me-5 pt-3 pb-3 ls-1 d-inline-block'>Gallery</Tab>
+                                        <Tab onClick={() => profileStore.loadFollow('followers')} className='me-5 pt-3 pb-3 ls-1 d-inline-block'>Followers</Tab>
+                                        <Tab onClick={() => profileStore.loadFollow('following')} className='me-5 pt-3 pb-3 ls-1 d-inline-block'>Following</Tab>
                                     </TabList>
                                 </div>
                             </div>
@@ -185,6 +190,56 @@ export default observer(function UserProfile() {
                             <div className="row d-flex row-custom-user-profile">
                                 {user1?.photos?.map((item) => (
                                     <div className='col-xl-3 text-center col-xxl-4 col-lg-3 userprofile-pics mt-3' key={item.id}><img src={item.url} alt="" /></div>
+                                ))}
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div className="row d-flex">
+                                {profileStore.followings?.map((item) => (
+                                    <div className='person-card col-xl-2 text-center col-xxl-3 col-lg-2'>
+                                        <div className='following'>
+
+                                            <span onClick={() => {
+                                                history.push(`/userprofile/${item?.userName}`)
+                                                window.location.reload();
+                                            }} className='person-card-image'>
+                                                <img className='user-profile-pic' src={item.image || require('../../../assets/images/user-11.png').default} alt="" />
+                                            </span>
+                                            <h4 style={{ fontWeight: 700 }} className='following-name'>
+                                                {item.dsiplayName}
+                                            </h4>
+                                            <p>@{item.userName}</p>
+                                            {
+                                                item?.following ?
+                                                    <a onClick={() => updateFollowing(item?.userName, item.following)} className='followbtn-recommended'>Unfollow</a>
+                                                    :
+                                                    <a onClick={() => updateFollowing(item?.userName, item.following)} className='followbtn-recommended'>Follow</a>
+                                            }
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div className="row d-flex">
+                                {profileStore.followings?.map((item) => (
+                                    <div className='person-card col-xl-2 text-center col-xxl-3 col-lg-2'>
+                                        <div className='following'>
+                                            <span className='person-card-image'>
+                                                <img className='user-profile-pic' src={item.image || require('../../../assets/images/user-11.png').default} alt="" />
+                                            </span>
+                                            <h4 style={{ fontWeight: 700 }} className='following-name'>
+                                                {item.dsiplayName}
+                                            </h4>
+                                            <p>{item.userName}</p>
+                                            {
+                                                item?.following ?
+                                                    <a onClick={() => updateFollowing(item?.userName, item.following)} className='followbtn-recommended'>Unfollow</a>
+                                                    :
+                                                    <a onClick={() => updateFollowing(item?.userName, item.following)} className='followbtn-recommended'>Follow</a>
+                                            }
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                         </TabPanel>

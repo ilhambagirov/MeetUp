@@ -88,7 +88,8 @@ const Account = {
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),
     updateUserDetails: (user: UserFormValues) => request.post<User>('/account/updateuserdetails', user),
     emailConfirm: (token: string, username: string) => request.get<User>(`/account/register-email-confirm?token=${token}&username=${username}`),
-    updateFolowing : (userName : string) => request.post(`follow/${userName}`,{})
+    updateFolowing: (userName: string) => request.post(`follow/${userName}`, {}),
+    listFollow: (userName: string, predicate: string) => request.get<User[]>(`follow/${userName}?predicate=${predicate}`)
 }
 const Photos = {
     create: (file: any) => {
