@@ -35,7 +35,8 @@ export default observer(function PostComment({ postId }: Props) {
         <>
             {commentStore.comments.map(comment => (
                 <div className="mt-3 d-flex" key={comment.id}>
-                    <Link to={`/userprofile/${comment.userName}`}>
+                     {console.log(comment)}
+                    <Link to={`/userprofile/${comment.username}`}>
                         <img className="rounded-circle me-2" src={comment.image || "https://i.imgur.com/RpzrMR2.jpg"} width="40" height="40" />
                     </Link>
                     <div className="user d-flex flex-column">

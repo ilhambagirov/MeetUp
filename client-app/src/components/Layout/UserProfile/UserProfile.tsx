@@ -11,16 +11,16 @@ import PostWithPhoto from "../Main/PostWithPhoto";
 import './UserProfile.scss'
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import Modal from "react-modal";
-import { MdOutlineCancel } from "react-icons/md";
 import { useDropzone } from "react-dropzone";
 import { FiDroplet, FiPlus } from "react-icons/fi";
 
 export default observer(function UserProfile() {
-    const { postStore, profileStore } = useDarkMode();
+    const { postStore, profileStore, userStore } = useDarkMode();
     const { groupedPosts } = postStore
-    const { profile, changeImage } = profileStore
-    // let { user } = userStore
-    const user = profile as User
+    const { profile, changeImage, updateFollowing } = profileStore
+    const user1 = profile as User
+    const { user } = userStore
+    const user2 = user as User
     // modal
 
     const customStyles = {
@@ -79,9 +79,9 @@ export default observer(function UserProfile() {
                                 <div className='background-image-profile '></div>
                                 <div className="header-body">
                                     <figure onClick={openModal} className='user-prof-image'>
-                                        <img className='w-100' src={user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                        <img className='w-100' src={user1?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                     </figure>
-                                    <Modal
+                                    {user1?.userName === user2?.userName && <Modal
                                         isOpen={modalIsOpen}
                                         onRequestClose={closeModal}
                                         style={customStyles}
@@ -120,34 +120,40 @@ export default observer(function UserProfile() {
                                                 }
                                             </div>
                                         </div>
-                                    </Modal>
-                                    <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{user?.dsiplayName}</h4>
-                                    <span className='username-user-profile'>{user?.userName}</span>
+                                    </Modal>}
+                                    <h4 style={{ fontWeight: 700, letterSpacing: 0.4, fontSize: 18 }} className='mb-0'>{user1?.dsiplayName}</h4>
+                                    <span className='username-user-profile'>{user1?.userName}</span>
                                     <div className='features-following d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-3 ms-1'>
                                         <h4 style={{ fontWeight: 600 }}>
-                                            <b>5</b>
+                                            <b>{user1?.posts?.length}</b>
                                             <span>Posts</span>
                                         </h4>
                                         <h4 style={{ fontWeight: 600 }}>
-                                            <b>25.2m</b>
+                                            <b>{user1?.followersCount}</b>
                                             <span>Followers</span>
                                         </h4>
                                         <h4 style={{ fontWeight: 600 }}>
-                                            <b>237</b>
+                                            <b>{user1?.followingCount}</b>
                                             <span>Following</span>
                                         </h4>
                                     </div>
                                     <a href="" className='follow-btn-left position-absolute'>Follow</a>
-
-                                    <div className='feature-btns d-flex align-items-center justify-content-center position-absolute right-15 top-10 mt-2 me-2'>
-                                        <a href="" className='follow-btn'>Follow</a>
-                                        <a href="" className='other-btns-user-profile'>
-                                            <BsEnvelope />
-                                        </a>
-                                        <a className='other-btns-user-profile' href="">
-                                            <BiDotsHorizontalRounded />
-                                        </a>
-                                    </div>
+                                    {user1?.userName !== user2?.userName &&
+                                        <div className='feature-btns d-flex align-items-center justify-content-center position-absolute right-15 top-10 mt-2 me-2'>
+                                            {
+                                                user1?.following ?
+                                                    <div onClick={() => updateFollowing(user1?.userName, user1.following)} className='unfollow-btn'>Unfollow</div>
+                                                    :
+                                                    <div onClick={() => updateFollowing(user1?.userName, user1.following)} className='follow-btn'>Follow</div>
+                                            }
+                                            <a href="" className='other-btns-user-profile'>
+                                                <BsEnvelope />
+                                            </a>
+                                            <a className='other-btns-user-profile' href="">
+                                                <BiDotsHorizontalRounded />
+                                            </a>
+                                        </div>
+                                    }
                                 </div>
                                 <div className='header-footer'>
                                     <TabList className='ps-4 d-flex'>
@@ -169,7 +175,7 @@ export default observer(function UserProfile() {
                                             {console.log(post)}
                                             <PostWithPhoto key={post.id}
                                                 post={post.value}
-                                                user={user} />
+                                                user={user1} />
                                         </>
                                     ))}
                                 </div >
@@ -177,7 +183,7 @@ export default observer(function UserProfile() {
                         </TabPanel>
                         <TabPanel>
                             <div className="row d-flex row-custom-user-profile">
-                                {user?.photos?.map((item) => (
+                                {user1?.photos?.map((item) => (
                                     <div className='col-xl-3 text-center col-xxl-4 col-lg-3 userprofile-pics mt-3' key={item.id}><img src={item.url} alt="" /></div>
                                 ))}
                             </div>

@@ -32,7 +32,7 @@ namespace MeetUp.Application.Modules.PostModules
         }
         public async Task<Result<List<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
-            var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Followers.Any(x => x.Observer.Email == userAccessor.GetUsername()));
+            var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
             var posts = await db.Posts
             .Include(x => x.Comments)
             .Include(x => x.CreatedByUser)
@@ -51,7 +51,7 @@ namespace MeetUp.Application.Modules.PostModules
             {
                 var postMapped = mapper.Map<PostDto>(post);
 
-                var following = post.CreatedByUser.Followers.Any(x => x.Target.UserName == usersFollowing.UserName);
+                var following = post.CreatedByUser.Followers.Any(x => x.Observer.UserName == usersFollowing.UserName);
                 postMapped.CreatedByUser.Following = following;
                 postsMapped.Add(postMapped);
             }

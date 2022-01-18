@@ -18,7 +18,7 @@ export interface User {
     following : boolean
     followersCount : number
     followingCount : number
-}
+ }
 export interface UserFormValues {
     email: string,
     dsiplayName?: string,

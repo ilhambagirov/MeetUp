@@ -5,8 +5,8 @@ export interface Profile{
     dsiplayName:string;
     image? :string;
     bio?: string;
-    photos : Photo[]
     following : boolean
+    photos : Photo[]
 }
 export class Profile implements Profile{
     constructor(user :User) {

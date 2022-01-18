@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiBlock } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
@@ -17,11 +17,11 @@ interface Props {
 }
 export default observer(function PostsSettings({ post }: Props) {
 
-    const { activitystore, postStore, userStore } = useDarkMode()
+    const { activitystore, postStore, userStore, profileStore } = useDarkMode()
     const { darkMode } = activitystore
     const { deletePost, updateActivity, setPostDropDown } = postStore
     let { user } = userStore
-    user = user as User
+    const user1 = user as User
     console.log(post)
 
     const postsDrop = classNames("posts-drop posts-drop-settings-position", { "posts-drop-dark": darkMode })
@@ -48,19 +48,16 @@ export default observer(function PostsSettings({ post }: Props) {
                     <span className='mt-1'>Add this to your saved items</span>
                 </h4>
             </a>
-            <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
+            {console.log(post)}
+            <a onClick={() => profileStore.updateFollowing(post.createdByUser?.userName, post.createdByUser.following)} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                 <RiUserUnfollowLine className='me-3' />
                 <h4 className='mb-0 me-4'>
-                    {post.createdByUser.following === true ?
-                        <span className={desc}>Unfollow</span>
-                        :
-                        <span className={desc}>Follow</span>
-                      }
+                    <span className={desc}>{post?.createdByUser?.following === true ? 'Unfollow' : 'Follow'}</span>
                     <span className='mt-1'>Add this to your saved items</span>
                 </h4>
             </a>
             {
-                (user?.userName === post?.createdByUser.userName || window.location.pathname === `/userprofile/${user.userName}`) &&
+                (user1?.userName === post?.createdByUser?.userName || window.location.pathname === `/userprofile/${user1.userName}`) &&
                 <><a onClick={handleClick} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                     <AiOutlineDelete className='me-3' />
                     <h4 className='mb-0 me-4'>

@@ -108,4 +108,12 @@ export default class PostStore {
     setActivity = (a: Post) => {
         this.postRegistry.set(a.id, a);
     }
+
+    // updatePostUserFollowing = (username: string) => {
+    //     this.postRegistry.forEach(post => {
+    //         if (post.createdByUser?.userName === username) {
+    //             post.createdByUser.following = !post.createdByUser.following
+    //         }
+    //     })
+    // }
 }

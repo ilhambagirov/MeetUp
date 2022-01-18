@@ -30,7 +30,7 @@ namespace MeetUp.Application.Modules.AccountModules
         }
         public async Task<Result<AppUserDto>> Handle(UserProfileQuery request, CancellationToken cancellationToken)
         {
-            var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Followers.Any(x => x.Observer.Email == userAccessor.GetUsername()));
+            var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
             var user = await db.Users.Include(x => x.Posts.Where(p => p.DeletedDate == null))
                .Include(x => x.Followings)
                .Include(x => x.Followers)
@@ -41,7 +41,7 @@ namespace MeetUp.Application.Modules.AccountModules
 
             var userMapped = mapper.Map<AppUserDto>(user);
 
-            var following = user.Followers.Any(x => x.Target.UserName == usersFollowing.UserName);
+            var following = user.Followers.Any(x => x.Observer.UserName == usersFollowing.UserName);
             userMapped.Following = following;
 
             return Result<AppUserDto>.Success(userMapped);
