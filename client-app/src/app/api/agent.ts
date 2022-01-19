@@ -4,6 +4,7 @@ import { history } from "../..";
 import { Post, PostFormValues } from "../models/post";
 import { Profile } from "../models/profile";
 import { User, UserFormValues } from "../models/user";
+import {Message} from "../models/message";
 import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";
 
@@ -100,12 +101,15 @@ const Photos = {
         })
     },
 }
-
+const Chat = {
+    usersList: () => request.get<User[]>('chat'),
+    messages: (userName: string) => request.get<Message[]>(`chat/firendId/${userName}`)
+}
 const agent = {
     Account,
     Posts,
     Universities,
-    Photos
+    Photos,
+    Chat
 }
-
 export default agent

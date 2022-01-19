@@ -28,7 +28,7 @@ export default observer(function Header() {
     const [menuBackground, SetmenuBackground] = useState("");
 
     //custom hooks
-    const { activitystore, userStore, profileStore } = useDarkMode();
+    const { activitystore, userStore, profileStore, chatStore } = useDarkMode();
     const { chatstore } = UseChatMode();
     const { sidestore } = UseSideBar();
     const { darkMode, setDarkMode } = activitystore
@@ -162,11 +162,13 @@ export default observer(function Header() {
                             </div>
                         }
 
-                        <a className=' text-decoration-none nav-right-link' href="#">
-                            <MdChatBubbleOutline onClick={() => setChatMode()} fill='#0d6efd' className='nav-right-logo' />
+                        <a className=' text-decoration-none nav-right-link' onClick={() => chatStore.getUsers}>
+                            <MdChatBubbleOutline onClick={() => {
+                                setChatMode()
+                                chatStore.getUsers()
+                            }} fill='#0d6efd' className='nav-right-logo' />
                         </a>
                         <a className=' text-decoration-none nav-right-link rotate' onClick={() => handleSettingsDropdown()} href="#">
-
                             <VscSettingsGear fill='#0d6efd' className={toggleCatch} />
                         </a>
                         {
@@ -277,7 +279,12 @@ export default observer(function Header() {
                             </div>
                         }
                         <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
-                            <img className='profile-img' src={user1?.image || user.image || profile4} alt="" />
+                            {user1?.userName !== user?.userName ?
+                                <img className='profile-img' src={user.image || user1?.image || profile4} alt="" />
+                                :
+                                <img className='profile-img' src={user1?.image || user.image || profile4} alt="" />
+                            }
+
                         </Link>
                     </div>
                 </div>

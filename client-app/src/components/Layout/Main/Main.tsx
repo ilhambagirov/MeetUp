@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { UseChatMode } from "../../../app/stores/chatboxstore";
 import { useDarkMode } from "../../../app/stores/store";
+import ChatBox from "../ChatBox/ChatBox";
 import CreatePost from "./CreatePost";
 import './Main.scss'
 import PeopleRecomended from "./PeopleRecomended";
@@ -13,7 +14,7 @@ import StorySlider from "./StrorySlider";
 export default observer(function Main() {
     //custom hooks
     const { chatstore } = UseChatMode()
-    const { activitystore, postStore} = useDarkMode()
+    const { activitystore, postStore,chatStore } = useDarkMode()
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
 
@@ -29,9 +30,12 @@ export default observer(function Main() {
                         <div className='main-content-left col-xl-8 col-lg-9 col-12 '>
                             <StorySlider />
                             <CreatePost />
+                            {chatStore.boxMode &&
+                                <ChatBox />
+                            }
                             {postStore.groupedPosts.map((post) => (
                                 <>
-                                   { console.log(postStore.groupedPosts)}
+                                    {console.log(postStore.groupedPosts)}
                                     <PostWithPhoto key={post.id} post={post.value} />
                                 </>
                             ))}

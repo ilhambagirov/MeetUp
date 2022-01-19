@@ -15,6 +15,7 @@ namespace MeetUp.Persistence.DataContext
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserFollowing> UserFollowings { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

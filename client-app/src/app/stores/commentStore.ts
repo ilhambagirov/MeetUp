@@ -8,6 +8,7 @@ export default class CommentStore {
     comments: PostComment[] = []
     hubConnection: HubConnection | null = null
     commentMode = 0
+  
     constructor() {
         makeAutoObservable(this)
     }
@@ -25,7 +26,6 @@ export default class CommentStore {
             .withAutomaticReconnect()
             .configureLogging(LogLevel.Information)
             .build()
-
         this.hubConnection.start().catch(error => console.log("Error while connection", error))
 
         this.hubConnection.on("LoadComments", (comments: PostComment[]) => {
@@ -36,7 +36,6 @@ export default class CommentStore {
             runInAction(() => this.comments.unshift(comment))
         });
     }
-
     stopHubConnection = () => {
         this.hubConnection.stop().catch(error => console.log("Error connection stopping", error))
     }
