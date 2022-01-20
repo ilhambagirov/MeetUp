@@ -6,6 +6,8 @@ import { User } from '../../../app/models/user';
 import { dark, useDarkMode } from "../../../app/stores/store";
 import './ChatBox.scss'
 import ScrollableFeed from 'react-scrollable-feed'
+import { formatDistanceToNow } from 'date-fns';
+import { FiSend } from 'react-icons/fi';
 
 export default observer(function ChatBox() {
 
@@ -13,6 +15,8 @@ export default observer(function ChatBox() {
     const { boxMode } = chatStore
     const { user } = userStore
     const u = user as User
+
+    const receiver = chatStore.users.find(x => x.userName == chatStore.receiverName)
 
 
     // const messagesEndRef = useRef(null)
@@ -31,18 +35,30 @@ export default observer(function ChatBox() {
 
     return (
         <div className='chatBox'>
+            <div className='chat-header'>
+                <span className='me-2'>
+                    <img className='friends-profile-img' src={receiver?.image || require('../../../assets/images/user-12.png').default} alt="" />
+                </span>
+                <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
+                    <a className='friends-names'>{receiver.dsiplayName}</a>
+                </h3>
+            </div>
             <div className='messages'>
                 <ScrollableFeed>
                     {chatStore.messages.map(message => (
                         message.messageText ?
-                            <div key={message.id} className={message.sender?.userName === u?.userName ? 'sender mb-1 p-1' : 'receiver mb-1 p-1'}>{message.messageText}</div>
+                            <>  <div key={message.id} className={message.sender?.userName === u?.userName ? 'sender mb-1' : 'receiver mb-1'}>{message.messageText}</div>
+                                <div key={message.id + 1} className={message.sender?.userName === u?.userName ? 'sender-date mb-1' : "mb-1"}>{formatDistanceToNow(new Date(message?.date!)) + ' ago'}</div></>
                             :
-                            <div key={message.id} className='sender mb-1 p-1'>{message}</div>
+                            <>
+                                <div key={message.id} className='sender mb-1'>{message}</div>
+                                {/* <div key={message.id + 1} className='sender-date mb-1'>{message.date + ' ago'}</div> */}
+                            </>
                     ))}
                 </ScrollableFeed>
                 {/* <div ref={messagesEndRef} /> */}
             </div>
-            <div className='d-flex footer-box'>
+            <div className='footer-box mb-1'>
                 <Formik
                     onSubmit={(values, { resetForm }) => {
                         chatStore.sendMessage(values).then(() => resetForm())
@@ -51,11 +67,11 @@ export default observer(function ChatBox() {
                     }
                     initialValues={{ message: '' }}>
                     {({ isSubmitting, isValid, handleSubmit }) => (
-                        <Form>
-                            <MyTextInput style="col-8 form-control ml-1 shadow-none textarea comment-textarea"
+                        <Form className='d-flex justify-content-between align-items-end'>
+                            <div className='col-10'><MyTextInput style="ml-1 shadow-none textarea comment-textarea send-input"
                                 name="message"
-                                placeholder="Add Comment" />
-                            <button type='submit' className='col-4'>Send</button>
+                                placeholder="Add message" /></div>
+                            <button type='submit' className='col-2 btn sendBtn'><FiSend/></button>
                         </Form>
                     )}
                 </Formik>

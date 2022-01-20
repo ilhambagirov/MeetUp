@@ -4,7 +4,7 @@ import { User } from "./user";
 export interface Message {
     id: number;
     messageText: string,
-    createdDate : Date,
+    date : Date,
     sender: User
     receiver: User
     senderId: string

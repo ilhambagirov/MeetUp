@@ -88,6 +88,19 @@
         }
     }
 }
+.friends-names{
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #1e74fd;
+    font-size: 13px;
+}
+
+.friends-profile-img{
+    width: 35px;
+}
+.friends-names-dark{
+    color: #eee !important;
+}
 
 .chatmodeopen{
     right: 0;
@@ -98,22 +111,55 @@
     transition: right 0.8s ease;
 }
 .messages{
-    height: 190px;
+    height: 250px;
     padding: 10px;
     justify-content: flex-start;
+    padding-bottom: 2px;
+    
 }
 .chatBox{
-    width: 250px;
-    height: 270px;
+    border-radius: 8px;
+    width: 310px;
+    height: 380px;
     position: fixed;
     bottom: 10px;
     right: 300px;
-    background-color: rgb(221, 215, 215);
+    background-color: #fff;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     .footer-box{
+        border-top: 1px solid #e1e1f0!important;
         width: inherit;
         position: absolute;
         bottom: 0;
+        form{
+            height: 45px;
+        }
     }
+}
+.send-input{
+    border-radius: 30px;
+    line-height: 32px;
+    font-size: 13px;
+    background-color: #eee;
+    font-weight: 500;
+    padding-left: 1rem;
+    border: 2px #eee solid;
+    outline: 0;
+    outline: 0;
+    width: 100%;
+    &:focus{
+        outline: 0;
+    }
+}
+
+.chat-header{
+    border-bottom: 1px solid #e1e1f0!important;
+    padding: 5px 15px;
+    align-items: center;
+    display: flex;
+    height: 65px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 .styles_scrollable-div__prSCv{
     display: flex;
@@ -126,10 +172,47 @@
 .sender{
     background-color: #004e93;
     align-self: flex-end;
+    word-wrap: break-word;
+    width: 210px;
+    padding: 10px 20px;
+    max-width: 80%;
+    display: inline-block;
+    text-align: left;
+    border-radius: 20px 20px 0 20px;
+    background-color: #e2efff;
+    color: #2a4e7f;
 }
 .receiver{
     background-color: #009353;
     align-self: flex-start;
+    word-wrap: break-word;
+    width: 210px;
+    color: #594939;
+    padding: 10px 20px;
+    background-color: #fcf6ee;
+    border-radius: 20px 20px 20px 0;
+    max-width: 80%;
+    display: inline-block;
+    text-align: left;
+}
+.comment-textarea{
+    margin-left: 5px;
+}
+.sender-date{
+    align-self: flex-end;
+}
+
+.sendBtn{
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    svg{
+        color: #0d6efd;
+        width: 20px;
+        height: 20px;
+    }
 }
 
 

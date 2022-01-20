@@ -1,4 +1,5 @@
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
+import { message } from "antd";
 import { makeAutoObservable, runInAction } from "mobx";
 import React from "react";
 import agent from "../api/agent";
@@ -61,7 +62,8 @@ export default class ChatStore {
 
         this.hubConnection.start().catch(error => console.log("Error while connection", error))
 
-        this.hubConnection.on("ReceiveMessage", (message: Message) => {
+        this.hubConnection.on("ReceiveMessage", (message: Message, date: Date) => {
+            message.date = date
             runInAction(() => this.messages.push(message))
         });
     }

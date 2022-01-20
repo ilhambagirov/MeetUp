@@ -66,7 +66,8 @@ namespace MeetUp.API.Hubs
             };
             db.Messages.Add(newMessage);
             db.SaveChanges();
-            await Clients.User(friendId).SendAsync("ReceiveMessage", newMessage);
+            await Clients.User(friendId).SendAsync("ReceiveMessage", newMessage, date);
+            await Clients.User(friendId).SendAsync("loadMessage", newMessage, date);
         }
         public override async Task<Task> OnConnectedAsync()
         {
