@@ -201,7 +201,6 @@ export default observer(function UserProfile() {
 
                                             <span onClick={() => {
                                                 history.push(`/userprofile/${item?.userName}`)
-                                                window.location.reload();
                                             }} className='person-card-image'>
                                                 <img className='user-profile-pic' src={item.image || require('../../../assets/images/user-11.png').default} alt="" />
                                             </span>

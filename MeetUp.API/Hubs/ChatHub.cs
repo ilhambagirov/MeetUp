@@ -61,7 +61,7 @@ namespace MeetUp.API.Hubs
                 SenderId = userId,
                 ReceiverId = friendId,
                 MessageText = message,
-                Date = date,
+                Date = serverTime,
                 IsRead = false
             };
             db.Messages.Add(newMessage);

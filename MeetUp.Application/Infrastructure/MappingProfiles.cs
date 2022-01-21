@@ -11,6 +11,8 @@ namespace MeetUp.Application.Infrastructure
         {
             CreateMap<Post, PostDto>()
                 .ReverseMap();
+           /* CreateMap<IQueryable<Post>, IQueryable<PostDto>>()
+              .ReverseMap();*/
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<AppUser, UserFollowing>().ReverseMap();
 

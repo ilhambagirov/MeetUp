@@ -1,4 +1,5 @@
-﻿using MeetUp.Application.Modules.PostModules;
+﻿using MeetUp.Application.Infrastructure;
+using MeetUp.Application.Modules.PostModules;
 using MeetUp.Domain.Models.EntityDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ namespace MeetUp.API.Controllers
     public class HomeController : BaseApiController
     {
         [HttpGet("posts")]
-        public async Task<IActionResult> PostList()
+        public async Task<IActionResult> PostList([FromQuery] PagingParams param)
         {
-            return HandleResult(await Mediator.Send(new PostListQuery()));
+            return HandleResult(await Mediator.Send(new PostListQuery { Params = param }));
         }
         [HttpPost("posts")]
         public async Task<IActionResult> PostCreateAsync([FromForm] PostCreateCommand command)

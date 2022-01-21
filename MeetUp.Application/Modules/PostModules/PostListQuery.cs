@@ -1,23 +1,22 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
+using MeetUp.Application.Infrastructure;
 using MeetUp.Application.Interfaces;
 using MeetUp.Application.Modules.Responses;
-using MeetUp.Domain.Models.Entities;
 using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.PostModules
 {
-    public class PostListQuery : IRequest<Result<List<PostDto>>>
+    public class PostListQuery : IRequest<Result<PagedList<PostDto>>>
     {
+        public PagingParams Params { get; set; }
     }
-    public class PostListQueryHandler : IRequestHandler<PostListQuery, Result<List<PostDto>>>
+    public class PostListQueryHandler : IRequestHandler<PostListQuery, Result<PagedList<PostDto>>>
     {
         private readonly AppDbContext db;
         private readonly IMapper mapper;
@@ -30,32 +29,20 @@ namespace MeetUp.Application.Modules.PostModules
             this.mapper = mapper;
             this.userAccessor = userAccessor;
         }
-        public async Task<Result<List<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
             var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
-            var posts = await db.Posts
+            var a = db.Posts
             .Include(x => x.Comments)
             .Include(x => x.CreatedByUser)
             .ThenInclude(u => u.Photos)
-            .Include(x => x.CreatedByUser)
-            .ThenInclude(u => u.Followers)
-            .ThenInclude(u => u.Observer)
-            .Include(x => x.CreatedByUser)
-            .ThenInclude(u => u.Followings)
             .Where(x => x.DeletedDate == null)
-            .AsNoTracking()
-            .ToListAsync();
+            .AsNoTracking().AsQueryable();
+            var posts = mapper.Map<IQueryable<PostDto>>(a);
 
-            var postsMapped = new List<PostDto>();
-            foreach (var post in posts)
-            {
-                var postMapped = mapper.Map<PostDto>(post);
-
-                var following = post.CreatedByUser.Followers.Any(x => x.Observer.UserName == usersFollowing.UserName);
-                postMapped.CreatedByUser.Following = following;
-                postsMapped.Add(postMapped);
-            }
-            return Result<List<PostDto>>.Success(postsMapped);
+            return Result<PagedList<PostDto>>.Success(
+                await PagedList<PostDto>.CreateAsync(posts, request.Params.PageNumber, request.Params.PageSize)
+                );
 
         }
     }

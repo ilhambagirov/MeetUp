@@ -31,6 +31,7 @@ export default observer(function ChatBox() {
     React.useEffect(() => {
         console.log('salam')
         window.scrollTo(10, 10);
+        console.log(formatDistanceToNow(new Date('2022-01-21 14:57:15.0286944Z')) + 'ago')
     }, []);
 
     return (
@@ -48,7 +49,7 @@ export default observer(function ChatBox() {
                     {chatStore.messages.map(message => (
                         message.messageText ?
                             <>  <div key={message.id} className={message.sender?.userName === u?.userName ? 'sender mb-1' : 'receiver mb-1'}>{message.messageText}</div>
-                                <div key={message.id + 1} className={message.sender?.userName === u?.userName ? 'sender-date mb-1' : "mb-1"}>{formatDistanceToNow(new Date(message?.date!)) + ' ago'}</div></>
+                                <div key={message.id + 1} className={message.sender?.userName === u?.userName ? 'sender-date mb-1' : "mb-1"}>{formatDistanceToNow(new Date(message.date)) + 'ago'}</div></>
                             :
                             <>
                                 <div key={message.id} className='sender mb-1'>{message}</div>
