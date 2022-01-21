@@ -1,22 +1,25 @@
 ﻿using AutoMapper;
 using MediatR;
+using MeetUp.Application.Extensions;
 using MeetUp.Application.Infrastructure;
 using MeetUp.Application.Interfaces;
 using MeetUp.Application.Modules.Responses;
+using MeetUp.Domain.Models.Entities;
 using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.PostModules
 {
-    public class PostListQuery : IRequest<Result<PagedList<PostDto>>>
+    public class PostListQuery : IRequest<Result<List<PostDto>>>
     {
         public PagingParams Params { get; set; }
     }
-    public class PostListQueryHandler : IRequestHandler<PostListQuery, Result<PagedList<PostDto>>>
+    public class PostListQueryHandler : IRequestHandler<PostListQuery, Result<List<PostDto>>>
     {
         private readonly AppDbContext db;
         private readonly IMapper mapper;
@@ -29,7 +32,7 @@ namespace MeetUp.Application.Modules.PostModules
             this.mapper = mapper;
             this.userAccessor = userAccessor;
         }
-        public async Task<Result<PagedList<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
             var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
             var a = db.Posts
@@ -38,11 +41,9 @@ namespace MeetUp.Application.Modules.PostModules
             .ThenInclude(u => u.Photos)
             .Where(x => x.DeletedDate == null)
             .AsNoTracking().AsQueryable();
-            var posts = mapper.Map<IQueryable<PostDto>>(a);
+            var list = await a.PaginatedMappedListAsync<PostDto, Post>(mapper, request.Params.PageIndex, request.Params.PageSize);
 
-            return Result<PagedList<PostDto>>.Success(
-                await PagedList<PostDto>.CreateAsync(posts, request.Params.PageNumber, request.Params.PageSize)
-                );
+            return Result<List<PostDto>>.Success(list.Items);
 
         }
     }

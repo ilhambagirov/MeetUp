@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,28 +7,32 @@ using System.Threading.Tasks;
 
 namespace MeetUp.Application.Infrastructure
 {
-    public class PagedList<T> : List<T>
+    public sealed class PagedList<T, Y>  // T : Dto Destination
+                                                   // Y : Entity Source
     {
-        public PagedList(List<T> items, int count, int pageNumber, int pageSize)
+        public List<T> Items { get; }
+        public int PageIndex { get; }
+        public int TotalPages { get; }
+        public int TotalCount { get; }
+
+        public PagedList(List<T> items, int count, int pageIndex, int pageSize)
         {
-            CurrentPage = pageNumber;
+            PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            PageSize = pageSize;
             TotalCount = count;
-            AddRange(items);
+            Items = items;
         }
 
-        public int CurrentPage { get; set; }
-        public int TotalPages { get; set; }
-        public int PageSize { get; set; }
-        public int TotalCount { get; set; }
+        public bool HasPreviousPage => PageIndex > 1;
 
-        public static async Task<PagedList<T>> CreateAsync(IQueryable<T> query, int pageNumber, int pageSize)
+        public bool HasNextPage => PageIndex < TotalPages;
+
+        public static async Task<PagedList<T, Y>> CreateAsync(IQueryable<Y> source, IMapper mapper, int pageIndex, int pageSize)
         {
-            var count = await query.CountAsync();
-            var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-
-            return new PagedList<T>(items, count, pageNumber, pageSize);
+            var count = await source.CountAsync();
+            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            var dtos = mapper.Map<List<Y>, List<T>>(items);
+            return new PagedList<T, Y>(dtos, count, pageIndex, pageSize);
         }
     }
 }
