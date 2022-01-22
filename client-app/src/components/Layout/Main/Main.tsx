@@ -1,6 +1,9 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
+import { Button, Loader } from "semantic-ui-react";
+import { PagingParams } from "../../../app/models/pagination";
 import { UseChatMode } from "../../../app/stores/chatboxstore";
 import { useDarkMode } from "../../../app/stores/store";
 import ChatBox from "../ChatBox/ChatBox";
@@ -14,9 +17,18 @@ import StorySlider from "./StrorySlider";
 export default observer(function Main() {
     //custom hooks
     const { chatstore } = UseChatMode()
-    const { activitystore, postStore,chatStore } = useDarkMode()
+    const { activitystore, postStore, chatStore } = useDarkMode()
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
+    const { pagination, setPagingParams, loadActivitiesPagination } = postStore
+
+    const [loadingNext, setLoadingNext] = useState(false)
+
+    const handleGetNext = () => {
+        setLoadingNext(true)
+        setPagingParams(new PagingParams(pagination!.currentPage + 1))
+        loadActivitiesPagination().then(() => setLoadingNext(false))
+    }
 
     const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode, "darkmode-maincontent": darkMode })
     useEffect(() => {
@@ -33,12 +45,20 @@ export default observer(function Main() {
                             {chatStore.boxMode &&
                                 <ChatBox />
                             }
-                            {postStore.groupedPosts.map((post) => (
-                                <>
-                                    {console.log(postStore.groupedPosts)}
-                                    <PostWithPhoto key={post.id} post={post.value} />
-                                </>
-                            ))}
+                            <InfiniteScroll
+                                pageStart={0}
+                                loadMore={handleGetNext}
+                                hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                                initialLoad={false}
+                            >
+                                {postStore.groupedPosts.map((post) => (
+                                    <>
+                                        {console.log(postStore.groupedPosts)}
+                                        <PostWithPhoto key={post.id} post={post.value} />
+                                    </>
+                                ))}
+                            </InfiniteScroll>
+                            <Loader active={loadingNext} />
                             <PeopleRecomended />
                         </div>
                         <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>

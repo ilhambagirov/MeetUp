@@ -11,7 +11,7 @@ namespace MeetUp.API.Controllers
         [HttpGet("posts")]
         public async Task<IActionResult> PostList([FromQuery] PagingParams param)
         {
-            return HandleResult(await Mediator.Send(new PostListQuery { Params = param }));
+            return HandlePagedResult(await Mediator.Send(new PostListQuery { Params = param }));
         }
         [HttpPost("posts")]
         public async Task<IActionResult> PostCreateAsync([FromForm] PostCreateCommand command)

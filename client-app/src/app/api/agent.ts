@@ -1,12 +1,13 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { Axios, AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { Post, PostFormValues } from "../models/post";
 import { Profile } from "../models/profile";
 import { User, UserFormValues } from "../models/user";
-import {Message} from "../models/message";
+import { Message } from "../models/message";
 import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";
+import { PaginatedResult } from "../models/pagination";
 
 const sleep = (delay: number) => {
     return new Promise(resolve => {
@@ -26,6 +27,11 @@ axios.interceptors.request.use(config => {
 })
 axios.interceptors.response.use(async response => {
     await sleep(200);
+    const pagination = response.headers['pagination']
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination))
+        return response as AxiosResponse<PaginatedResult<any>>
+    }
     return response;
 },
     (error: AxiosError) => {
@@ -69,7 +75,7 @@ const request = {
 }
 // request.post<Post>('/home/posts', post)
 const Posts = {
-    list: () => request.get<Post[]>('/home/posts'),
+    list: (params : URLSearchParams) => axios.get<PaginatedResult<Post[]>>('/home/posts',{params}).then(responseBody),
     create: (post: PostFormValues) => {
         let formData = new FormData()
         formData.append('Title', post.title)

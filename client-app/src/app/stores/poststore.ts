@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
+import { PaginatedResult, Pagination, PagingParams } from "../models/pagination";
 import { Post, PostFormValues } from "../models/post";
 import { Profile } from "../models/profile";
 import { User } from "../models/user";
@@ -10,9 +11,21 @@ export default class PostStore {
     editMode = 0
     postDrop = 0
     addPhotoMode = false
+    pagination: Pagination | null = null
+    pagingParams = new PagingParams()
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams()
+        params.append('pageIndex', this.pagingParams.pageIndex.toString())
+        params.append('pageSize', this.pagingParams.pageSize.toString())
+        return params
+    }
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams
     }
 
     setAddPhotoMode = (bool: boolean) => {
@@ -34,14 +47,34 @@ export default class PostStore {
 
     loadActivities = async () => {
         try {
-            const activities = await agent.Posts.list();
+            this.setPagingParams(new PagingParams(1, 5))
+            console.log(this.pagingParams)
+            const result = await agent.Posts.list(this.axiosParams);
             this.postRegistry.clear()
-            activities.forEach(a => {
+            result.data.forEach(a => {
                 this.setActivity(a)
             })
+            this.setPagination(result.pagination)
         } catch (error) {
             console.log(error)
         }
+    }
+    loadActivitiesPagination = async () => {
+        try {
+            setTimeout(async () => {
+                const result = await agent.Posts.list(this.axiosParams);
+                result.data.forEach(a => {
+                    this.setActivity(a)
+                })
+                this.setPagination(result.pagination)
+            }, 2000);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    setPagination(pagination: Pagination) {
+        this.pagination = pagination
     }
 
     get groupedPosts() {

@@ -13,6 +13,7 @@ namespace MeetUp.Application.Infrastructure
         public List<T> Items { get; }
         public int PageIndex { get; }
         public int TotalPages { get; }
+        public int PageSize { get; }
         public int TotalCount { get; }
 
         public PagedList(List<T> items, int count, int pageIndex, int pageSize)
@@ -20,6 +21,7 @@ namespace MeetUp.Application.Infrastructure
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             TotalCount = count;
+            PageSize = pageSize;
             Items = items;
         }
 

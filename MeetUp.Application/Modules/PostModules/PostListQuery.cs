@@ -15,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace MeetUp.Application.Modules.PostModules
 {
-    public class PostListQuery : IRequest<Result<List<PostDto>>>
+    public class PostListQuery : IRequest<Result<PagedList<PostDto, Post>>>
     {
         public PagingParams Params { get; set; }
     }
-    public class PostListQueryHandler : IRequestHandler<PostListQuery, Result<List<PostDto>>>
+    public class PostListQueryHandler : IRequestHandler<PostListQuery, Result<PagedList<PostDto, Post>>>
     {
         private readonly AppDbContext db;
         private readonly IMapper mapper;
@@ -32,18 +32,18 @@ namespace MeetUp.Application.Modules.PostModules
             this.mapper = mapper;
             this.userAccessor = userAccessor;
         }
-        public async Task<Result<List<PostDto>>> Handle(PostListQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<PostDto, Post>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
             var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
             var a = db.Posts
-            .Include(x => x.Comments)
             .Include(x => x.CreatedByUser)
             .ThenInclude(u => u.Photos)
             .Where(x => x.DeletedDate == null)
+            .OrderByDescending(x=>x.CreatedDate)
             .AsNoTracking().AsQueryable();
             var list = await a.PaginatedMappedListAsync<PostDto, Post>(mapper, request.Params.PageIndex, request.Params.PageSize);
 
-            return Result<List<PostDto>>.Success(list.Items);
+            return Result<PagedList<PostDto, Post>>.Success(list);
 
         }
     }
