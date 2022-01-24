@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import { BsThreeDots } from "react-icons/bs";
-import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
+import { AiOutlineComment, AiOutlineLike, AiOutlineShareAlt } from "react-icons/ai";
 import { useDarkMode } from "../../../app/stores/store";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
@@ -151,11 +151,11 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                 <div className='post-with-photo-footer d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
                         <a className='likes d-flex align-items-center me-4' href="">
-                            <FcLike className='likes-icon' />
-                            <span className={Footer}>2.8K Like</span>
+                            <AiOutlineLike className={post.liking ? 'likes-icon liked-icon' : 'likes-icon'} />
+                            <span className={Footer}>{post.likeCount} Like</span>
                         </a>
                         <div className='likes d-flex align-items-center comments-btn ' onClick={() => handleComments(post.id)}>
-                            <AiOutlineComment className='likes-icon' />
+                            <AiOutlineComment className='comments-icon' />
                             <span className={Footer}>{post.comments?.length} Comment</span>
                         </div>
                     </div>

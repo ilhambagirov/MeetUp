@@ -75,7 +75,7 @@ const request = {
 }
 // request.post<Post>('/home/posts', post)
 const Posts = {
-    list: (params : URLSearchParams) => axios.get<PaginatedResult<Post[]>>('/home/posts',{params}).then(responseBody),
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<Post[]>>('/home/posts', { params }).then(responseBody),
     create: (post: PostFormValues) => {
         let formData = new FormData()
         formData.append('Title', post.title)
@@ -111,11 +111,15 @@ const Chat = {
     usersList: () => request.get<User[]>('chat'),
     messages: (userName: string) => request.get<Message[]>(`chat/firendId/${userName}`)
 }
+const Like = {
+    like: (id: number) => request.get<User[]>(`chat/${id}`),
+}
 const agent = {
     Account,
     Posts,
     Universities,
     Photos,
-    Chat
+    Chat,
+    Like
 }
 export default agent

@@ -9,6 +9,8 @@ export interface Post {
     createdDate : Date,
     createdByUser: Profile
     createdByUserId: string
+    liking : boolean
+    likeCount: number
     comments : PostComment[]
 }
 

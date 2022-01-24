@@ -69,7 +69,7 @@ export default observer(function ChatBox() {
                     initialValues={{ message: '' }}>
                     {({ isSubmitting, isValid, handleSubmit }) => (
                         <Form className='d-flex justify-content-between align-items-end'>
-                            <div className='col-10'><MyTextInput style="ml-1 shadow-none textarea comment-textarea send-input"
+                            <div className='col-10'><MyTextInput autoComplete='off' style="ml-1 shadow-none textarea comment-textarea send-input"
                                 name="message"
                                 placeholder="Add message" /></div>
                             <button type='submit' className='col-2 btn sendBtn'><FiSend/></button>

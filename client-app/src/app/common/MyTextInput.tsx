@@ -12,6 +12,7 @@ interface Props {
     defaultValue?: string
     key?: string
     normal?: boolean
+    autoComplete?: string
 }
 
 export default function MyTextInput({ style, normal, ...props }: Props) {
