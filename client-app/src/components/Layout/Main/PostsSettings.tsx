@@ -38,14 +38,14 @@ export default observer(function PostsSettings({ post }: Props) {
                 <VscSave className='me-3' />
                 <h4 className='mb-0 me-4'>
                     <span className={desc}>Save Post</span>
-                    <span className='mt-1'>Add this to your saved items</span>
+                    <span>Add this to your saved items</span>
                 </h4>
             </a>
             <a className='d-flex not-drop d-flex align-items-center mb-0 mt-2' href="">
                 <BiBlock className='me-3' />
                 <h4 className='mb-0 me-4'  >
                     <span className={desc}>Block User</span>
-                    <span className='mt-1'>Add this to your saved items</span>
+                    <span>Add this to your saved items</span>
                 </h4>
             </a>
             {console.log(post)}
@@ -53,7 +53,7 @@ export default observer(function PostsSettings({ post }: Props) {
                 <RiUserUnfollowLine className='me-3' />
                 <h4 className='mb-0 me-4'>
                     <span className={desc}>{post?.createdByUser?.following === true ? 'Unfollow' : 'Follow'}</span>
-                    <span className='mt-1'>Add this to your saved items</span>
+                    <span>Add this to your saved items</span>
                 </h4>
             </a>
             {
@@ -62,7 +62,7 @@ export default observer(function PostsSettings({ post }: Props) {
                     <AiOutlineDelete className='me-3' />
                     <h4 className='mb-0 me-4'>
                         <span className={desc}>Delete</span>
-                        <span className='mt-1'>You will delete this post</span>
+                        <span>You will delete this post</span>
                     </h4>
                 </a>
                     <a onClick={() => {
@@ -72,7 +72,7 @@ export default observer(function PostsSettings({ post }: Props) {
                         <FiEdit2 className='me-3' />
                         <h4 className='mb-0 me-4'>
                             <span className={desc}>Edit</span>
-                            <span className='mt-1'>You will edit this post</span>
+                            <span>You will edit this post</span>
                         </h4>
                     </a>
                 </>

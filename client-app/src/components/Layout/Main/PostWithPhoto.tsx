@@ -30,7 +30,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
 
     //custom hooks
     const { activitystore } = useDarkMode()
-    const { postDrop, setPostDropDown } = postStore
+    const { postDrop, setPostDropDown, updateLike } = postStore
     const { darkMode } = activitystore
 
     //classnames
@@ -150,7 +150,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                 }
                 <div className='post-with-photo-footer d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
-                        <a className='likes d-flex align-items-center me-4' href="">
+                        <a onClick={() => updateLike(post.id, post.liking)} className='likes d-flex align-items-center me-4'>
                             <AiOutlineLike className={post.liking ? 'likes-icon liked-icon' : 'likes-icon'} />
                             <span className={Footer}>{post.likeCount} Like</span>
                         </a>

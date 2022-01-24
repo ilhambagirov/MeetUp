@@ -139,6 +139,10 @@ export default observer(function UserProfile() {
                                             <b>{user1?.followingCount}</b>
                                             <span>Following</span>
                                         </h4>
+                                        <h4 style={{ fontWeight: 600 }}>
+                                            <b>{user1?.likesCount}</b>
+                                            <span>Likes</span>
+                                        </h4>
                                     </div>
                                     <a href="" className='follow-btn-left position-absolute'>Follow</a>
                                     {user1?.userName !== user2?.userName &&

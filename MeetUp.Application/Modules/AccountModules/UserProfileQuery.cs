@@ -22,7 +22,7 @@ namespace MeetUp.Application.Modules.AccountModules
         private readonly IUserAccessor userAccessor;
 
         public UserProfileQueryHandler(AppDbContext db,
-           IMapper mapper,IUserAccessor userAccessor)
+           IMapper mapper, IUserAccessor userAccessor)
         {
             this.db = db;
             this.mapper = mapper;
@@ -31,7 +31,8 @@ namespace MeetUp.Application.Modules.AccountModules
         public async Task<Result<AppUserDto>> Handle(UserProfileQuery request, CancellationToken cancellationToken)
         {
             var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
-            var user = await db.Users.Include(x => x.Posts.Where(p => p.DeletedDate == null))
+            var user = await db.Users.Include(x => x.Posts.Where(p => p.DeletedDate == null)).ThenInclude(x => x.Likes)
+                .Include(x => x.Posts.Where(p => p.DeletedDate == null)).ThenInclude(x => x.Comments)
                .Include(x => x.Followings)
                .Include(x => x.Followers)
                .ThenInclude(x => x.Observer)
@@ -43,6 +44,17 @@ namespace MeetUp.Application.Modules.AccountModules
 
             var following = user.Followers.Any(x => x.Observer.UserName == usersFollowing.UserName);
             userMapped.Following = following;
+            foreach (var item in user.Posts)
+            {
+                userMapped.LikesCount += item.Likes.Count;
+            }
+            foreach (var item in userMapped.Posts)
+            {
+                if (db.LikedPosts.Any(x => x.PostId == item.Id && x.LikerId == user.Id))
+                {
+                    item.Liking = true;
+                }
+            }
 
             return Result<AppUserDto>.Success(userMapped);
         }

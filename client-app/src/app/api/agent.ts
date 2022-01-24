@@ -112,7 +112,7 @@ const Chat = {
     messages: (userName: string) => request.get<Message[]>(`chat/firendId/${userName}`)
 }
 const Like = {
-    like: (id: number) => request.get<User[]>(`chat/${id}`),
+    like: (id: number) => request.post(`like/${id}`,{}),
 }
 const agent = {
     Account,

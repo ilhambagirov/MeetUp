@@ -19,6 +19,21 @@ export default class PostStore {
         makeAutoObservable(this)
     }
 
+    updateLike = async (postId: number, liking: boolean) => {
+        try {
+            await agent.Like.like(postId)
+            var post = this.postRegistry.get(postId)
+            runInAction(() => {
+                liking ? post.likeCount-- : post.likeCount++
+                post.liking = !post.liking
+                var user = dark.profileStore.profile as User
+                liking ? user.likesCount-- : user.likesCount++
+            })
+        } catch (error) {
+            throw error
+        }
+    }
+
     get axiosParams() {
         const params = new URLSearchParams()
         params.append('pageIndex', this.pagingParams.pageIndex.toString())
@@ -92,6 +107,8 @@ export default class PostStore {
             runInAction(() => {
                 this.postRegistry.delete(id)
             })
+            var profile = dark.profileStore.profile as User
+            profile.posts.length--
         } catch (error) {
             console.log(error)
         }
@@ -103,8 +120,9 @@ export default class PostStore {
             var createdPost = await agent.Posts.create(post).then(result => result.data)
             console.log(createdPost)
             createdPost.createdByUser = createdUser
-
             this.setActivity(createdPost)
+            var profile = dark.profileStore.profile as User
+            profile.posts.length++
         }
         catch (error) {
             console.log(error)

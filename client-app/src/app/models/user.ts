@@ -18,6 +18,7 @@ export interface User {
     following : boolean
     followersCount : number
     followingCount : number
+    likesCount : number
  }
 export interface UserFormValues {
     email: string,
