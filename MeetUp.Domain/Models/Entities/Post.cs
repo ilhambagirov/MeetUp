@@ -8,5 +8,6 @@ namespace MeetUp.Domain.Models.Entities
         public string FilePath { get; set; }
         public virtual ICollection<SavedPost> PostsSavedByUser { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<LikedPost> Likes { get; set; }
     }
 }

@@ -34,16 +34,25 @@ namespace MeetUp.Application.Modules.PostModules
         }
         public async Task<Result<PagedList<PostDto, Post>>> Handle(PostListQuery request, CancellationToken cancellationToken)
         {
-            var usersFollowing = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
-            var a = db.Posts
+            var user = await db.Users.FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
+            var postsFromDb = db.Posts
             .Include(x => x.CreatedByUser)
             .ThenInclude(u => u.Photos)
+            .Include(x=>x.Likes)
             .Where(x => x.DeletedDate == null)
             .OrderByDescending(x=>x.CreatedDate)
             .AsNoTracking().AsQueryable();
-            var list = await a.PaginatedMappedListAsync<PostDto, Post>(mapper, request.Params.PageIndex, request.Params.PageSize);
+            var posts = await postsFromDb.PaginatedMappedListAsync<PostDto, Post>(mapper, request.Params.PageIndex, request.Params.PageSize);
 
-            return Result<PagedList<PostDto, Post>>.Success(list);
+            foreach (var post in posts.Items)
+            {
+                if (db.LikedPosts.Any(x => x.PostId == post.Id && x.LikerId == user.Id))
+                {
+                    post.Liking = true;
+                }
+            }
+
+            return Result<PagedList<PostDto, Post>>.Success(posts);
 
         }
     }
