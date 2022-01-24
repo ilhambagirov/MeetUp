@@ -6,6 +6,7 @@ import { BiBlock } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { VscSave } from "react-icons/vsc";
+import swal from "sweetalert";
 import { Post } from "../../../app/models/post";
 import { User } from "../../../app/models/user";
 import { useDarkMode } from "../../../app/stores/store";
@@ -29,8 +30,25 @@ export default observer(function PostsSettings({ post }: Props) {
 
     const handleClick = (e: any) => {
         e.preventDefault();
-        console.log(post.id)
-        deletePost(post.id)
+        setPostDropDown(0)
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this post!",
+            icon: "warning",
+            buttons: ["Cancel", "Yes!"],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    deletePost(post.id)
+                    swal("Poof! Your post has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Your post is safe!");
+                }
+            });
+
     }
     return (
         <div className={postsDrop} >

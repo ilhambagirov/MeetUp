@@ -19,15 +19,16 @@ export default class PostStore {
         makeAutoObservable(this)
     }
 
-    updateLike = async (postId: number, liking: boolean) => {
+    updateLike = async (postId: number, liking: boolean, username: string) => {
         try {
             await agent.Like.like(postId)
             var post = this.postRegistry.get(postId)
             runInAction(() => {
                 liking ? post.likeCount-- : post.likeCount++
                 post.liking = !post.liking
-                var user = dark.profileStore.profile as User
-                liking ? user.likesCount-- : user.likesCount++
+                var user = dark.profileStore.loadProfile(username)
+                var u = user as unknown as User
+                liking ? u.likesCount-- : u.likesCount++
             })
         } catch (error) {
             throw error

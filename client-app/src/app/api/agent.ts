@@ -8,6 +8,7 @@ import { Message } from "../models/message";
 import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";
 import { PaginatedResult } from "../models/pagination";
+import swal from "sweetalert";
 
 const sleep = (delay: number) => {
     return new Promise(resolve => {
@@ -39,11 +40,15 @@ axios.interceptors.response.use(async response => {
         switch (status) {
             case 400:
                 console.log(data)
-                toast.error(data.errors[Object.keys(data.errors)[0]][0])
+                swal(data.errors[Object.keys(data.errors)[0]][0], {
+                    icon: "error",
+                });
                 dark.userStore.errorData = data.errors[Object.keys(data.errors)[0]][0]
                 break;
             case 401:
-                toast.error('UnAuthorized')
+                swal("Your are not logged in!", {
+                    icon: "error",
+                });
                 break;
             case 404:
                 dark.commonStore.setServerError(data)

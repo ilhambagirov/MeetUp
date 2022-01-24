@@ -19,9 +19,11 @@ export default class ProfileStore {
         try {
             console.log(userName)
             const user = await agent.Account.userProfile(userName)
-            runInAction(() => this.profile = user)
-            dark.postStore.postRegistry.clear()
-            user.posts?.forEach((a: Post) => dark.postStore.setActivity(a))
+            if(window.location.pathname.includes('userprofile')){
+                runInAction(() => this.profile = user)
+                dark.postStore.postRegistry.clear()
+                user.posts?.forEach((a: Post) => dark.postStore.setActivity(a))
+            }
             return user;
         } catch (error) {
             throw error

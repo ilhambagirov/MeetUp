@@ -6,14 +6,14 @@ import { dark } from "./store";
 import { ChangePassword } from "../models/userPasswordChange";
 import { toast } from "react-toastify";
 import { Post } from "../models/post";
-import jwt_decode from "jwt-decode";
+import swal from "sweetalert";
 
 export default class UserStore {
     // Jwt: string | null = window.localStorage.getItem('jwt')
     // token: string = this.Jwt == null ? '' : this.Jwt
     // DecodedJwt: User | null = this.token == '' ? null : jwt_decode(this.token)
     user: User | Promise<User> | null = null
-    errorData : string
+    errorData: string
     // this.DecodedJwt == null ? null : {
     //     id: this.DecodedJwt.id,
     //     dsiplayName: this.DecodedJwt.dsiplayName,
@@ -82,7 +82,9 @@ export default class UserStore {
         try {
             await agent.Account.changePassword(creds)
             history.push("/home")
-            toast.success("Password Changed!")
+            swal("Password Changed!", {
+                icon: "success",
+            });
         } catch (error) {
             throw error;
         }
@@ -92,7 +94,9 @@ export default class UserStore {
         try {
             const user = await agent.Account.updateUserDetails(creds)
             runInAction(() => this.user = user)
-            toast.success("Account Saved!")
+            swal("Your Account Details has been updated!", {
+                icon: "success",
+            });
         } catch (error) {
             throw error;
         }
@@ -103,7 +107,9 @@ export default class UserStore {
             const user = await agent.Account.register(creds)
             dark.commonStore.setToken(user.data.token)
             history.push("/")
-            toast.success("Email Confirmation link was send to your email address. Please confirm!")
+            swal("Email Confirmation link was send to your email address. Please confirm!", {
+                icon: "success",
+            });
         } catch (error) {
             throw error;
         }
@@ -112,7 +118,6 @@ export default class UserStore {
     emailConfirm = async (token: string, username: string) => {
         try {
             await agent.Account.emailConfirm(token, username)
-            
             setTimeout(() => {
                 history.push("/")
             }, 2000)

@@ -42,7 +42,7 @@ export default observer(function Main() {
             <div className='main-content-wrapper'>
                 <div className='main-content-container'>
                     <div className='row feed-body'>
-                        <div className='main-content-left col-xl-8 col-lg-9 col-12 '>
+                        <div className='main-content-left col-xl-10 col-lg-9 col-12 '>
                             <StorySlider />
                             <CreatePost />
                             {chatStore.boxMode &&
@@ -69,9 +69,9 @@ export default observer(function Main() {
                                 ))}
                             </InfiniteScroll>
                         </div>
-                        <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>
+                        {/* <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>
                             <PopularEvents />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

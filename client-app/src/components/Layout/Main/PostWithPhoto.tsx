@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { profile } from "console";
 import CommentStore from "../../../app/stores/commentStore";
 import PostComment from "./PostComment";
-
+import swal from "sweetalert";
 interface Props {
     post: Post
     user?: User
@@ -52,9 +52,11 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
 
     const handleClickUpdate = (post: PostFormValues, n: number) => {
         post.id = n
-        console.log(n)
-        postStore.updateActivity(post!)
         postStore.setEditMode(0)
+        postStore.updateActivity(post!)
+        swal("Your post has been updated!", {
+            icon: "success",
+        });
     }
     let id = 0
     const validationSchema = Yup.object(
@@ -150,7 +152,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                 }
                 <div className='post-with-photo-footer d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
-                        <a onClick={() => updateLike(post.id, post.liking)} className='likes d-flex align-items-center me-4'>
+                        <a onClick={() => updateLike(post.id, post.liking, post.createdByUser.userName)} className='likes d-flex align-items-center me-4'>
                             <AiOutlineLike className={post.liking ? 'likes-icon liked-icon' : 'likes-icon'} />
                             <span className={Footer}>{post.likeCount} Like</span>
                         </a>
