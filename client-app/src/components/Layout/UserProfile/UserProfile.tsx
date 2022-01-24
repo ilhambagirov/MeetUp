@@ -181,7 +181,7 @@ export default observer(function UserProfile() {
                                     <CreatePost />
                                     {groupedPosts.map((post) => (
                                         <>
-                                            {console.log(post)}
+                                            {console.log(post.value)}
                                             <PostWithPhoto key={post.id}
                                                 post={post.value}
                                                 user={user1} />

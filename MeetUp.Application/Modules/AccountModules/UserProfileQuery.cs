@@ -50,7 +50,7 @@ namespace MeetUp.Application.Modules.AccountModules
             }
             foreach (var item in userMapped.Posts)
             {
-                if (db.LikedPosts.Any(x => x.PostId == item.Id && x.LikerId == user.Id))
+                if (db.LikedPosts.Any(x => x.PostId == item.Id && x.LikerId == usersFollowing.Id))
                 {
                     item.Liking = true;
                 }

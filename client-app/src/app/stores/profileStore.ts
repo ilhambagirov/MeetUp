@@ -17,13 +17,10 @@ export default class ProfileStore {
     }
     loadProfile = async (userName: string) => {
         try {
-            console.log(userName)
             const user = await agent.Account.userProfile(userName)
-            if(window.location.pathname.includes('userprofile')){
-                runInAction(() => this.profile = user)
-                dark.postStore.postRegistry.clear()
-                user.posts?.forEach((a: Post) => dark.postStore.setActivity(a))
-            }
+            runInAction(() => this.profile = user)
+            dark.postStore.postRegistry.clear()
+            user.posts?.forEach((a: Post) => dark.postStore.setActivity(a))
             return user;
         } catch (error) {
             throw error
@@ -33,7 +30,12 @@ export default class ProfileStore {
     changeImage = async (file: any) => {
         try {
             const user = await agent.Photos.create(file).then(result => result.data)
-            runInAction(() => this.profile = user)
+            runInAction(() => {
+                var p = this.profile as User
+                p.image = user.image
+                var i = dark.userStore.user as User
+                i.image = user.image
+            })
             return user;
         } catch (error) {
             throw error
@@ -70,7 +72,7 @@ export default class ProfileStore {
             var profile = this.profile as User
             var followList = await agent.Account.listFollow(profile.userName, predicate)
             runInAction(() => {
-               this.followings = followList
+                this.followings = followList
             })
         } catch (error) {
             throw error

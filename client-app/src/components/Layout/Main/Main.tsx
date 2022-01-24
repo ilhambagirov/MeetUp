@@ -66,7 +66,7 @@ export default observer(function Main() {
                                     <>
                                         <PostWithPhoto key={post.id} post={post.value} />
                                     </>
-                                ))}
+                                ))}{console.log(postStore.groupedPosts)}
                             </InfiniteScroll>
                         </div>
                         {/* <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>

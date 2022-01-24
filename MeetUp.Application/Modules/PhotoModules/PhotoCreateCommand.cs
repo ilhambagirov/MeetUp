@@ -36,7 +36,11 @@ namespace MeetUp.Application.Modules.PhotoModules
         }
         public async Task<Result<AppUserDto>> Handle(PhotoCreateCommand request, CancellationToken cancellationToken)
         {
-            var user = await db.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
+            var user = await db.Users.Include(x => x.Posts.Where(p => p.DeletedDate == null)).ThenInclude(x => x.Likes)
+                .Include(x => x.Posts.Where(p => p.DeletedDate == null)).ThenInclude(x => x.Comments)
+               .Include(x => x.Followings)
+               .Include(x => x.Followers)
+               .ThenInclude(x => x.Observer).Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == userAccessor.GetUsername());
             if (user == null) return null;
 
             var photoUploadResult = await photoAccessor.AddPhoto(request.File);

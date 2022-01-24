@@ -152,7 +152,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                 }
                 <div className='post-with-photo-footer d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
-                        <a onClick={() => updateLike(post.id, post.liking, post.createdByUser.userName)} className='likes d-flex align-items-center me-4'>
+                        <a onClick={() => updateLike(post.id, post.liking, post.createdByUser?.userName !== undefined ? post.createdByUser?.userName : user.userName)} className='likes d-flex align-items-center me-4'>
                             <AiOutlineLike className={post.liking ? 'likes-icon liked-icon' : 'likes-icon'} />
                             <span className={Footer}>{post.likeCount} Like</span>
                         </a>

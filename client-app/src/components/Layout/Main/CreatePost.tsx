@@ -98,7 +98,7 @@ export default observer(function CreatePost() {
                         </div>
                         <div className='post-content'>
                             <span className='me-2 my-profile-img-add-post-wrapper'>
-                                <img className='my-profile-img-add-post' src={ user2?.image || user1.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                <img className='my-profile-img-add-post' src={ user1?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                             </span>
                             <MyTextInput name='title' style={postAddTextArea} placeholder='What do you think?' />
                         </div>

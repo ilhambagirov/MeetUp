@@ -26,9 +26,11 @@ export default class PostStore {
             runInAction(() => {
                 liking ? post.likeCount-- : post.likeCount++
                 post.liking = !post.liking
-                var user = dark.profileStore.loadProfile(username)
-                var u = user as unknown as User
-                liking ? u.likesCount-- : u.likesCount++
+                if (window.location.pathname.includes('userprofile')) {
+                    var user = dark.profileStore.loadProfile(username)
+                    var u = user as unknown as User
+                    liking ? u.likesCount-- : u.likesCount++
+                }
             })
         } catch (error) {
             throw error
@@ -98,10 +100,14 @@ export default class PostStore {
     }
 
     get groupedPosts() {
-        const array = Array.from(this.postRegistry, ([id, value]) => ({ id, value }));
-        return array
+        var result = Array.from(this.postRegistry, ([id, value]) => ({ id, value }))
+            .sort(function (a, b) {
+                var dateA = new Date(a.value.createdDate).getTime();
+                var dateB = new Date(b.value.createdDate).getTime();
+                return dateA < dateB ? -1 : 1
+            });
+        return result
     }
-
     deletePost = async (id: number) => {
         try {
             const post = await agent.Posts.delete(id);
