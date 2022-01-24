@@ -10,6 +10,7 @@ namespace MeetUp.Application.Infrastructure
         public MappingProfiles()
         {
             CreateMap<Post, PostDto>()
+                .ForMember(i => i.LikeCount, o => o.MapFrom(s => s.Likes.Count))
                 .ReverseMap();
            /* CreateMap<IQueryable<Post>, IQueryable<PostDto>>()
               .ReverseMap();*/
