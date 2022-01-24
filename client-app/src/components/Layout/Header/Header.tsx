@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaMeetup } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineHome, AiOutlineHistory, AiOutlineUsergroupDelete, AiOutlineMenu } from "react-icons/ai";
@@ -18,6 +18,9 @@ import { useDarkMode } from "../../../app/stores/store";
 import { UseSideBar } from "../../../app/stores/sidebarstore";
 import { Link } from "react-router-dom";
 import { User } from "../../../app/models/user";
+import { Formik } from "formik";
+import * as Yup from 'yup'
+import MyTextInput from "../../../app/common/MyTextInput";
 
 export default observer(function Header() {
     // built-in hooks
@@ -28,7 +31,7 @@ export default observer(function Header() {
     const [menuBackground, SetmenuBackground] = useState("");
 
     //custom hooks
-    const { activitystore, userStore, profileStore, chatStore } = useDarkMode();
+    const { activitystore, userStore, profileStore, chatStore, searchStore } = useDarkMode();
     const { chatstore } = UseChatMode();
     const { sidestore } = UseSideBar();
     const { darkMode, setDarkMode } = activitystore
@@ -66,6 +69,12 @@ export default observer(function Header() {
     const darkModeToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': checkedBoxDarkMode })
     const SideBarToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': sidebarcollapsedmode })
 
+    const validationSchema = Yup.object(
+        {
+            title: Yup.string().required("The title is required"),
+        }
+    )
+    const initialValues = { dsiplayName: '' }
     return (
         <header className={navbardark}  >
             <div className='custom-container'>
@@ -77,14 +86,23 @@ export default observer(function Header() {
                         </Link>
                     </div>
                     <div className='navmiddle d-flex'>
-                        <form action="" className='d-lg-flex d-none'>
-                            <div className='form-group search-input-wrapper'>
-
-                                <FiSearch style={{ color: darkMode ? 'white' : 'grey' }} className='search-input-logo' />
-
-                                <input style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} className='search-input' placeholder='Start typing to search..' type="text" name="searchInput" id="" />
-                            </div>
-                        </form>
+                        <Formik validationSchema={validationSchema}
+                            onSubmit={async (values, actions) => {
+                                await searchStore.searchUser(values)
+                                actions.resetForm()
+                            }}
+                            enableReinitialize
+                            initialValues={initialValues}
+                        >
+                            {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                                <form className='d-lg-flex d-none'>
+                                    <div className='form-group search-input-wrapper'>
+                                        <FiSearch style={{ color: darkMode ? 'white' : 'grey' }} className='search-input-logo' />
+                                        <input onChange={() => handleSubmit} className='search-input' placeholder='Start typing to search..' autoComplete="off" type="text" name="dsiplayName" />
+                                    </div>
+                                </form>
+                            )}
+                        </Formik>
                         <div className='d-flex'>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <AiOutlineHome className='nav-middle-Logo' />
