@@ -18,9 +18,8 @@ import { useDarkMode } from "../../../app/stores/store";
 import { UseSideBar } from "../../../app/stores/sidebarstore";
 import { Link } from "react-router-dom";
 import { User } from "../../../app/models/user";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from 'yup'
-import MyTextInput from "../../../app/common/MyTextInput";
 
 export default observer(function Header() {
     // built-in hooks
@@ -29,6 +28,7 @@ export default observer(function Header() {
     const [checkedBoxDarkMode, SetcheckedBoxDarkMode] = useState(false);
     const [sidebarcollapsedmode, Setsidebarcollapsedmode] = useState(false);
     const [menuBackground, SetmenuBackground] = useState("");
+    const [searchItem, setSearchItem] = useState("");
 
     //custom hooks
     const { activitystore, userStore, profileStore, chatStore, searchStore } = useDarkMode();
@@ -69,12 +69,6 @@ export default observer(function Header() {
     const darkModeToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': checkedBoxDarkMode })
     const SideBarToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': sidebarcollapsedmode })
 
-    const validationSchema = Yup.object(
-        {
-            title: Yup.string().required("The title is required"),
-        }
-    )
-    const initialValues = { dsiplayName: '' }
     return (
         <header className={navbardark}  >
             <div className='custom-container'>
@@ -86,23 +80,22 @@ export default observer(function Header() {
                         </Link>
                     </div>
                     <div className='navmiddle d-flex'>
-                        <Formik validationSchema={validationSchema}
-                            onSubmit={async (values, actions) => {
-                                await searchStore.searchUser(values)
-                                actions.resetForm()
-                            }}
-                            enableReinitialize
-                            initialValues={initialValues}
-                        >
-                            {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                                <form className='d-lg-flex d-none'>
-                                    <div className='form-group search-input-wrapper'>
-                                        <FiSearch style={{ color: darkMode ? 'white' : 'grey' }} className='search-input-logo' />
-                                        <input onChange={() => handleSubmit} className='search-input' placeholder='Start typing to search..' autoComplete="off" type="text" name="dsiplayName" />
-                                    </div>
-                                </form>
-                            )}
-                        </Formik>
+                        <form className='d-lg-flex d-none'>
+                            <div className='form-group search-input-wrapper'>
+                                <FiSearch style={{ color: darkMode ? 'white' : 'grey' }} className='search-input-logo' />
+                                <input onClick={() => searchStore.searchUser()} onChange={(e) => setSearchItem(e.target.value)} className='search-input' placeholder='Start typing to search..' autoComplete="off" type="text" name="dsiplayName" />
+                            </div>
+                        </form>
+                        {
+                            searchItem.length > 0 &&
+                            <div className="search-dropdown">
+                                <ul>
+                                    {searchStore.users.filter(x => x.dsiplayName.includes(searchItem)).map(item => (
+                                        <li>{item.dsiplayName}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        }
                         <div className='d-flex'>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <AiOutlineHome className='nav-middle-Logo' />
@@ -298,7 +291,7 @@ export default observer(function Header() {
                         }
                         <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
                             {user1?.userName === user?.userName ?
-                                <img className='profile-img' src={user1?.image|| user.image || profile4} alt="" />
+                                <img className='profile-img' src={user1?.image || user.image || profile4} alt="" />
                                 :
                                 <img className='profile-img' src={user?.image || user1?.image || profile4} alt="" />
                             }

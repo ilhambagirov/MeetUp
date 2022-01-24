@@ -34,10 +34,10 @@ namespace MeetUp.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("SearchUser/{DisplayName}")]
-        public async Task<ActionResult<UserDto>> SearchUser(string DisplayName)
+        [HttpGet("SearchUser")]
+        public async Task<ActionResult<UserDto>> SearchUser()
         {
-            return HandleResult(await Mediator.Send(new UserSearchQuery() { DisplayName = DisplayName }));
+            return HandleResult(await Mediator.Send(new UserSearchQuery()));
         }
 
         [HttpPost("changepassword")]

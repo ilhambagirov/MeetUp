@@ -138,6 +138,7 @@ header{
 
 .navmiddle{
     margin-left: 2rem;
+    position: relative;
 }
 .search-input-wrapper{
     position: relative;
@@ -150,7 +151,14 @@ header{
     top: 14px;
     outline-color: grey;
 }
-
+.search-dropdown{
+    position: absolute;
+    left: 20px;
+    background: #fff;
+    padding: 10px;
+    top: 86px;
+    width: 285px;
+}
 .search-input{
     border-radius: 20px;
     line-height: 32px;

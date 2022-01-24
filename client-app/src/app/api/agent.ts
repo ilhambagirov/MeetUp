@@ -102,7 +102,7 @@ const Account = {
     emailConfirm: (token: string, username: string) => request.get<User>(`/account/register-email-confirm?token=${token}&username=${username}`),
     updateFolowing: (userName: string) => request.post(`follow/${userName}`, {}),
     listFollow: (userName: string, predicate: string) => request.get<User[]>(`follow/${userName}?predicate=${predicate}`),
-    searchUser: (userName: string) => request.get<User[]>(`Account/SearchUser/${userName}`)
+    searchUser: () => request.get<User[]>(`Account/SearchUser`)
 }
 const Photos = {
     create: (file: any) => {

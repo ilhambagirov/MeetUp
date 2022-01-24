@@ -15,7 +15,6 @@ namespace MeetUp.Application.Modules.AccountModules
 {
     public class UserSearchQuery : IRequest<Result<List<AppUserDto>>>
     {
-        public string DisplayName { get; set; }
     }
     public class UserSearchQueryHandler : IRequestHandler<UserSearchQuery, Result<List<AppUserDto>>>
     {
@@ -33,7 +32,7 @@ namespace MeetUp.Application.Modules.AccountModules
         }
         public async Task<Result<List<AppUserDto>>> Handle(UserSearchQuery request, CancellationToken cancellationToken)
         {
-            var usersList = await db.Users.Where(x => x.DsiplayName.Contains(request.DisplayName)).ToListAsync();
+            var usersList = await db.Users.ToListAsync();
             if (usersList == null) return null;
 
             var users = new List<AppUser>();

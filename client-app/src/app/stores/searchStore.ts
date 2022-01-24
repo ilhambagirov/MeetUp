@@ -9,10 +9,10 @@ export default class SearchStore {
         makeAutoObservable(this)
     }
 
-    searchUser = async (username: any) => {
+    searchUser = async () => {
         try {
             console.log('aue')
-            const user = await agent.Account.searchUser(username)
+            const user = await agent.Account.searchUser()
             runInAction(() => this.users = user)
         } catch (error) {
             throw error
