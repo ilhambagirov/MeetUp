@@ -13,6 +13,7 @@ export default class PostStore {
     addPhotoMode = false
     pagination: Pagination | null = null
     pagingParams = new PagingParams()
+    // loadingNext = false
 
     constructor() {
         makeAutoObservable(this)
@@ -27,6 +28,9 @@ export default class PostStore {
     setPagingParams = (pagingParams: PagingParams) => {
         this.pagingParams = pagingParams
     }
+    // setLoadingNext(bool: boolean) {
+    //     runInAction(() => this.loadingNext = bool)
+    // }
 
     setAddPhotoMode = (bool: boolean) => {
         runInAction(() => {

@@ -71,7 +71,7 @@ export default observer(function Header() {
             <div className='custom-container'>
                 <div className={`nav-head  shadow-xs `}>
                     <div className='navleft'>
-                        <Link to='/home' className='d-flex text-decoration-none logo-Link'>
+                        <Link to='/home' className='d-flex text-decoration-none logo-Link align-items-center'>
                             <FaMeetup className='meetup-Logo' />
                             <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp.</span>
                         </Link>

@@ -13,6 +13,7 @@ import PeopleRecomended from "./PeopleRecomended";
 import PopularEvents from "./PopularEvents";
 import PostWithPhoto from "./PostWithPhoto";
 import StorySlider from "./StrorySlider";
+import { TailSpin } from 'react-loader-spinner'
 
 export default observer(function Main() {
     //custom hooks
@@ -25,9 +26,11 @@ export default observer(function Main() {
     const [loadingNext, setLoadingNext] = useState(false)
 
     const handleGetNext = () => {
+        console.log('girdi qaqam')
         setLoadingNext(true)
         setPagingParams(new PagingParams(pagination!.currentPage + 1))
-        loadActivitiesPagination().then(() => setLoadingNext(false))
+        loadActivitiesPagination()
+        setLoadingNext(false)
     }
 
     const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode, "darkmode-maincontent": darkMode })
@@ -50,16 +53,21 @@ export default observer(function Main() {
                                 loadMore={handleGetNext}
                                 hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
                                 initialLoad={false}
+                                loader={<div className="d-flex justify-content-center mb-5">
+                                    <TailSpin
+                                        height={50}
+                                        width="50"
+                                        color='#0d6efd'
+                                        ariaLabel='loading'
+                                    />
+                                </div>}
                             >
                                 {postStore.groupedPosts.map((post) => (
                                     <>
-                                        {console.log(postStore.groupedPosts)}
                                         <PostWithPhoto key={post.id} post={post.value} />
                                     </>
                                 ))}
                             </InfiniteScroll>
-                            <Loader active={loadingNext} />
-                            <PeopleRecomended />
                         </div>
                         <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>
                             <PopularEvents />
