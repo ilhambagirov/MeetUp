@@ -87,11 +87,19 @@ export default observer(function Header() {
                             </div>
                         </form>
                         {
-                            searchItem.length > 0 &&
+                            searchItem.length > 0 && searchStore.users.some(x => x.dsiplayName.toLowerCase().startsWith(searchItem.toLowerCase())) &&
                             <div className="search-dropdown">
-                                <ul>
-                                    {searchStore.users.filter(x => x.dsiplayName.includes(searchItem)).map(item => (
-                                        <li>{item.dsiplayName}</li>
+                                <ul className="mb-0">
+                                    {searchStore.users.filter(x => x.dsiplayName.toLowerCase().startsWith(searchItem.toLowerCase())).map(item => (
+                                        <li onClick={()=>setSearchItem("")}><Link to={`/userprofile/${item.userName}`}  className="d-flex align-items-center">
+                                            <span className='post-with-photo-user-photo me-3'>
+                                                <img className='user-profile-pic' src={item.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                            </span>
+                                            <div className="d-flex flex-column">
+                                                <span style={{ color: '#999c9f', fontWeight: '600' }}>{item.dsiplayName}</span>
+                                                <span style={{ fontSize: '13px' }}>@{item.userName}</span>
+                                            </div>
+                                        </Link></li>
                                     ))}
                                 </ul>
                             </div>

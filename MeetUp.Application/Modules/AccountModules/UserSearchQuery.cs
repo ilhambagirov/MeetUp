@@ -32,7 +32,7 @@ namespace MeetUp.Application.Modules.AccountModules
         }
         public async Task<Result<List<AppUserDto>>> Handle(UserSearchQuery request, CancellationToken cancellationToken)
         {
-            var usersList = await db.Users.ToListAsync();
+            var usersList = await db.Users.Include(x => x.Photos).ToListAsync();
             if (usersList == null) return null;
 
             var users = new List<AppUser>();
