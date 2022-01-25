@@ -7,6 +7,7 @@ import PostStore from "./poststore";
 import ProfileStore from "./profileStore";
 import UserStore from "./userStore";
 import SearchStore from "./searchStore";
+import AdminStore from "./adminstore";
 
 interface Store {
     activitystore: DarkModeStore,
@@ -17,6 +18,7 @@ interface Store {
     commentStore: CommentStore
     chatStore: ChatStore
     searchStore: SearchStore
+    adminstore: AdminStore
 }
 
 export const dark: Store = {
@@ -27,7 +29,8 @@ export const dark: Store = {
     profileStore: new ProfileStore(),
     commentStore: new CommentStore(),
     chatStore: new ChatStore(),
-    searchStore: new SearchStore()
+    searchStore: new SearchStore(),
+    adminstore: new AdminStore()
 }
 
 export const DarkContext = createContext(dark)

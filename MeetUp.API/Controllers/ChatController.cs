@@ -32,6 +32,7 @@ namespace MeetUp.API.Controllers
         {
             string userId = _userManager.GetUserId(User);
             List<AppUser> customUsers = _context.Users.Include(x=>x.Photos).Where(u => u.Id != userId).ToList();
+
             return Ok(mapper.Map<List<AppUserDto>>(customUsers));
         }
         [HttpGet("firendId/{username}")]

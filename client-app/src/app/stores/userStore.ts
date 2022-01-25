@@ -22,7 +22,7 @@ export default class UserStore {
     // }
     constructor() {
         makeAutoObservable(this)
-        if (window.location.pathname !== '/' && window.location.pathname !== '/register' && !window.location.pathname.includes('confirm')) {
+        if (window.location.pathname !== '/' && window.location.pathname !== '/register' &&  window.location.pathname !== '/adminDashboard' && window.location.pathname !== '/admin' && !window.location.pathname.includes('confirm')) {
             runInAction(() => this.user = this.loadUser())
         }
     }

@@ -25,9 +25,11 @@ import { ToastContainer } from 'react-toastify'
 import { Container } from 'semantic-ui-react';
 import ServerError from './components/Layout/Errors/ServerError';
 import EmailConfirm from './app/common/EmailConfirm';
+import AdminLogin from './components/Admin/AdminLogin'
+import AdminNavbar from './components/Admin/Navbar'
 export default observer(function App() {
 
-  const { activitystore, userStore } = useDarkMode()
+  const { activitystore, userStore, adminstore } = useDarkMode()
   const { darkMode } = activitystore
 
   const wrapper = classNames("wrapper", { containerdark: darkMode })
@@ -40,8 +42,13 @@ export default observer(function App() {
       <Route exact path='/' component={Login} />
       <Route path='/register' component={Register} />
       <Route path='/confirm' component={EmailConfirm} />
+      <Route exact path='/admin' component={AdminLogin} />
+      <Switch>
+        {console.log(adminstore.admin)}
+        <Route exact path='/adminDashboard' render={() => (adminstore.admin !== null ? (<AdminNavbar />) : (<Redirect to="/admin" />))} />
+      </Switch>
       {
-        path !== '/register' && path !== '/confirm' &&
+        path !== '/register' && path !== '/confirm' && path !== '/admin' && adminstore.admin === null && path !== '/adminDashboard' &&
         <Route path='/(.+)' render={() => (
           <>
             {
@@ -65,6 +72,8 @@ export default observer(function App() {
           </>
         )} />
       }
+
+
     </div>
   );
 })

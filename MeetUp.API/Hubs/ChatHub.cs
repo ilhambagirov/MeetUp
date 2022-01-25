@@ -41,6 +41,7 @@ namespace MeetUp.API.Hubs
 
         public async Task SendMessage(string username, string message)
         {
+            var a = userAccessor.GetUsername();
             string userId = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id;
             string friendId = userMangaer.FindByNameAsync(username).Result.Id;
 
@@ -67,7 +68,6 @@ namespace MeetUp.API.Hubs
             db.Messages.Add(newMessage);
             db.SaveChanges();
             await Clients.User(friendId).SendAsync("ReceiveMessage", newMessage, date);
-            await Clients.User(friendId).SendAsync("loadMessage", newMessage, date);
         }
         public override async Task<Task> OnConnectedAsync()
         {
