@@ -11,10 +11,19 @@ namespace MeetUp.Persistence.DataContext
     public class SeedData
     {
         public static async Task CreateSeedData(AppDbContext context,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager
+            )
         {
-            if (!userManager.Users.Any() && !context.Posts.Any())
+            if (!userManager.Users.Any() && !context.Posts.Any() && !context.Roles.Any())
             {
+                /* var role = new RoleManager<Role>()
+                 {
+                     Name = "SuperAdmin"
+                 };
+                 var userRole = new RiodeRole()
+                 {
+                     Name = "User"
+                 };*/
                 var users = new List<AppUser>
                 {
                     new AppUser
