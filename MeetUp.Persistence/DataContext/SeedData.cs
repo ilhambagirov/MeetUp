@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MeetUp.Persistence.DataContext
@@ -14,6 +13,27 @@ namespace MeetUp.Persistence.DataContext
             UserManager<AppUser> userManager
             )
         {
+            if (!context.NotificationTypes.Any())
+            {
+                var notificationTypes = new List<NotificationType>
+                {
+                    new NotificationType
+                    {
+                       Name = "Chat"
+                    },
+                    new NotificationType
+                    {
+                         Name = "Comment"
+                    },
+                    new NotificationType
+                    {
+                        Name = "Like"
+                    },
+                };
+                await context.NotificationTypes.AddRangeAsync(notificationTypes);
+                await context.SaveChangesAsync();
+            }
+
             if (!userManager.Users.Any() && !context.Posts.Any() && !context.Roles.Any())
             {
                 /* var role = new RoleManager<Role>()

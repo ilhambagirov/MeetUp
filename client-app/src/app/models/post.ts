@@ -1,6 +1,6 @@
 import { PostComment } from "./comment";
 import { Profile } from "./profile";
-import { User } from "./user";
+
 
 export interface Post {
     id: number;

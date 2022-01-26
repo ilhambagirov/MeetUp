@@ -17,7 +17,8 @@ namespace MeetUp.Persistence.DataContext
         public DbSet<UserFollowing> UserFollowings { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<LikedPost> LikedPosts { get; set; }
-
+        public DbSet<NotificationType> NotificationTypes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

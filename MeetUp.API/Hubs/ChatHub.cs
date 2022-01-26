@@ -5,6 +5,7 @@ using MeetUp.Domain.Models.Entities;
 using MeetUp.Persistence.DataContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace MeetUp.API.Hubs
         {
             var a = userAccessor.GetUsername();
             string userId = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id;
-            string friendId = userMangaer.FindByNameAsync(username).Result.Id;
+            var friend = await userMangaer.FindByNameAsync(username);
 
             //datetime
             DateTime serverTime = DateTime.Now;
@@ -52,7 +53,7 @@ namespace MeetUp.API.Hubs
             DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, tzi);
             DateTime date = localTime;
             bool countUp = false;
-            if (db.Messages.Any(m => m.ReceiverId == friendId && m.SenderId == userId && m.IsRead == false))
+            if (db.Messages.Any(m => m.ReceiverId == friend.Id && m.SenderId == userId && m.IsRead == false))
             {
                 countUp = true;
             }
@@ -60,14 +61,28 @@ namespace MeetUp.API.Hubs
             Message newMessage = new Message()
             {
                 SenderId = userId,
-                ReceiverId = friendId,
+                ReceiverId = friend.Id,
                 MessageText = message,
                 Date = serverTime,
                 IsRead = false
             };
+
+            var notType = await db.NotificationTypes.FirstOrDefaultAsync(x => x.Id == 1);
+
+            Notification newNotification = new Notification()
+            {
+                NotificationType = notType,
+                FromUserId = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id,
+                ToUserId = friend.Id,
+                PostId = 11,
+                CreatedDate = serverTime
+            };
+            db.Notifications.Add(newNotification);
+
             db.Messages.Add(newMessage);
             db.SaveChanges();
-            await Clients.User(friendId).SendAsync("ReceiveMessage", newMessage, date);
+            await Clients.User(friend.Id).SendAsync("ReceiveMessage", newMessage, date);
+            await Clients.User(friend.Id).SendAsync("ReceiveNotification", newNotification, date);
         }
         public override async Task<Task> OnConnectedAsync()
         {

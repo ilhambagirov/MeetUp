@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MeetUp.Domain.Models.Entities
 {
@@ -17,5 +18,7 @@ namespace MeetUp.Domain.Models.Entities
         public virtual ICollection<UserFollowing> Followings { get; set; }
         public virtual ICollection<UserFollowing> Followers { get; set; }
         public virtual ICollection<LikedPost> LikedPosts { get; set; }
+        [NotMapped]
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }
