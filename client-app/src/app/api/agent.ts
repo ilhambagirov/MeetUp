@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { history } from "../..";
 import { Post, PostFormValues } from "../models/post";
 import { Profile } from "../models/profile";
-import { User, UserFormValues } from "../models/user";
+import { PasswordValues, User, UserFormValues } from "../models/user";
 import { Message } from "../models/message";
 import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";
@@ -97,9 +97,11 @@ const Account = {
     userProfile: (userName: string) => request.get<User>(`/account/userProfile/${userName}`),
     login: (user: UserFormValues) => request.post<User>(`/account`, user),
     register: (user: UserFormValues) => axios.post<User>('/account/register', user),
+    resetPassword: (email : string) => axios.post<void>('/account/reset-password', {email: email}),
     changePassword: (passwordModel: ChangePassword) => axios.post<void>('/account/changepassword', passwordModel),
     updateUserDetails: (user: UserFormValues) => request.post<User>('/account/updateuserdetails', user),
     emailConfirm: (token: string, username: string) => request.get<User>(`/account/register-email-confirm?token=${token}&username=${username}`),
+    resetPasswordConfirm: (token: string, username: string, password: PasswordValues) => request.post<void>(`/account/reset-password-confirm?token=${token}&email=${username}`,password),
     updateFolowing: (userName: string) => request.post(`follow/${userName}`, {}),
     listFollow: (userName: string, predicate: string) => request.get<User[]>(`follow/${userName}?predicate=${predicate}`),
     searchUser: () => request.get<User[]>(`Account/SearchUser`)

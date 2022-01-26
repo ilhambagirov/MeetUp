@@ -33,3 +33,8 @@ export interface UserFormValues {
     academicDegree?: string,
     profession?: string,
 }
+
+export interface PasswordValues {
+    password?: string,
+    passwordConfirm?: string,
+}

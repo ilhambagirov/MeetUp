@@ -16,8 +16,9 @@ import { FiDroplet, FiPlus } from "react-icons/fi";
 import Item from "antd/lib/list/Item";
 import { Link, NavLink } from "react-router-dom";
 import { history } from "../../..";
+import { useHistory, useLocation } from "react-router-dom";
 
-export default observer(function UserProfile() {
+export default observer(function UserProfile(props : any) {
     const { postStore, profileStore, userStore } = useDarkMode();
     const { groupedPosts } = postStore
     const { profile, changeImage, updateFollowing } = profileStore
@@ -50,7 +51,7 @@ export default observer(function UserProfile() {
     useEffect(() => {
         var point = window.location.pathname.lastIndexOf('/')
         profileStore.loadProfile(window.location.pathname.substring(point + 1))
-    }, [profileStore.loadProfile])
+    }, [profileStore.loadProfile, props.location])
 
     // photo upload
 

@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
-import { User, UserFormValues } from "../models/user";
+import { PasswordValues, User, UserFormValues } from "../models/user";
 import { dark } from "./store";
 import { ChangePassword } from "../models/userPasswordChange";
 import { toast } from "react-toastify";
@@ -14,6 +14,7 @@ export default class UserStore {
     // DecodedJwt: User | null = this.token == '' ? null : jwt_decode(this.token)
     user: User | Promise<User> | null = null
     errorData: string
+    tokenIsValid: string | null = null
     // this.DecodedJwt == null ? null : {
     //     id: this.DecodedJwt.id,
     //     dsiplayName: this.DecodedJwt.dsiplayName,
@@ -22,7 +23,11 @@ export default class UserStore {
     // }
     constructor() {
         makeAutoObservable(this)
-        if (window.location.pathname !== '/' && window.location.pathname !== '/register' &&  window.location.pathname !== '/adminDashboard' && window.location.pathname !== '/admin' && !window.location.pathname.includes('confirm')) {
+        this.tokenIsValid = localStorage.getItem('tokenValid')
+        if (window.location.pathname !== '/' && window.location.pathname !== '/register' &&
+            window.location.pathname !== '/adminDashboard' && window.location.pathname !== '/admin' &&
+            !window.location.pathname.includes('confirm') && window.location.pathname !== '/passwordreset' &&
+            window.location.pathname !== '/confirmResetPassword') {
             runInAction(() => this.user = this.loadUser())
         }
     }
@@ -68,6 +73,21 @@ export default class UserStore {
         }
     }
 
+    resetPassword = async (values: any) => {
+        try {
+            console.log(values.email)
+            await agent.Account.resetPassword(values.email)
+            localStorage.setItem('tokenValid', 'Yes')
+            history.push("/")
+            swal("Reset Password Confirmation Link has been sent to your email address!", {
+                icon: "success",
+            });
+        } catch (error) {
+            console.log('partladi')
+            throw error;
+        }
+    }
+
     logout = () => {
         console.log("salamun aleykum")
         dark.commonStore.setToken(null)
@@ -81,7 +101,7 @@ export default class UserStore {
     changeUserPassword = async (creds: ChangePassword) => {
         try {
             await agent.Account.changePassword(creds)
-            history.push("/home")
+            history.push("/")
             swal("Password Changed!", {
                 icon: "success",
             });
@@ -121,6 +141,19 @@ export default class UserStore {
             setTimeout(() => {
                 history.push("/")
             }, 2000)
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    resetPasswordConfirm = async (token: string, email: string, password: PasswordValues) => {
+        try {
+            await agent.Account.resetPasswordConfirm(token, email, password)
+            localStorage.removeItem('tokenValid')
+            history.push("/")
+            swal("Your password has been changed", {
+                icon: "success",
+            });
         } catch (error) {
             throw error;
         }

@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Threading.Tasks;
 using static MeetUp.Application.Helpers.Providers.EmailConfirmationProvider;
+using static MeetUp.Application.Helpers.Providers.PasswordResetProvider;
 
 namespace MeetUp.Application.Extensions
 {
@@ -21,12 +22,14 @@ namespace MeetUp.Application.Extensions
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+                opt.Tokens.PasswordResetTokenProvider = "passwordreset";
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddUserManager<UserManager<AppUser>>()
                 .AddDefaultTokenProviders()
-                .AddTokenProvider<EmailConfirmationTokenProvider<AppUser>>("emailconfirmation");
+                .AddTokenProvider<EmailConfirmationTokenProvider<AppUser>>("emailconfirmation")
+                .AddTokenProvider<PasswordResetTokenProvider<AppUser>>("passwordreset");
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["TokenKey"]));
 

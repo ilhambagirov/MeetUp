@@ -73,5 +73,29 @@ namespace MeetUp.API.Controllers
             if (response == null) return ValidationProblem();
             return Ok(response);
         }
+
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(AccountResetPasswordCommand command)
+        {
+            var response = await Mediator.Send(command);
+            if (response == null) return ValidationProblem();
+            return Ok(response);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("reset-password-confirm")]
+        public async Task<IActionResult> ResetPasswordConfirm([FromQuery] string token, [FromQuery] string email, ResetPassword passwordModel)
+        {
+            var response = await Mediator.Send(new AccountResetPassCommand
+            {
+                Token = token,
+                Email = email,
+                Password = passwordModel.Password,
+                PasswordConfirm = passwordModel.PasswordConfirm
+            });
+            if (response == null) return ValidationProblem();
+            return Ok(response);
+        }
     }
 }

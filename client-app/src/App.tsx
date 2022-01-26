@@ -27,6 +27,8 @@ import ServerError from './components/Layout/Errors/ServerError';
 import EmailConfirm from './app/common/EmailConfirm';
 import AdminLogin from './components/Admin/AdminLogin'
 import AdminNavbar from './components/Admin/Navbar'
+import ResetPassword from './components/Layout/Account/ResetPassword/ResetPassword'
+import SendEmailResetPass from './components/Layout/Account/ResetPassword/SendEmailResetPass';
 export default observer(function App() {
 
   const { activitystore, userStore, adminstore } = useDarkMode()
@@ -43,12 +45,18 @@ export default observer(function App() {
       <Route path='/register' component={Register} />
       <Route path='/confirm' component={EmailConfirm} />
       <Route exact path='/admin' component={AdminLogin} />
+      <Route exact path='/passwordreset' component={SendEmailResetPass} />
       <Switch>
-        {console.log(adminstore.admin)}
         <Route exact path='/adminDashboard' render={() => (adminstore.admin !== null ? (<AdminNavbar />) : (<Redirect to="/admin" />))} />
       </Switch>
+      <Switch>
+        <Route path='/confirmResetPassword' render={() => (userStore.tokenIsValid ? (<ResetPassword />) : (<Redirect to="/" />))} />
+      </Switch>
       {
-        path !== '/register' && path !== '/confirm' && path !== '/admin' && adminstore.admin === null && path !== '/adminDashboard' &&
+        path !== '/register' && path !== '/confirm' &&
+        path !== '/admin' && path !== '/passwordreset' &&
+        adminstore.admin === null && path !== '/adminDashboard' &&
+        path !== '/confirmResetPassword' &&
         <Route path='/(.+)' render={() => (
           <>
             {
@@ -63,7 +71,7 @@ export default observer(function App() {
               <Route path='/socialaccount' render={() => (userStore.isLoggedIn ? (<SocialAccount />) : (<Redirect to="/" />))} />
               <Route path='/passwordchange' render={() => (userStore.isLoggedIn ? (<PasswordChange />) : (<Redirect to="/" />))} />
               <Route path='/help' render={() => (userStore.isLoggedIn ? (<Help />) : (<Redirect to="/" />))} />
-              <Route path='/userprofile/:username' render={() => (userStore.isLoggedIn ? (<UserProfile />) : (<Redirect to="/" />))} />
+              <Route path='/userprofile/:username' render={(props) => (userStore.isLoggedIn ? (<UserProfile {...props} />) : (<Redirect to="/" />))} />
               <Route path='/server-error' component={ServerError} />
               <Container>
                 <Route component={NotFound} />

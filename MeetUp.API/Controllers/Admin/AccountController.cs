@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace MeetUp.API.Controllers.Admin
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AccountController : BaseApiController
+   /* public class AccountController : BaseApiController
     {
         [HttpPost]
         public async Task<ActionResult<UserDto>> Login(AccountLoginCommand command)
@@ -17,5 +15,5 @@ namespace MeetUp.API.Controllers.Admin
             if (response.UserName == null) return ValidationProblem();
             return Ok(response);
         }
-    }
+    }*/
 }
