@@ -335,10 +335,13 @@ a{
     position: absolute;
     top: 55px;
     right: 170px;
+    width: 320px;
     padding: 1.5rem;
     border-radius: 15px;
     z-index: 2;
     background-color: #fff;
+    height: 380px;
+    overflow-y: auto;
 }
 
 .notificationdropdark{
@@ -373,7 +376,9 @@ a{
 
 .not-drop{
     margin-bottom: 1rem;
-    width: max-content;
+    width: 100%;
+  
+
 }
 .not-user-pics{
     width: 40px;

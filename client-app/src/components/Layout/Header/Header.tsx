@@ -78,7 +78,7 @@ export default observer(function Header() {
         console.log('girdi qaqam')
         setLoadingNext(true)
         chatStore.setPagingParams(new PagingParams(chatStore.pagination!.currentPage + 1))
-        chatStore.loadNotifications()
+        chatStore.loadNotificationsPagination()
         setLoadingNext(false)
     }
 
@@ -122,17 +122,8 @@ export default observer(function Header() {
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <AiOutlineHome className='nav-middle-Logo' />
                             </a>
-                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link d-none search-991'>
-                                <FiSearch className='nav-middle-Logo' />
-                            </a>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} className=' nav-middle-link d-none search-991' href="#">
                                 <MdChatBubbleOutline onClick={() => setChatMode()} className='nav-middle-Logo' />
-                            </a>
-                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link lg-show'>
-                                <AiOutlineHistory className='nav-middle-Logo' />
-                            </a>
-                            <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
-                                <BsCameraVideo className='nav-middle-Logo' />
                             </a>
                             <a style={{ backgroundColor: darkMode ? '#1a2236' : '#eee' }} href="" className='nav-middle-link xl-none'>
                                 <AiOutlineUsergroupDelete className='nav-middle-Logo' />
@@ -147,6 +138,7 @@ export default observer(function Header() {
                         <a className='text-decoration-none nav-right-link' onClick={() => {
                             handleNotDropdown()
                             chatStore.loadNotifications()
+                            chatStore.notificationCount = 0
                         }} href="#">
                             {chatStore.notificationCount > 0 &&
                                 <span className='notification'>{chatStore.notificationCount}
@@ -158,6 +150,7 @@ export default observer(function Header() {
                             <div className={notificationDrop}>
                                 <h4 className={notificationHeader}>Notification</h4>
                                 <InfiniteScroll
+                                    useWindow={false}
                                     pageStart={0}
                                     loadMore={handleGetNext}
                                     hasMore={!loadingNext && !!chatStore.pagination && chatStore.pagination.currentPage < chatStore.pagination.totalPages}
@@ -173,18 +166,16 @@ export default observer(function Header() {
                                 >
                                     {chatStore.notifications?.map(note => (
                                         <a className='d-flex not-drop' href="">
-                                            {console.log(chatStore.notifications)}
                                             <img className='not-user-pics' src={note?.fromUserImage || user8} alt="" />
-                                            <div className='ms-2'>
+                                            <div className='ms-2 w-100'>
                                                 <h5 className={notificationNames}>
                                                     {note?.fromUserName}
                                                     <span className='time-not-user'>{formatDistanceToNow(new Date(note.createdDate))}</span>
                                                 </h5>
-                                                {/* {note.notificationTypeName === 'message' ?
+                                                {note.notificationTypeName === 'Chat' ?
                                                     <h6>You have new message</h6> :
                                                     <h6>You have new comment</h6>
-                                                } */}
-                                                 <h6>You have new comment</h6>
+                                                }
                                             </div>
                                         </a>
                                     ))}
@@ -201,7 +192,7 @@ export default observer(function Header() {
                         <a className=' text-decoration-none nav-right-link rotate' onClick={() => handleSettingsDropdown()} href="#">
                             <VscSettingsGear fill='#0d6efd' className={toggleCatch} />
                         </a>
-                        {
+                        {/* {
                             settingsDropdown &&
                             <div className={settingsDrop}>
                                 <h4 className={notificationHeader}>Settings</h4>
@@ -307,7 +298,7 @@ export default observer(function Header() {
                                     </div>
                                 </div>
                             </div>
-                        }
+                        } */}
                         <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
                             {user1?.userName === user?.userName ?
                                 <img className='profile-img' src={user1?.image || user.image || profile4} alt="" />

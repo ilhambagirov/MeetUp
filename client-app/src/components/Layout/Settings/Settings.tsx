@@ -73,17 +73,6 @@ export default observer(function Settings() {
                             </ul>
                             <div className='setting-caption mb-2'>Other</div>
                             <ul>
-                                <li className='border-bottom'>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/help' >
-                                        <div className='d-flex align-items-center justify-content-center' >
-                                            <span style={{ background: `linear-gradient(#f2994a,#f2c94c)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
-                                                <BiHelpCircle />
-                                            </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Help</h4>
-                                        </div>
-                                        <MdKeyboardArrowRight className='arrow-settings' />
-                                    </Link>
-                                </li>
                                 <li onClick={() => logout()}>
                                     <a  className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' >
                                         <div className='d-flex align-items-center justify-content-center' >

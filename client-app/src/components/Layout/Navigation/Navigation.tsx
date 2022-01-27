@@ -48,22 +48,6 @@ export default observer(function Navigation() {
                                     <span className={navWrapInfos}>Newsfeed</span>
                                 </a>
                             </li>
-                            <li>
-                                <a className='nav-wrap-sidebar-feed' href="">
-                                    <span style={{ background: `linear-gradient(#f80404, #e9a3a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
-                                        <GiWorld />
-                                    </span>
-                                    <span className={navWrapInfos}>Explore Stories</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a className='nav-wrap-sidebar-feed' href="">
-                                    <span style={{ background: `linear-gradient(#003de6, #4da7e2)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
-                                        <MdOutlineGroups />
-                                    </span>
-                                    <span className={navWrapInfos}>Groups</span>
-                                </a>
-                            </li>
                             <li onClick={() => profileStore.loadProfile(user1.userName)}>
                                 <Link to={`/userprofile/${user1.userName}`} className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#64392e, #e4b0a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
@@ -83,21 +67,8 @@ export default observer(function Navigation() {
                                     <span className={navWrapInfos}>Followers</span>
                                 </a>
                             </li>
-                            <li>
-                                <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
-                                    <AiOutlineDisconnect className='sidebar-logos' />
-                                    <span className={navWrapInfos}>Connections</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
-                                    <HiOutlineLocationMarker className='sidebar-logos' />
-                                    <span className={navWrapInfos}>Latest Events</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
-
                     <div className={navWrap0}>
                         <ul className='mb-1'>
                             <li>
@@ -105,12 +76,6 @@ export default observer(function Navigation() {
                                     <VscSettingsGear className='sidebar-logos' />
                                     <span className={navWrapInfos}>Settings</span>
                                 </Link>
-                            </li>
-                            <li>
-                                <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
-                                    <VscSave className='sidebar-logos' />
-                                    <span className={navWrapInfos}>Saved</span>
-                                </a>
                             </li>
                         </ul>
                     </div>

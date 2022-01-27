@@ -51,11 +51,11 @@ namespace MeetUp.API.Hubs
 
             await Clients.Group(command.PostId.ToString())
                 .SendAsync("ReceiveComment", comment.Value);
-
-            await Clients.User(post.CreatedByUserId)
-              .SendAsync("ReceiveNotification", newNotification);
         }
-
+        public async Task SendNotification(string receiverId)
+        {
+            await Clients.User(receiverId).SendAsync("ReceiveNotification", "salam");
+        }
         public async Task LoadComment(string postId)
         {
             if (!string.IsNullOrEmpty(postId))
@@ -65,7 +65,6 @@ namespace MeetUp.API.Hubs
                 await Clients.Caller.SendAsync("LoadComments", result.Value);
             }
         }
-
 
         public async Task SendMessage(string username, string message)
         {
@@ -98,16 +97,16 @@ namespace MeetUp.API.Hubs
 
             Notification newNotification = new Notification()
             {
-                NotificationType = notType,
+                NotificationTypeId = notType.Id,
                 FromUserId = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id,
                 ToUserId = friend.Id,
-                PostId = 11,
+                PostId = 40,
                 CreatedDate = serverTime
             };
             db.Notifications.Add(newNotification);
-
             db.Messages.Add(newMessage);
-            db.SaveChanges();
+            var t = db.SaveChanges();
+
             await Clients.User(friend.Id).SendAsync("ReceiveMessage", newMessage, newNotification, date);
         }
         public override async Task<Task> OnConnectedAsync()

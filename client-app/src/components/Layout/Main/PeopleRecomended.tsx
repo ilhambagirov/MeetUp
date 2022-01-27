@@ -56,7 +56,7 @@ export default  function PeopleRecomended() {
     const Names = classNames("person-card-username", { "person-card-username-dark": darkMode })
     const People = classNames("person-card-body", { "person-card-body-dark": darkMode })
     return (
-        <div className='people-recommended'>
+        <div className='people-recommended mb-5'>
             <Slider {...settings}>
                 <div className='person-card'>
                     <div className={People}>
@@ -89,6 +89,30 @@ export default  function PeopleRecomended() {
                         </span>
                         <h4 style={{ fontWeight: 700 }} className={Names}>
                             Tatyana July
+                        </h4>
+                        <p>@ilhambb</p>
+                        <a className='followbtn-recommended' href="">Follow</a>
+                    </div>
+                </div>
+                <div className='person-card'>
+                    <div className={People}>
+                        <span className='person-card-image'>
+                            <img className='user-profile-pic' src={require('../../../assets/images/user-11.png').default} alt="" />
+                        </span>
+                        <h4 style={{ fontWeight: 700 }} className={Names}>
+                            Ilham Baghirov
+                        </h4>
+                        <p>@ilhambb</p>
+                        <a className='followbtn-recommended' href="">Follow</a>
+                    </div>
+                </div>
+                <div className='person-card'>
+                    <div className={People}>
+                        <span className='person-card-image'>
+                            <img className='user-profile-pic' src={require('../../../assets/images/user-11.png').default} alt="" />
+                        </span>
+                        <h4 style={{ fontWeight: 700 }} className={Names}>
+                            Ilham Baghirov
                         </h4>
                         <p>@ilhambb</p>
                         <a className='followbtn-recommended' href="">Follow</a>

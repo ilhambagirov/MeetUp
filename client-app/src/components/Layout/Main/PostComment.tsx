@@ -10,19 +10,19 @@ import * as Yup from 'yup'
 
 interface Props {
     postId: number
+    userId : string
 }
 
-export default observer(function PostComment({ postId }: Props) {
+export default observer(function PostComment({ postId, userId }: Props) {
     const { commentStore, userStore, chatStore } = useDarkMode()
     const { user } = userStore
     const user1 = user as User
+
     useEffect(() => {
         if (postId) {
-            setTimeout(() => {
-                commentStore.loadComment(postId.toString())
-            }, 200);
-
+            commentStore.loadComment(postId.toString())
         }
+       
     }, [commentStore, postId])
 
     const validationSchema = Yup.object(
@@ -57,7 +57,7 @@ export default observer(function PostComment({ postId }: Props) {
                 <Formik
                     validationSchema={validationSchema}
                     onSubmit={(values, { resetForm }) =>
-                        commentStore.addComment(values).then(() => resetForm())}
+                        commentStore.addComment(values, userId).then(() => resetForm())}
                     initialValues={{ body: '', postId: postId.toString() }}>
                     {({ isSubmitting, isValid, handleSubmit }) => (
                         <Form>

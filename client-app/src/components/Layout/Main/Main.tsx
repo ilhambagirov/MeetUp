@@ -38,6 +38,10 @@ export default observer(function Main() {
         chatStore.createHubConnection();
         commentStore.createHubConnection()
         postStore.loadActivities()
+        return () => {
+            commentStore.clearComments()
+            chatStore.stopHubConnection()
+        }
     }, [postStore.loadActivities])
     return (
         <div className={menuContent}>
@@ -45,7 +49,8 @@ export default observer(function Main() {
                 <div className='main-content-container'>
                     <div className='row feed-body'>
                         <div className='main-content-left col-xl-10 col-lg-9 col-12 '>
-                            <StorySlider />
+                            {/* <StorySlider /> */}
+                            <PeopleRecomended/>
                             <CreatePost />
                             {chatStore.boxMode &&
                                 <ChatBox />

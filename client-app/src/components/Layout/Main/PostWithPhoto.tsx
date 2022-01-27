@@ -170,7 +170,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                     }
                 </div>
                 {commentStore.commentMode === post.id &&
-                    <PostComment postId={post.id} />
+                    <PostComment postId={post.id} userId={post.createdByUserId} />
                 }
             </div >
         </>

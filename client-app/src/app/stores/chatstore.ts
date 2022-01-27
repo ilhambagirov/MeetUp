@@ -33,6 +33,9 @@ export default class ChatStore {
             throw error
         }
     }
+    stopHubConnection = () => {
+        this.hubConnection.stop().catch(error => console.log("Error connection stopping", error))
+    }
     get axiosParams() {
         const params = new URLSearchParams()
         params.append('pageIndex', this.pagingParams.pageIndex.toString())
@@ -48,6 +51,21 @@ export default class ChatStore {
             const result = await agent.Notifications.list(this.axiosParams);
             runInAction(() => this.notifications = result.data)
             this.setPagination(result.pagination)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    loadNotificationsPagination = async () => {
+        try {
+            setTimeout(async () => {
+                console.log(this.pagingParams)
+                const result = await agent.Notifications.list(this.axiosParams);
+                result.data.map(item => (
+                    runInAction(() => this.notifications.push)
+                ))
+                runInAction(() => this.notifications = result.data)
+                this.setPagination(result.pagination)
+            }, 500);
         } catch (error) {
             console.log(error)
         }
@@ -70,11 +88,7 @@ export default class ChatStore {
             if (this.boxMode) {
                 console.log(id)
                 this.getMessages(id)
-                this.createHubConnection()
                 runInAction(() => this.receiverName = id)
-            }
-            else {
-                this.hubConnection.stop().catch(error => console.log("Error connection stopping", error))
             }
         } catch (error) {
             throw error
@@ -102,9 +116,7 @@ export default class ChatStore {
             })
         });
     }
-    stopHubConnection = () => {
-        this.hubConnection.stop().catch(error => console.log("Error connection stopping", error))
-    }
+
     beep = () => {
         var notify = require("../../assets/sounds/that-was-quick-606.mp3")
         var snd = new Audio(notify.default);
