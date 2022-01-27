@@ -5,9 +5,10 @@ import React from "react";
 import agent from "../api/agent";
 import { Message } from "../models/message";
 import { User } from "../models/user";
-import { Notification } from "../models/notification";
+import { Notification, NotificationDto } from "../models/notification";
 import { dark } from "./store";
 import { PostComment } from "../models/comment";
+import { Pagination, PagingParams } from "../models/pagination";
 export default class ChatStore {
 
     users: User[] = [];
@@ -15,9 +16,11 @@ export default class ChatStore {
     messages: Message[] = []
     hubConnection: HubConnection | null = null
     receiverName: string
-    notifications: Notification[] = []
+    notifications: NotificationDto[] = []
     notificationMode = false
     notificationCount = 0
+    pagingParams = new PagingParams()
+    pagination: Pagination | null = null
 
     constructor() {
         makeAutoObservable(this)
@@ -29,6 +32,28 @@ export default class ChatStore {
         } catch (error) {
             throw error
         }
+    }
+    get axiosParams() {
+        const params = new URLSearchParams()
+        params.append('pageIndex', this.pagingParams.pageIndex.toString())
+        params.append('pageSize', this.pagingParams.pageSize.toString())
+        return params
+    }
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams
+    }
+    loadNotifications = async () => {
+        try {
+            this.setPagingParams(new PagingParams(1, 7))
+            const result = await agent.Notifications.list(this.axiosParams);
+            runInAction(() => this.notifications = result.data)
+            this.setPagination(result.pagination)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    setPagination(pagination: Pagination) {
+        this.pagination = pagination
     }
     getMessages = async (id: string) => {
         try {
@@ -72,7 +97,6 @@ export default class ChatStore {
             runInAction(() => {
                 console.log(message)
                 this.messages.push(message)
-                this.notifications.push(notification)
                 this.notificationCount++
                 this.beep()
             })

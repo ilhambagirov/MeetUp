@@ -1,4 +1,5 @@
 ﻿using MeetUp.Application.Infrastructure;
+using MeetUp.Application.Modules.NotificationModule;
 using MeetUp.Application.Modules.PostModules;
 using MeetUp.Domain.Models.EntityDtos;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,11 @@ namespace MeetUp.API.Controllers
         public async Task<IActionResult> PostList([FromQuery] PagingParams param)
         {
             return HandlePagedResult(await Mediator.Send(new PostListQuery { Params = param }));
+        }
+        [HttpGet("notifications")]
+        public async Task<IActionResult> NotificationList([FromQuery] PagingParams param)
+        {
+            return HandlePagedResult(await Mediator.Send(new NatificationListQuery { Params = param }));
         }
         [HttpPost("posts")]
         public async Task<IActionResult> PostCreateAsync([FromForm] PostCreateCommand command)

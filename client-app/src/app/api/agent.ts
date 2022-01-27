@@ -9,6 +9,7 @@ import { ChangePassword } from "../models/userPasswordChange";
 import { dark } from "../stores/store";
 import { PaginatedResult } from "../models/pagination";
 import swal from "sweetalert";
+import { Notification, NotificationDto } from "../models/notification";
 
 const sleep = (delay: number) => {
     return new Promise(resolve => {
@@ -122,12 +123,16 @@ const Chat = {
 const Like = {
     like: (id: number) => request.post(`like/${id}`,{}),
 }
+const Notifications = {
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<NotificationDto[]>>(`Home/notifications`,{params}).then(responseBody),
+}
 const agent = {
     Account,
     Posts,
     Universities,
     Photos,
     Chat,
-    Like
+    Like,
+    Notifications
 }
 export default agent

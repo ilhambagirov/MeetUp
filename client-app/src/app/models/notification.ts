@@ -13,3 +13,10 @@ export interface Notification {
     notificationType: NotificationType
     notificationTypeId: number
 }
+export interface NotificationDto {
+    id: number;
+    createdDate: Date,
+    fromUserName: string
+    fromUserImage: string
+    notificationTypeName: string
+}

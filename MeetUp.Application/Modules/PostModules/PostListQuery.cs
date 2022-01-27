@@ -8,7 +8,6 @@ using MeetUp.Domain.Models.Entities;
 using MeetUp.Domain.Models.EntityDtos;
 using MeetUp.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

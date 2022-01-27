@@ -20,6 +20,10 @@ import { Link } from "react-router-dom";
 import { User } from "../../../app/models/user";
 import { Form, Formik } from "formik";
 import * as Yup from 'yup'
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { PagingParams } from "../../../app/models/pagination";
+import InfiniteScroll from "react-infinite-scroller";
+import { TailSpin } from "react-loader-spinner";
 
 export default observer(function Header() {
     // built-in hooks
@@ -68,6 +72,16 @@ export default observer(function Header() {
     const toggleCatch = classnames("nav-right-logo")
     const darkModeToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': checkedBoxDarkMode })
     const SideBarToggleButtonClassNames = classnames("toggle-button-settings", { 'ant-switch-checked': sidebarcollapsedmode })
+
+    const [loadingNext, setLoadingNext] = useState(false)
+    const handleGetNext = () => {
+        console.log('girdi qaqam')
+        setLoadingNext(true)
+        chatStore.setPagingParams(new PagingParams(chatStore.pagination!.currentPage + 1))
+        chatStore.loadNotifications()
+        setLoadingNext(false)
+    }
+
 
     return (
         <header className={navbardark}  >
@@ -130,7 +144,10 @@ export default observer(function Header() {
                     </div>
 
                     <div className='nav-right align-items-center d-lg-flex d-none w-100 justify-content-end'>
-                        <a className='text-decoration-none nav-right-link' onClick={() => handleNotDropdown()} href="#">
+                        <a className='text-decoration-none nav-right-link' onClick={() => {
+                            handleNotDropdown()
+                            chatStore.loadNotifications()
+                        }} href="#">
                             {chatStore.notificationCount > 0 &&
                                 <span className='notification'>{chatStore.notificationCount}
                                 </span>}
@@ -140,46 +157,38 @@ export default observer(function Header() {
                             notificiationDropdown &&
                             <div className={notificationDrop}>
                                 <h4 className={notificationHeader}>Notification</h4>
-                                <a className='d-flex not-drop' href="">
-                                    <img className='not-user-pics' src={user8} alt="" />
-                                    <div className='ms-2'>
-                                        <h5 className={notificationNames}>
-                                            Ilham Baghirov
-                                            <span className='time-not-user'>3 min</span>
-                                        </h5>
-                                        <h6 >You have new Follow request!</h6>
-                                    </div>
-                                </a>
-                                <a className='d-flex not-drop' href="">
-                                    <img className='not-user-pics' src={user8} alt="" />
-                                    <div className='ms-2'>
-                                        <h5 className={notificationNames}>
-                                            Ilham Baghirov
-                                            <span className='time-not-user'>3 min</span>
-                                        </h5>
-                                        <h6 >You have new Follow request!</h6>
-                                    </div>
-                                </a>
-                                <a className='d-flex not-drop' href="">
-                                    <img className='not-user-pics' src={user8} alt="" />
-                                    <div className='ms-2'>
-                                        <h5 className={notificationNames}>
-                                            Ilham Baghirov
-                                            <span className='time-not-user'>3 min</span>
-                                        </h5>
-                                        <h6 >You have new Follow request!</h6>
-                                    </div>
-                                </a>
-                                <a className='d-flex not-drop mb-0' href="">
-                                    <img className='not-user-pics' src={user8} alt="" />
-                                    <div className='ms-2'>
-                                        <h5 className={notificationNames}>
-                                            Ilham Baghirov
-                                            <span className='time-not-user'>3 min</span>
-                                        </h5>
-                                        <h6 >You have new Follow request!!</h6>
-                                    </div>
-                                </a>
+                                <InfiniteScroll
+                                    pageStart={0}
+                                    loadMore={handleGetNext}
+                                    hasMore={!loadingNext && !!chatStore.pagination && chatStore.pagination.currentPage < chatStore.pagination.totalPages}
+                                    initialLoad={false}
+                                    loader={<div className="d-flex justify-content-center mb-5">
+                                        <TailSpin
+                                            height={20}
+                                            width="20"
+                                            color='#0d6efd'
+                                            ariaLabel='loading'
+                                        />
+                                    </div>}
+                                >
+                                    {chatStore.notifications?.map(note => (
+                                        <a className='d-flex not-drop' href="">
+                                            {console.log(chatStore.notifications)}
+                                            <img className='not-user-pics' src={note?.fromUserImage || user8} alt="" />
+                                            <div className='ms-2'>
+                                                <h5 className={notificationNames}>
+                                                    {note?.fromUserName}
+                                                    <span className='time-not-user'>{formatDistanceToNow(new Date(note.createdDate))}</span>
+                                                </h5>
+                                                {/* {note.notificationTypeName === 'message' ?
+                                                    <h6>You have new message</h6> :
+                                                    <h6>You have new comment</h6>
+                                                } */}
+                                                 <h6>You have new comment</h6>
+                                            </div>
+                                        </a>
+                                    ))}
+                                </InfiniteScroll>
                             </div>
                         }
 

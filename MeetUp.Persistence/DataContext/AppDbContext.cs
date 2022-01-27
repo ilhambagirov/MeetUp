@@ -60,6 +60,19 @@ namespace MeetUp.Persistence.DataContext
                                             .HasForeignKey(aa => aa.PostId)
                                             .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Notification>(x => x.HasKey(aa => new { aa.FromUserId, aa.ToUserId, aa.PostId }));
+
+           /* builder.Entity<Notification>()
+                                            .HasOne(u => u.FromUser)
+                                            .WithMany(a => a.Notifications)
+                                            .HasForeignKey(aa => aa.FromUserId)
+                                            .OnDelete(DeleteBehavior.NoAction);*/
+          /*  builder.Entity<Notification>()
+                                            .HasOne(u => u.ToUser)
+                                            .WithMany(a => a.Notifications)
+                                            .HasForeignKey(aa => aa.ToUserId)
+                                            .OnDelete(DeleteBehavior.NoAction);
+*/
             builder.Entity<Comment>()
                 .HasOne(x => x.Post)
                 .WithMany(x => x.Comments)

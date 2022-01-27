@@ -42,7 +42,6 @@ export default class CommentStore {
         this.hubConnection.on("ReceiveNotification", (notification: any) => {
             runInAction(() => {
                 console.log(notification)
-                dark.chatStore.notifications.push(notification)
                 dark.chatStore.notificationCount++
                 this.beep()
             })

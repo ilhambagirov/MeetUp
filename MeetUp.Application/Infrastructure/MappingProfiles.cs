@@ -16,6 +16,11 @@ namespace MeetUp.Application.Infrastructure
               .ReverseMap();*/
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<AppUser, UserFollowing>().ReverseMap();
+            CreateMap<Notification, NotificationDto>()
+                .ForMember(i => i.FromUserImage, o => o.MapFrom(s => s.FromUser.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ForMember(i => i.FromUserName, o => o.MapFrom(s => s.FromUser.UserName))
+                .ForMember(i => i.NotificationTypeName, o => o.MapFrom(s => s.NotificationType.Name))
+                .ReverseMap();
 
             CreateMap<AppUser, AppUserDto>()
                 .ForMember(i => i.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url))
