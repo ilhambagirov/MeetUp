@@ -13,15 +13,15 @@ interface Props {
 }
 
 export default observer(function PostComment({ postId }: Props) {
-    const { commentStore, userStore } = useDarkMode()
+    const { commentStore, userStore, chatStore } = useDarkMode()
     const { user } = userStore
     const user1 = user as User
     useEffect(() => {
         if (postId) {
-            commentStore.createHubConnection(postId)
-        }
-        return () => {
-            commentStore.clearComments()
+            setTimeout(() => {
+                commentStore.loadComment(postId.toString())
+            }, 200);
+
         }
     }, [commentStore, postId])
 
@@ -30,19 +30,18 @@ export default observer(function PostComment({ postId }: Props) {
             body: Yup.string().required("The body is required"),
         }
     )
-
     return (
         <>
             {commentStore.comments.map(comment => (
                 <div className="mt-3 d-flex" key={comment.id}>
-                     {console.log(comment)}
+                    {console.log(comment)}
                     <Link to={`/userprofile/${comment.username}`}>
                         <img className="rounded-circle me-2" src={comment.image || "https://i.imgur.com/RpzrMR2.jpg"} width="40" height="40" />
                     </Link>
                     <div className="user d-flex flex-column">
                         <span className="d-flex justify-content-between">
                             <small className="font-weight-bold me-2 username-comment">{comment.dsiplayName}</small>
-                            <small>{formatDistanceToNow(new Date(comment.createdDate!))+' ago'}</small>
+                            <small>{formatDistanceToNow(new Date(comment.createdDate!)) + ' ago'}</small>
                         </span>
                         <span >
                             <small className="comment">{comment.body}</small>
@@ -58,7 +57,7 @@ export default observer(function PostComment({ postId }: Props) {
                 <Formik
                     validationSchema={validationSchema}
                     onSubmit={(values, { resetForm }) =>
-                    commentStore.addComment(values).then(() => resetForm())}
+                        commentStore.addComment(values).then(() => resetForm())}
                     initialValues={{ body: '', postId: postId.toString() }}>
                     {({ isSubmitting, isValid, handleSubmit }) => (
                         <Form>

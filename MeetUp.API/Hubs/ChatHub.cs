@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,9 +35,37 @@ namespace MeetUp.API.Hubs
         {
             var comment = await mediatr.Send(command);
 
+            var notType = await db.NotificationTypes.FirstOrDefaultAsync(x => x.Id == 2);
+            var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == Int32.Parse(command.PostId));
+            var user = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id;
+            Notification newNotification = new Notification()
+            {
+                NotificationType = notType,
+                FromUserId = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id,
+                ToUserId = post.CreatedByUserId,
+                PostId = post.Id,
+                CreatedDate = DateTime.Now
+            };
+            db.Notifications.Add(newNotification);
+            db.SaveChanges();
+
             await Clients.Group(command.PostId.ToString())
                 .SendAsync("ReceiveComment", comment.Value);
+
+            await Clients.User(post.CreatedByUserId)
+              .SendAsync("ReceiveNotification", newNotification);
         }
+
+        public async Task LoadComment(string postId)
+        {
+            if (!string.IsNullOrEmpty(postId))
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, postId);
+                var result = await mediatr.Send(new CommentListQuery { PostId = Int32.Parse(postId) });
+                await Clients.Caller.SendAsync("LoadComments", result.Value);
+            }
+        }
+
 
         public async Task SendMessage(string username, string message)
         {
@@ -81,43 +108,11 @@ namespace MeetUp.API.Hubs
 
             db.Messages.Add(newMessage);
             db.SaveChanges();
-            await Clients.User(friend.Id).SendAsync("ReceiveMessage", newMessage, date);
-            await Clients.User(friend.Id).SendAsync("ReceiveNotification", newNotification, date);
+            await Clients.User(friend.Id).SendAsync("ReceiveMessage", newMessage, newNotification, date);
         }
         public override async Task<Task> OnConnectedAsync()
         {
-            var httpContext = Context.GetHttpContext();
-            var postId = httpContext.Request.Query["postId"];
-            var username = httpContext.Request.Query["username"];
-            if (!string.IsNullOrEmpty(postId))
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, postId);
-                var result = await mediatr.Send(new CommentListQuery { PostId = Int32.Parse(postId) });
-                await Clients.Caller.SendAsync("LoadComments", result.Value);
-                return base.OnConnectedAsync();
-            }
-            else if (!string.IsNullOrEmpty(username))
-            {
-                Trace.TraceInformation("MapHub started. ID: {0}", Context.ConnectionId);
-
-                var userName = Context.User.Identity.Name; // or get it from Context.User.Identity.Name;
-                List<string> existingUserConnectionIds;
-                ConnectedUsers.TryGetValue(userName, out existingUserConnectionIds);
-
-                if (existingUserConnectionIds == null)
-                {
-                    existingUserConnectionIds = new List<string>();
-                }
-                existingUserConnectionIds.Add(Context.ConnectionId);
-
-                ConnectedUsers.TryAdd(userName, existingUserConnectionIds);
-
-                return base.OnConnectedAsync();
-            }
             return base.OnConnectedAsync();
-
-
-
         }
     }
 }

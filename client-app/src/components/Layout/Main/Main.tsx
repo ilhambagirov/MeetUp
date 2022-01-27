@@ -18,7 +18,7 @@ import { TailSpin } from 'react-loader-spinner'
 export default observer(function Main() {
     //custom hooks
     const { chatstore } = UseChatMode()
-    const { activitystore, postStore, chatStore } = useDarkMode()
+    const { activitystore, postStore, chatStore, commentStore } = useDarkMode()
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
     const { pagination, setPagingParams, loadActivitiesPagination } = postStore
@@ -35,6 +35,8 @@ export default observer(function Main() {
 
     const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode, "darkmode-maincontent": darkMode })
     useEffect(() => {
+        chatStore.createHubConnection();
+        commentStore.createHubConnection()
         postStore.loadActivities()
     }, [postStore.loadActivities])
     return (

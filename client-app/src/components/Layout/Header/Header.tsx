@@ -91,7 +91,7 @@ export default observer(function Header() {
                             <div className="search-dropdown">
                                 <ul className="mb-0">
                                     {searchStore.users.filter(x => x.dsiplayName.toLowerCase().startsWith(searchItem.toLowerCase())).map(item => (
-                                        <li onClick={()=>setSearchItem("")}><Link to={`/userprofile/${item.userName}`}  className="d-flex align-items-center">
+                                        <li onClick={() => setSearchItem("")}><Link to={`/userprofile/${item.userName}`} className="d-flex align-items-center">
                                             <span className='post-with-photo-user-photo me-3'>
                                                 <img className='user-profile-pic' src={item.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                             </span>
@@ -131,7 +131,9 @@ export default observer(function Header() {
 
                     <div className='nav-right align-items-center d-lg-flex d-none w-100 justify-content-end'>
                         <a className='text-decoration-none nav-right-link' onClick={() => handleNotDropdown()} href="#">
-                            <span className='notification'></span>
+                            {chatStore.notificationCount > 0 &&
+                                <span className='notification'>{chatStore.notificationCount}
+                                </span>}
                             <BiBell fill='#0d6efd' className='nav-right-logo' />
                         </a>
                         {
