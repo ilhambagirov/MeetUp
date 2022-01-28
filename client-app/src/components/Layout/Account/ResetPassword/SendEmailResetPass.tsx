@@ -19,7 +19,7 @@ export default observer(function SendEmailResetPass() {
 
         <div className={container}>
             <div className='login-nav'>
-                <a className='d-flex text-decoration-none logo-Link' href="#">
+                <a className='d-flex text-decoration-none logo-Link align-items-center' href="#">
                     <FaMeetup className='meetup-Logo' />
                     <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>MeetUp.</span>
                 </a>

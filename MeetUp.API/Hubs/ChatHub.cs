@@ -100,7 +100,7 @@ namespace MeetUp.API.Hubs
                 NotificationTypeId = notType.Id,
                 FromUserId = userMangaer.FindByEmailAsync(userAccessor.GetUsername()).Result.Id,
                 ToUserId = friend.Id,
-                PostId = 40,
+                PostId = null,
                 CreatedDate = serverTime
             };
             db.Notifications.Add(newNotification);

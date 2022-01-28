@@ -78,6 +78,7 @@ export default observer(function App() {
               <><Header /><Navigation /><ChatList /></>
             }
             <Switch>
+              {console.log(userStore.isLoggedIn)}
               <Route exact path='/home' render={() => (userStore.isLoggedIn ? (<Main />) : (<Redirect to="/" />))} />
               <Route path='/settings' render={() => (userStore.isLoggedIn ? (<Settings />) : (<Redirect to="/" />))} />
               <Route path='/accountdetails' render={() => (userStore.isLoggedIn ? (<AccountDetails />) : (<Redirect to="/" />))} />

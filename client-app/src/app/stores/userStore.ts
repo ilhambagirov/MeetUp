@@ -15,6 +15,7 @@ export default class UserStore {
     user: User | Promise<User> | null = null
     errorData: string
     tokenIsValid: string | null = null
+    userIn: number | null = null
     // this.DecodedJwt == null ? null : {
     //     id: this.DecodedJwt.id,
     //     dsiplayName: this.DecodedJwt.dsiplayName,
@@ -24,15 +25,26 @@ export default class UserStore {
     constructor() {
         makeAutoObservable(this)
         this.tokenIsValid = localStorage.getItem('tokenValid')
-        if (window.location.pathname !== '/' && window.location.pathname !== '/register' &&
-            window.location.pathname !== '/adminDashboard' && window.location.pathname !== '/admin' &&
-            !window.location.pathname.includes('confirm') && window.location.pathname !== '/passwordreset' &&
-            window.location.pathname !== '/confirmResetPassword') {
-            runInAction(() => this.user = this.loadUser())
+        if (localStorage.getItem("jwt") !== null) {
+            runInAction(() => {
+                this.user = this.loadUser()
+                this.userIn = 1
+            }
+            )
+        } else {
+            runInAction(() => this.userIn = null)
         }
+        // if (window.location.pathname !== '/' && window.location.pathname !== '/register' &&
+        //     window.location.pathname !== '/adminDashboard' && window.location.pathname !== '/admin' &&
+        //     !window.location.pathname.includes('confirm') && window.location.pathname !== '/passwordreset' &&
+        //     window.location.pathname !== '/confirmResetPassword') {
+        //    
+        // }
     }
     get isLoggedIn() {
-        return !!this.user
+        var result = false
+        this.userIn === null ? result = false : result = true
+        return result
     }
     getUser = async () => {
         try {
@@ -57,14 +69,15 @@ export default class UserStore {
             throw error
         }
     }
-
-
     login = async (creds: UserFormValues) => {
         console.log(creds)
         try {
             const user = await agent.Account.login(creds)
             dark.commonStore.setToken(user.token)
-            runInAction(() => this.user = user)
+            runInAction(() => {
+                this.user = user
+                this.userIn = 1
+            })
             history.push("/home")
             console.log(this.user)
         } catch (error) {
@@ -97,7 +110,7 @@ export default class UserStore {
         dark.commentStore.commentMode = 0
         history.push("/")
     }
-   
+
 
     changeUserPassword = async (creds: ChangePassword) => {
         try {

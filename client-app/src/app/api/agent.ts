@@ -127,6 +127,9 @@ const Like = {
 const Notifications = {
     list: (params: URLSearchParams) => axios.get<PaginatedResult<NotificationDto[]>>(`Home/notifications`,{params}).then(responseBody),
 }
+const Admin = {
+    login: (user: UserFormValues) => request.post<User>(`/AccountAdmin`, user),
+}
 const agent = {
     Account,
     Posts,
@@ -134,6 +137,7 @@ const agent = {
     Photos,
     Chat,
     Like,
-    Notifications
+    Notifications,
+    Admin
 }
 export default agent

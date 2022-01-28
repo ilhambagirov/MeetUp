@@ -20,7 +20,7 @@ export default observer(function Login() {
         
         <div className={container}>
             <div className='login-nav'>
-                <a className='d-flex text-decoration-none logo-Link' href="#">
+                <a className='d-flex text-decoration-none logo-Link align-items-center' href="#">
                     <FaMeetup className='meetup-Logo' />
                     <span className='d-inline-block fredoka-font ls-3 text-current font-xxl logo-text mb-0 customlogotext'>Admin Login</span>
                 </a>
@@ -42,13 +42,6 @@ export default observer(function Login() {
                                         <div className='form-group'>
                                             <MyTextInput name='password' style='mb-2 form-control login-inputs' type="text" placeholder='Password' />
                                         </div>
-                                        <div className='form-saved mb-3 justify-content-between'>
-                                            <div className='d-flex align-items-center'>
-                                                <input className='me-1  checkbox-input' type="checkbox" />
-                                                <span style={{ color: '#adb5bd', fontSize: 13 }} className='me-1'>Remember me</span>
-                                            </div>
-                                            <a className='text-decoration-none text-black' href="">Forgot your Password?</a>
-                                        </div>
                                         <ErrorMessage name='error' render={() =>
                                             <Label basic color='red' style={{ marginBottom: 10 }} content={errors.error} />}
                                         />
@@ -56,17 +49,11 @@ export default observer(function Login() {
                                     </form>
                                 )}
                             </Formik>
-
-                        </div>
-                        <div className='d-flex align-items-center mt-3'>
-                            <h6 style={{ color: '#adb5bd', fontSize: 14 }} className='mb-0 me-1'>Don't have an account?</h6>
-                            <Link to='/register' style={{ fontWeight: 700 }} className='text-decoration-none'>Register</Link>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     )
 })
 

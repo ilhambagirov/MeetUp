@@ -13,6 +13,27 @@ namespace MeetUp.Persistence.DataContext
             UserManager<AppUser> userManager
             )
         {
+            if (!context.Roles.Any())
+            {
+                var roles = new List<AppRole>
+                {
+                 new AppRole()
+                {
+                    Name = "SuperAdmin",
+                    NormalizedName = "SUPERADMIN"
+                },
+                new AppRole()
+                {
+                    Name = "User",
+                    NormalizedName = "USER"
+                }
+                };
+                foreach (var role in roles)
+                {
+                    context.Roles.Add(role);
+                }
+                await context.SaveChangesAsync();
+            }
             if (!context.NotificationTypes.Any())
             {
                 var notificationTypes = new List<NotificationType>

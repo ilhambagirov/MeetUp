@@ -87,8 +87,8 @@ export default observer(function PostWithPhoto({ post, userr }: Props) {
                             </div>
                         </div>
                         :
-                        <div className='d-flex align-items-center' onClick={() => loadProfile(post.createdByUser?.userName)}>
-                            <Link to={`/userprofile/${post.createdByUser?.userName}`}>
+                        <div className='d-flex align-items-center'>
+                            <Link to={`/userprofile/${post?.createdByUser?.userName}`}>
                                 <span className='post-with-photo-user-photo me-3'>
                                     <img className='user-profile-pic' src={post.createdByUser?.image || userr?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                 </span>

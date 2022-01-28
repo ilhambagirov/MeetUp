@@ -48,8 +48,8 @@ export default observer(function Navigation() {
                                     <span className={navWrapInfos}>Newsfeed</span>
                                 </Link>
                             </li>
-                            <li onClick={() => profileStore.loadProfile(user1.userName)}>
-                                <Link to={`/userprofile/${user1.userName}`} className='nav-wrap-sidebar-feed' href="">
+                            <li onClick={() => profileStore.loadProfile(user1?.userName)}>
+                                <Link to={`/userprofile/${user1?.userName}`} className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#64392e, #e4b0a3)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
                                         <CgProfile />
                                     </span>

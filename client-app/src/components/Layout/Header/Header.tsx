@@ -298,7 +298,7 @@ export default observer(function Header() {
                         } */}
                         <Link className=' text-decoration-none nav-right-link' to={"/settings"}>
                             {user1?.userName === user?.userName ?
-                                <img className='profile-img' src={user1?.image || user.image || profile4} alt="" />
+                                <img className='profile-img' src={user1?.image || user?.image || profile4} alt="" />
                                 :
                                 <img className='profile-img' src={user?.image || user1?.image || profile4} alt="" />
                             }

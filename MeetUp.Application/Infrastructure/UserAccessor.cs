@@ -12,7 +12,6 @@ namespace MeetUp.Application.Infrastructure
         {
             this.httpAccessor = httpAccessor;
         }
-
         public string GetUsername()
         {
             var aa = httpAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);

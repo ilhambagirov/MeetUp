@@ -4,13 +4,15 @@ import classNames from "classnames";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { FaMeetup } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
+import { FiLogOut, FiSearch } from "react-icons/fi";
 import { BiBell } from "react-icons/bi";
 // import user8 from '../../assets/images/user-8.png'
 // import profile4 from '../../assets/images/avatar3.jpg'
 import '../Layout/Header/Header.scss';
 import './Navbar.scss'
+import { useDarkMode } from "../../app/stores/store";
 function AdminNavbar(props: any) {
+    const {adminstore} = useDarkMode()
     const [notificiationDropdown, SetnotificiationDropdown] = useState(false);
 
     const handleNotDropdown = () => {
@@ -39,12 +41,14 @@ function AdminNavbar(props: any) {
                                 <input className='search-input' placeholder='Start typing to search..' autoComplete="off" type="text" name="dsiplayName" />
                             </div>
                         </form>
-                        
                     </div>
                     <div className='nav-right align-items-center d-lg-flex d-none col-8 justify-content-end' style={{maxWidth:'123px'}}>
                             <a className='text-decoration-none nav-right-link' onClick={() => handleNotDropdown()} href="#">
                                 <span className='notification'></span>
                                 <BiBell fill='#0d6efd' className='nav-right-logo' />
+                            </a>
+                            <a className='text-decoration-none nav-right-link' onClick={() => adminstore.logout()} href="#">
+                                <FiLogOut fill='#0d6efd' className='nav-right-logo' />
                             </a>
                             {/* {
                                 notificiationDropdown &&
