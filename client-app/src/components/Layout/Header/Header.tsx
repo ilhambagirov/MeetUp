@@ -22,8 +22,9 @@ import { Form, Formik } from "formik";
 import * as Yup from 'yup'
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { PagingParams } from "../../../app/models/pagination";
-import InfiniteScroll from "react-infinite-scroller";
 import { TailSpin } from "react-loader-spinner";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Button } from "semantic-ui-react";
 
 export default observer(function Header() {
     // built-in hooks
@@ -75,14 +76,11 @@ export default observer(function Header() {
 
     const [loadingNext, setLoadingNext] = useState(false)
     const handleGetNext = () => {
-        console.log('girdi qaqam')
         setLoadingNext(true)
-        chatStore.setPagingParams(new PagingParams(chatStore.pagination!.currentPage + 1))
+        chatStore.setPagingParams(new PagingParams(chatStore.pagination!.currentPage + 1, 7))
         chatStore.loadNotificationsPagination()
         setLoadingNext(false)
     }
-
-
     return (
         <header className={navbardark}  >
             <div className='custom-container'>
@@ -147,14 +145,13 @@ export default observer(function Header() {
                         </a>
                         {
                             notificiationDropdown &&
-                            <div className={notificationDrop}>
+                            <div id="target-not" className={notificationDrop}>
                                 <h4 className={notificationHeader}>Notification</h4>
                                 <InfiniteScroll
-                                    useWindow={false}
-                                    pageStart={0}
-                                    loadMore={handleGetNext}
+                                    dataLength={chatStore.groupedNotifcations.length}
+                                    next={handleGetNext}
+                                    scrollableTarget="target-not"
                                     hasMore={!loadingNext && !!chatStore.pagination && chatStore.pagination.currentPage < chatStore.pagination.totalPages}
-                                    initialLoad={false}
                                     loader={<div className="d-flex justify-content-center mb-5">
                                         <TailSpin
                                             height={20}
@@ -164,15 +161,15 @@ export default observer(function Header() {
                                         />
                                     </div>}
                                 >
-                                    {chatStore.notifications?.map(note => (
+                                    {chatStore.groupedNotifcations?.map(note => (
                                         <a className='d-flex not-drop' href="">
-                                            <img className='not-user-pics' src={note?.fromUserImage || user8} alt="" />
+                                            <img className='not-user-pics' src={note?.value.fromUserImage || user8} alt="" />
                                             <div className='ms-2 w-100'>
                                                 <h5 className={notificationNames}>
-                                                    {note?.fromUserName}
-                                                    <span className='time-not-user'>{formatDistanceToNow(new Date(note.createdDate))}</span>
+                                                    {note?.value.fromUserName}
+                                                    <span className='time-not-user'>{formatDistanceToNow(new Date(note.value.createdDate))}</span>
                                                 </h5>
-                                                {note.notificationTypeName === 'Chat' ?
+                                                {note.value.notificationTypeName === 'Chat' ?
                                                     <h6>You have new message</h6> :
                                                     <h6>You have new comment</h6>
                                                 }

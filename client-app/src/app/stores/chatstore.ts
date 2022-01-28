@@ -16,7 +16,7 @@ export default class ChatStore {
     messages: Message[] = []
     hubConnection: HubConnection | null = null
     receiverName: string
-    notifications: NotificationDto[] = []
+    notificationRegistry = new Map<number, NotificationDto>();
     notificationMode = false
     notificationCount = 0
     pagingParams = new PagingParams()
@@ -32,6 +32,15 @@ export default class ChatStore {
         } catch (error) {
             throw error
         }
+    }
+    get groupedNotifcations() {
+        var result = Array.from(this.notificationRegistry, ([id, value]) => ({ id, value }))
+            .sort(function (a, b) {
+                var dateA = new Date(a.value.createdDate).getTime();
+                var dateB = new Date(b.value.createdDate).getTime();
+                return dateA < dateB ? 1 : -1
+            });
+        return result
     }
     stopHubConnection = () => {
         this.hubConnection.stop().catch(error => console.log("Error connection stopping", error))
@@ -49,21 +58,24 @@ export default class ChatStore {
         try {
             this.setPagingParams(new PagingParams(1, 7))
             const result = await agent.Notifications.list(this.axiosParams);
-            runInAction(() => this.notifications = result.data)
+            result.data.map(item => (
+                runInAction(() => this.setNotification(item))
+            ))
             this.setPagination(result.pagination)
         } catch (error) {
             console.log(error)
         }
     }
+    setNotification = (a: NotificationDto) => {
+        this.notificationRegistry.set(a.id, a);
+    }
     loadNotificationsPagination = async () => {
         try {
             setTimeout(async () => {
-                console.log(this.pagingParams)
                 const result = await agent.Notifications.list(this.axiosParams);
                 result.data.map(item => (
-                    runInAction(() => this.notifications.push)
+                    runInAction(() => this.setNotification(item))
                 ))
-                runInAction(() => this.notifications = result.data)
                 this.setPagination(result.pagination)
             }, 500);
         } catch (error) {

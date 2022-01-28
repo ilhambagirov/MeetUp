@@ -40,7 +40,6 @@ namespace MeetUp.Application.Modules.NotificationModule
             var notes = await notifications.PaginatedMappedListAsync<NotificationDto, Notification>(mapper, request.Params.PageIndex, request.Params.PageSize);
 
             return Result<PagedList<NotificationDto, Notification>>.Success(notes);
-
         }
     }
 }
