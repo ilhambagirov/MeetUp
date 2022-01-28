@@ -111,8 +111,14 @@ export default observer(function AccountDetails() {
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-6 mb-3">
-                                            <label htmlFor="">University</label>
-                                            <Select options={universities} name='university' />
+                                        <label htmlFor="">University</label>
+                                            <p style={{
+                                                padding: '0.7rem 0.8rem',
+                                                border: ' 2px #eee solid',
+                                                color: '#6a6a6a',
+                                                fontWeight: 500
+                                            }}
+                                                className='d-block form-control'>{u.university ? u.university : 'Empty'}</p>
                                         </div>
                                         <div className="col-lg-6 mb-3">
                                             <div className="form-group">
@@ -140,19 +146,6 @@ export default observer(function AccountDetails() {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-lg-12 mb-3 mt-3 ">
-                                            <input hidden className='d-block form-control' id='file' type="file" />
-                                            <label className='p-4 w-100 d-flex flex-column align-items-center drag-label' htmlFor="file">
-                                                <AiOutlineCloudDownload style={{ fontSize: 40 }} className='d-block text-center' />
-                                                <span>Drag and drop or click to replace</span>
-                                            </label>
-                                        </div>
-                                        <div className="col-lg-12 mb-3">
-                                            <div className="form-group">
-                                                <label htmlFor="">Bio</label>
-                                                <textarea className='d-block form-control p-3' name='bio' defaultValue={u?.bio} placeholder='Write your description' />
-                                            </div>
-                                        </div>
                                         <div className="col-lg-12 mb-3">
                                             <a onClick={() => setEditModeDetails(true)} className='save-btn'>Edit</a>
                                         </div>
@@ -212,8 +205,7 @@ export default observer(function AccountDetails() {
                                             </div>
                                             <div className="row">
                                                 <div className="col-lg-6 mb-3">
-                                                    <label htmlFor="">University</label>
-                                                    <Select options={universities} name='university' />
+                                                    <MyTextInput style='d-block form-control' label="University" normal={true} name='university'  defaultValue={u?.university} type="text" />
                                                 </div>
                                                 <div className="col-lg-6 mb-3">
                                                     <div className="form-group">
@@ -227,19 +219,6 @@ export default observer(function AccountDetails() {
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-lg-12 mb-3 mt-3 ">
-                                                    <input hidden className='d-block form-control' id='file' type="file" />
-                                                    <label className='p-4 w-100 d-flex flex-column align-items-center drag-label' htmlFor="file">
-                                                        <AiOutlineCloudDownload style={{ fontSize: 40 }} className='d-block text-center' />
-                                                        <span>Drag and drop or click to replace</span>
-                                                    </label>
-                                                </div>
-                                                <div className="col-lg-12 mb-3">
-                                                    <div className="form-group">
-                                                        <label htmlFor="">Bio</label>
-                                                        <textarea className='d-block form-control p-3' name='bio' defaultValue={u?.bio} placeholder='Write your description' />
-                                                    </div>
-                                                </div>
                                                 <div className="d-flex">
                                                     <div onClick={() => setTimeout(() => (setEditModeDetails(false), 1000))} className="col-lg-3 mb-3">
                                                         <button className='save-btn' type="submit">Save</button>

@@ -22,11 +22,11 @@ export default observer(function Main() {
     const { ChatMode } = chatstore
     const { darkMode } = activitystore
     const { pagination, setPagingParams, loadActivitiesPagination, loading } = postStore
-
     const [loadingNext, setLoadingNext] = useState(false)
+    const [spinner, setSpinner] = useState(false)
+
 
     const handleGetNext = () => {
-        console.log('girdi qaqam')
         setLoadingNext(true)
         setPagingParams(new PagingParams(pagination!.currentPage + 1))
         loadActivitiesPagination()
@@ -35,63 +35,77 @@ export default observer(function Main() {
 
     const menuContent = classNames("main-content ", { "main-content-chatopen": ChatMode, "darkmode-maincontent": darkMode })
     useEffect(() => {
+        setSpinner(true)
         postStore.loadActivities()
         chatStore.getUsersRecomended()
+        setTimeout(() => {
+            setSpinner(false)
+        }, 500);
     }, [postStore.loadActivities])
     return (
+
         <div className={menuContent}>
-            <div className='main-content-wrapper'>
-                <div className='main-content-container'>
-                    <div className='row feed-body'>
-
-
-
-                        <div className='main-content-left col-xl-10 col-lg-9 col-12 '>
-                            {loading ?
-                                <div className="d-flex justify-content-center mb-5 post-loader">
-                                    <TailSpin
-                                        height={50}
-                                        width="50"
-                                        color='#0d6efd'
-                                        ariaLabel='loading'
-                                    />
-                                </div>
-                                :
-                                <>
-                                    <PeopleRecomended users={chatStore.usersRecomended} />
-                                    <CreatePost />
-
-                                    <InfiniteScroll
-                                        pageStart={0}
-                                        loadMore={handleGetNext}
-                                        hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
-                                        initialLoad={false}
-                                        loader={<div className="d-flex justify-content-center mb-5">
+            {
+                spinner ?
+                    <div className="d-flex justify-content-center mb-5 post-loader">
+                        <TailSpin
+                            height={50}
+                            width="50"
+                            color='#0d6efd'
+                            ariaLabel='loading'
+                        />
+                    </div>
+                    :
+                    <div className='main-content-wrapper'>
+                        <div className='main-content-container'>
+                            <div className='row feed-body'>
+                                <div className='main-content-left col-xl-10 col-lg-9 col-12 '>
+                                    {loading ?
+                                        <div className="d-flex justify-content-center mb-5 post-loader">
                                             <TailSpin
                                                 height={50}
                                                 width="50"
                                                 color='#0d6efd'
                                                 ariaLabel='loading'
                                             />
-                                        </div>}
-                                    >
-                                        {postStore.groupedPosts.map((post) => (
-                                            <>
-                                                <PostWithPhoto key={post.id} post={post.value} />
-                                            </>
-                                        ))}{console.log(postStore.groupedPosts)}
-                                    </InfiniteScroll></>
-                            }
-                            {/* <StorySlider /> */}
+                                        </div>
+                                        :
+                                        <>
+                                            <PeopleRecomended users={chatStore.usersRecomended} />
+                                            <CreatePost />
 
-                        </div>
+                                            <InfiniteScroll
+                                                pageStart={0}
+                                                loadMore={handleGetNext}
+                                                hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                                                initialLoad={false}
+                                                loader={<div className="d-flex justify-content-center mb-5">
+                                                    <TailSpin
+                                                        height={50}
+                                                        width="50"
+                                                        color='#0d6efd'
+                                                        ariaLabel='loading'
+                                                    />
+                                                </div>}
+                                            >
+                                                {postStore.groupedPosts.map((post) => (
+                                                    <>
+                                                        <PostWithPhoto key={post.id} post={post.value} />
+                                                    </>
+                                                ))}{console.log(postStore.groupedPosts)}
+                                            </InfiniteScroll></>
+                                    }
+                                    {/* <StorySlider /> */}
 
-                        {/* <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>
+                                </div>
+
+                                {/* <div className='main-content-right col-xl-4 col-lg-3 d-lg-block d-none'>
                             <PopularEvents />
                         </div> */}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+            }
         </div>
     )
 })

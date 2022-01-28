@@ -52,7 +52,7 @@ export default observer(function PostsSettings({ post }: Props) {
     }
     return (
         <div className={postsDrop} >
-            <a className='d-flex not-drop d-flex align-items-center mb-0' href="">
+            {/* <a className='d-flex not-drop d-flex align-items-center mb-0' href="">
                 <VscSave className='me-3' />
                 <h4 className='mb-0 me-4'>
                     <span className={desc}>Save Post</span>
@@ -66,7 +66,7 @@ export default observer(function PostsSettings({ post }: Props) {
                     <span>Add this to your saved items</span>
                 </h4>
             </a>
-            {console.log(post)}
+            {console.log(post)} */}
             <a onClick={() => profileStore.updateFollowing(post.createdByUser?.userName, post.createdByUser.following)} className='d-flex not-drop d-flex align-items-center mb-0 mt-2'>
                 <RiUserUnfollowLine className='me-3' />
                 <h4 className='mb-0 me-4'>

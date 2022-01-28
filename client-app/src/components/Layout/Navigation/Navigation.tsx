@@ -41,12 +41,12 @@ export default observer(function Navigation() {
                         <h6 className='nav-wrap-header'>New Feeds</h6>
                         <ul className='mb-1'>
                             <li>
-                                <a className='nav-wrap-sidebar-feed' href="">
+                                <Link to='/home' className='nav-wrap-sidebar-feed' href="">
                                     <span style={{ background: `linear-gradient(#0e0eec, #6a6aaf)` }} className='nav-wrap-sidebar-feed-icon-wrap'>
                                         <CgLivePhoto />
                                     </span>
                                     <span className={navWrapInfos}>Newsfeed</span>
-                                </a>
+                                </Link>
                             </li>
                             <li onClick={() => profileStore.loadProfile(user1.userName)}>
                                 <Link to={`/userprofile/${user1.userName}`} className='nav-wrap-sidebar-feed' href="">

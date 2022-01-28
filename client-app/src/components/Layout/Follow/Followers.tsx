@@ -1,20 +1,35 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "../../../app/models/user";
 import { useDarkMode } from "../../../app/stores/store";
 import { history } from "../../..";
 import './Follow.scss'
+import { TailSpin } from "react-loader-spinner";
 export default observer(function Followers(props: any) {
     const { profileStore, userStore } = useDarkMode();
     const { updateFollowing, loadFollows } = profileStore
     const { loadUser } = userStore
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
+        setLoading(true)
         loadUser().then(result =>
             loadFollows(result?.userName, 'followers')
         )
+       setTimeout(() => {
+        setLoading(false)
+       }, 500);
     }, [profileStore.loadProfile, props.location])
     return (
+        loading ?
+        <div className="d-flex justify-content-center mb-5 post-loader">
+            <TailSpin
+                height={50}
+                width="50"
+                color='#0d6efd'
+                ariaLabel='loading'
+            />
+        </div>
+        :
         <div className='main-content'>
             <div className='UserProfile-wrapper'>
                 <div className='UserProfile-body'>

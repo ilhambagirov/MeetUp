@@ -21,11 +21,13 @@ import swal from "sweetalert";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 interface Props {
     post: Post
-    user?: User
+    userr?: User
 }
-export default observer(function PostWithPhoto({ post, user }: Props) {
-    const { postStore, profileStore, commentStore } = useDarkMode()
+export default observer(function PostWithPhoto({ post, userr }: Props) {
+    const { postStore, profileStore, commentStore, userStore } = useDarkMode()
     let { loadProfile } = profileStore
+    let { user } = userStore
+    const user1 = user as User
     //built in hooks
     const [postsShareDrop, setpostsShareDrop] = useState(0)
 
@@ -73,11 +75,11 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                     {window.location.pathname.includes('/userprofile') ?
                         <div className='d-flex align-items-center'>
                             <span className='post-with-photo-user-photo me-3'>
-                                <img className='user-profile-pic' src={post.createdByUser?.image || user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                <img className='user-profile-pic' src={post.createdByUser?.image || userr?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                             </span>
                             <div className='d-flex flex-column post-with-photo-header-left'>
                                 <h4 style={{ fontWeight: 700 }} className={Names}>
-                                    {post.createdByUser?.dsiplayName || user?.dsiplayName}
+                                    {post.createdByUser?.dsiplayName || userr?.dsiplayName}
                                 </h4>
                                 <span>
                                     {formatDistanceToNow(new Date(post.createdDate))} ago
@@ -88,13 +90,13 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                         <div className='d-flex align-items-center' onClick={() => loadProfile(post.createdByUser?.userName)}>
                             <Link to={`/userprofile/${post.createdByUser?.userName}`}>
                                 <span className='post-with-photo-user-photo me-3'>
-                                    <img className='user-profile-pic' src={post.createdByUser?.image || user?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
+                                    <img className='user-profile-pic' src={post.createdByUser?.image || userr?.image || require('../../../assets/images/avatar3.jpg').default} alt="" />
                                 </span>
                             </Link>
                             <Link to={`/userprofile/${post.createdByUser?.userName}`} >
                                 <div className='d-flex flex-column post-with-photo-header-left'>
                                     <h4 style={{ fontWeight: 700 }} className={Names}>
-                                        {post.createdByUser?.dsiplayName || user?.dsiplayName}
+                                        {post.createdByUser?.dsiplayName || userr?.dsiplayName}
                                     </h4>
                                     <span>
                                         {formatDistanceToNow(new Date(post.createdDate!)) + ' ago'}
@@ -103,11 +105,12 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                                 </div>
                             </Link>
                         </div>
+                    }{
+                        (user1?.userName === post?.createdByUser?.userName || window.location.pathname === `/userprofile/${user1.userName}`) &&
+                        <span className='post-with-photo-menu'>
+                            <BsThreeDots onClick={() => handledropforposts(post.id)} />
+                        </span>
                     }
-                    <span className='post-with-photo-menu'>
-                        <BsThreeDots onClick={() => handledropforposts(post.id)} />
-                    </span>
-
                     {postDrop === post.id &&
                         <PostsSettings post={post} />
                     }
@@ -154,7 +157,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                 }
                 <div className='post-with-photo-footer d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
-                        <a onClick={() => updateLike(post.id, post.liking, post.createdByUser?.userName !== undefined ? post.createdByUser?.userName : user.userName)} className='likes d-flex align-items-center me-4'>
+                        <a onClick={() => updateLike(post.id, post.liking, post.createdByUser?.userName !== undefined ? post.createdByUser?.userName : userr.userName)} className='likes d-flex align-items-center me-4'>
                             <AiOutlineLike className={post.liking ? 'likes-icon liked-icon' : 'likes-icon'} />
                             <span className={Footer}>{post.likeCount} Like</span>
                         </a>
@@ -163,13 +166,13 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                             <span className={Footer}>{post.comments?.length} Comment</span>
                         </div>
                     </div>
-                    <label>
+                    {/* <label>
                         <AiOutlineShareAlt onClick={() => handleSharedropforposts(1)} className='share-icon me-1' />
                         <span className={Footer}>Share</span>
                     </label>
                     {postsShareDrop === 1 &&
                         <PostShareDropdown />
-                    }
+                    } */}
                 </div>
                 {commentStore.commentMode === post.id &&
                     <PostComment postId={post.id} userId={post.createdByUserId} />
