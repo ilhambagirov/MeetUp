@@ -62,10 +62,16 @@ export default observer(function Navigation() {
                     <div className={navWrap0}>
                         <ul className='mb-1'>
                             <li>
-                                <a className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
+                                <Link to='/followers' className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
                                     <RiUserFollowLine className='sidebar-logos' />
                                     <span className={navWrapInfos}>Followers</span>
-                                </a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to='/followings' className='nav-wrap-sidebar-feed nav-wrap-sidebar-feed-down ' href="">
+                                    <RiUserFollowLine className='sidebar-logos' />
+                                    <span className={navWrapInfos}>Followings</span>
+                                </Link>
                             </li>
                         </ul>
                     </div>

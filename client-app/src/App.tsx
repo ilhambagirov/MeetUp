@@ -30,6 +30,8 @@ import AdminNavbar from './components/Admin/Navbar'
 import ResetPassword from './components/Layout/Account/ResetPassword/ResetPassword'
 import SendEmailResetPass from './components/Layout/Account/ResetPassword/SendEmailResetPass';
 import ChatBox from './components/Layout/ChatBox/ChatBox';
+import Followers from './components/Layout/Follow/Followers';
+import Following from './components/Layout/Follow/Following';
 export default observer(function App() {
 
   const { activitystore, userStore, adminstore, chatStore, commentStore } = useDarkMode()
@@ -82,7 +84,9 @@ export default observer(function App() {
               <Route path='/savedaddress' render={() => (userStore.isLoggedIn ? (<SavedAddress />) : (<Redirect to="/" />))} />
               <Route path='/socialaccount' render={() => (userStore.isLoggedIn ? (<SocialAccount />) : (<Redirect to="/" />))} />
               <Route path='/passwordchange' render={() => (userStore.isLoggedIn ? (<PasswordChange />) : (<Redirect to="/" />))} />
-              <Route path='/help' render={() => (userStore.isLoggedIn ? (<Help />) : (<Redirect to="/" />))} />
+              {/* <Route path='/help' render={() => (userStore.isLoggedIn ? (<Help />) : (<Redirect to="/" />))} /> */}
+              <Route path='/followers' render={() => (userStore.isLoggedIn ? (<Followers />) : (<Redirect to="/" />))} />
+              <Route path='/followings' render={() => (userStore.isLoggedIn ? (<Following />) : (<Redirect to="/" />))} />
               <Route path='/userprofile/:username' render={(props) => (userStore.isLoggedIn ? (<UserProfile {...props} />) : (<Redirect to="/" />))} />
               <Route path='/server-error' component={ServerError} />
               <Container>

@@ -66,11 +66,35 @@ export default class ProfileStore {
             throw error
         }
     }
+    updateFollowings = async (userName: string, following: boolean) => {
+        try {
+            await agent.Account.updateFolowing(userName)
+            runInAction(() => {
+                var user = this.followings.filter(x => x.userName === userName)[0]
+                user.following = !following
+                if (following) {
+                    this.followings = this.followings.filter(x=>x.userName !== userName)
+                }
+            })
+        } catch (error) {
+            throw error
+        }
+    }
 
     loadFollow = async (predicate: string) => {
         try {
             var profile = this.profile as User
             var followList = await agent.Account.listFollow(profile.userName, predicate)
+            runInAction(() => {
+                this.followings = followList
+            })
+        } catch (error) {
+            throw error
+        }
+    }
+    loadFollows = async (username: string, predicate: string) => {
+        try {
+            var followList = await agent.Account.listFollow(username, predicate)
             runInAction(() => {
                 this.followings = followList
             })

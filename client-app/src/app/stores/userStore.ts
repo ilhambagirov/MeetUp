@@ -97,6 +97,7 @@ export default class UserStore {
         dark.commentStore.commentMode = 0
         history.push("/")
     }
+   
 
     changeUserPassword = async (creds: ChangePassword) => {
         try {

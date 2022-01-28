@@ -13,10 +13,7 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import Modal from "react-modal";
 import { useDropzone } from "react-dropzone";
 import { FiDroplet, FiPlus } from "react-icons/fi";
-import Item from "antd/lib/list/Item";
-import { Link, NavLink } from "react-router-dom";
 import { history } from "../../..";
-import { useHistory, useLocation } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
 
 export default observer(function UserProfile(props: any) {
