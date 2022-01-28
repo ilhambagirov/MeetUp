@@ -42,6 +42,7 @@ export default observer(function PostComment({ postId, userId }: Props) {
                         <span className="d-flex justify-content-between">
                             <small className="font-weight-bold me-2 username-comment">{comment.dsiplayName}</small>
                             <small>{formatDistanceToNow(new Date(comment.createdDate!)) + ' ago'}</small>
+                            {console.log(comment.createdDate)}
                         </span>
                         <span >
                             <small className="comment">{comment.body}</small>

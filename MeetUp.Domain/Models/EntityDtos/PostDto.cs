@@ -9,6 +9,7 @@ namespace MeetUp.Domain.Models.EntityDtos
         public string Title { get; set; }
         public string FilePath { get; set; }
         public string CreatedByUserId { get; set; }
+        public string CreatedDate { get; set; }
         public bool Liking { get; set; }
         public int LikeCount { get; set; }
         public virtual AppUserDto CreatedByUser { get; set; }

@@ -12,7 +12,6 @@ using System.Linq;
 
 namespace MeetUp.API.Controllers
 {
-    [AllowAnonymous]
     public class ChatController : BaseApiController
     {
         private readonly AppDbContext _context;
@@ -34,6 +33,22 @@ namespace MeetUp.API.Controllers
             List<AppUser> customUsers = _context.Users.Include(x=>x.Photos).Where(u => u.Id != userId).ToList();
 
             return Ok(mapper.Map<List<AppUserDto>>(customUsers));
+        }
+
+        [HttpGet("Users")]
+        public IActionResult Users()
+        {
+            string userId = _userManager.GetUserId(User);
+            List<AppUser> customUsers = _context.Users.Include(x => x.Photos).Include(x=>x.Followers).ThenInclude(x=>x.Observer).Where(u => u.Id != userId).ToList();
+            var result = new List<AppUserDto>();
+            foreach (var profile in customUsers)
+            {
+                var profileMapped = mapper.Map<AppUserDto>(profile);
+                var following = profile.Followers.Any(x => x.ObserverId == userId);
+                profileMapped.Following = following;
+                result.Add(profileMapped);
+            }
+            return Ok(result);
         }
         [HttpGet("firendId/{username}")]
         public IActionResult Chat(string username)

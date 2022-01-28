@@ -13,8 +13,7 @@ export default class PostStore {
     addPhotoMode = false
     pagination: Pagination | null = null
     pagingParams = new PagingParams()
-    // loadingNext = false
-
+    loading = false
     constructor() {
         makeAutoObservable(this)
     }
@@ -104,7 +103,7 @@ export default class PostStore {
             .sort(function (a, b) {
                 var dateA = new Date(a.value.createdDate).getTime();
                 var dateB = new Date(b.value.createdDate).getTime();
-                return dateA < dateB ? -1 : 1
+                return dateA < dateB ? 1 : -1
             });
         return result
     }
@@ -121,18 +120,24 @@ export default class PostStore {
         }
     }
     createActivity = async (post: PostFormValues) => {
+        runInAction(() => this.loading = true)
         const user = dark.userStore.user
         const createdUser = new Profile(user! as User)
         try {
             var createdPost = await agent.Posts.create(post).then(result => result.data)
-            console.log(createdPost)
-            createdPost.createdByUser = createdUser
-            this.setActivity(createdPost)
-            var profile = dark.profileStore.profile as User
-            profile.posts.length++
+            setTimeout(() => {
+                createdPost.createdByUser = createdUser
+                this.setActivity(createdPost)
+                if (window.location.pathname.includes('userprofile')) {
+                    var profile = dark.profileStore.profile as User
+                    profile.posts.length++
+                }
+            }, 1000);
+            runInAction(() => this.loading = false)
         }
         catch (error) {
             console.log(error)
+            runInAction(() => this.loading = false)
         }
 
     }

@@ -15,7 +15,7 @@ export interface User {
     profession?: string,
     posts?: Post[] 
     photos? : Photo[]
-    following : boolean
+    following? : boolean
     followersCount : number
     followingCount : number
     likesCount? : number

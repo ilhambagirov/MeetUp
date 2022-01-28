@@ -33,7 +33,7 @@ export default observer(function AccountDetails() {
                     <Link to='/settings'>
                         <AiOutlineArrowLeft className='goback-icon' />
                     </Link>
-                    <h4 style={{ fontWeight: 600 }} className='ms-4 mb-0'>Account Details</h4>
+                    <h4 style={{ fontWeight: 600 }} className='ms-4 mt-0 mb-0'>Account Details</h4>
                 </div>
                 <div className="account-content border-0 p-lg-5 p-4 d-flex align-items-center justify-content-center">
                     <div className='User-profile-pic w-100'>

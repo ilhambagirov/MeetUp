@@ -3,7 +3,6 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { dark } from "./store";
 import { User } from "../../app/models/user";
 import { PostComment } from "../models/comment";
-
 export default class CommentStore {
     comments: PostComment[] = []
     hubConnection: HubConnection | null = null

@@ -26,7 +26,7 @@ export default function SavedAddress() {
                     <Link to='/settings'>
                         <AiOutlineArrowLeft className='goback-icon' />
                     </Link>
-                    <h4 style={{ fontWeight: 600 }} className='ms-4 mb-0'>Saved Address</h4>
+                    <h4 style={{ fontWeight: 600 }} className='ms-4 mb-0 mt-0'>Saved Address</h4>
                 </div>
                 <div className='password-change-content border-0 p-lg-5 p-4'>
                     <Formik

@@ -48,7 +48,6 @@ namespace MeetUp.Application.Modules.PostModules
                 };
                 user.Photos.Add(photo);
             }
-
             var post = new Post()
             {
                 Title = request.Title,

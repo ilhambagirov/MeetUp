@@ -8,6 +8,7 @@ import './ChatBox.scss'
 import ScrollableFeed from 'react-scrollable-feed'
 import { formatDistanceToNow } from 'date-fns';
 import { FiSend } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 export default observer(function ChatBox() {
 
@@ -36,13 +37,18 @@ export default observer(function ChatBox() {
 
     return (
         <div className='chatBox'>
-            <div className='chat-header'>
-                <span className='me-2'>
-                    <img className='friends-profile-img' src={receiver?.image || require('../../../assets/images/user-12.png').default} alt="" />
-                </span>
-                <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
-                    <a className='friends-names'>{receiver.dsiplayName}</a>
-                </h3>
+            <div className='chat-header d-flex justify-content-between'>
+                <div className='d-flex'>
+                    <span className='me-2'>
+                        <img className='friends-profile-img' src={receiver?.image || require('../../../assets/images/user-12.png').default} alt="" />
+                    </span>
+                    <h3 className='fw-700 mb-0 mt-0 d-flex align-items-center'>
+                        <a className='friends-names'>{chatStore.receiverName}</a>
+                    </h3>
+                </div>
+                <div onClick={() => chatStore.setBoxMode(receiver?.userName)}>
+                    <AiOutlineCloseCircle className='close-box' />
+                </div>
             </div>
             <div className='messages'>
                 <ScrollableFeed>
@@ -72,7 +78,7 @@ export default observer(function ChatBox() {
                             <div className='col-10'><MyTextInput autoComplete='off' style="ml-1 shadow-none textarea comment-textarea send-input"
                                 name="message"
                                 placeholder="Add message" /></div>
-                            <button type='submit' className='col-2 btn sendBtn'><FiSend/></button>
+                            <button type='submit' className='col-2 btn sendBtn'><FiSend /></button>
                         </Form>
                     )}
                 </Formik>

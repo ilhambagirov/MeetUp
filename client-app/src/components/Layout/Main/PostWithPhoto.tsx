@@ -18,6 +18,7 @@ import { profile } from "console";
 import CommentStore from "../../../app/stores/commentStore";
 import PostComment from "./PostComment";
 import swal from "sweetalert";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 interface Props {
     post: Post
     user?: User
@@ -79,7 +80,7 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                                     {post.createdByUser?.dsiplayName || user?.dsiplayName}
                                 </h4>
                                 <span>
-                                    2 hours ago
+                                    {formatDistanceToNow(new Date(post.createdDate))} ago
                                 </span>
                             </div>
                         </div>
@@ -96,8 +97,9 @@ export default observer(function PostWithPhoto({ post, user }: Props) {
                                         {post.createdByUser?.dsiplayName || user?.dsiplayName}
                                     </h4>
                                     <span>
-                                        2 hours ago
+                                        {formatDistanceToNow(new Date(post.createdDate!)) + ' ago'}
                                     </span>
+                                    {console.log(post)}
                                 </div>
                             </Link>
                         </div>

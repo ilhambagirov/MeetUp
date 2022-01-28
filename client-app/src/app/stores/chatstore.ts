@@ -12,6 +12,7 @@ import { Pagination, PagingParams } from "../models/pagination";
 export default class ChatStore {
 
     users: User[] = [];
+    usersRecomended: User[] = [];
     boxMode: boolean = false
     messages: Message[] = []
     hubConnection: HubConnection | null = null
@@ -29,6 +30,27 @@ export default class ChatStore {
         try {
             const user = await agent.Chat.usersList()
             runInAction(() => this.users = user)
+        } catch (error) {
+            throw error
+        }
+    }
+    updateFollowing = async (userName: string, following: boolean) => {
+        try {
+            await agent.Account.updateFolowing(userName)
+            runInAction(() => {
+                var user = this.usersRecomended.filter(x => x.userName === userName)[0]
+                user.following = !following
+            })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    getUsersRecomended = async () => {
+        try {
+            const user = await agent.Chat.usersRecomended()
+            console.log(user)
+            runInAction(() => this.usersRecomended = user)
         } catch (error) {
             throw error
         }
@@ -101,6 +123,7 @@ export default class ChatStore {
                 console.log(id)
                 this.getMessages(id)
                 runInAction(() => this.receiverName = id)
+                console.log(this.receiverName)
             }
         } catch (error) {
             throw error

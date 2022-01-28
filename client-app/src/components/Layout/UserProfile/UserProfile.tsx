@@ -17,9 +17,10 @@ import Item from "antd/lib/list/Item";
 import { Link, NavLink } from "react-router-dom";
 import { history } from "../../..";
 import { useHistory, useLocation } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
-export default observer(function UserProfile(props : any) {
-    const { postStore, profileStore, userStore } = useDarkMode();
+export default observer(function UserProfile(props: any) {
+    const { postStore, profileStore, userStore, chatStore } = useDarkMode();
     const { groupedPosts } = postStore
     const { profile, changeImage, updateFollowing } = profileStore
     const user1 = profile as User
@@ -154,8 +155,8 @@ export default observer(function UserProfile(props : any) {
                                                     :
                                                     <div onClick={() => updateFollowing(user1?.userName, user1.following)} className='follow-btn'>Follow</div>
                                             }
-                                            <a href="" className='other-btns-user-profile'>
-                                                <BsEnvelope />
+                                            <a className='other-btns-user-profile'>
+                                                <BsEnvelope onClick={() => chatStore.setBoxMode(user1?.userName)} />
                                             </a>
                                             <a className='other-btns-user-profile' href="">
                                                 <BiDotsHorizontalRounded />
@@ -179,15 +180,27 @@ export default observer(function UserProfile(props : any) {
                                     <PopularEvents />
                                 </div>
                                 <div className='col-xl-8 col-xxl-8 col-lg-8 userprofile-right mt-3'>
-                                    <CreatePost />
-                                    {groupedPosts.map((post) => (
+                                    {postStore.loading ?
+                                        <div className="d-flex justify-content-center mb-5 post-loader-profile">
+                                            <TailSpin
+                                                height={50}
+                                                width="50"
+                                                color='#0d6efd'
+                                                ariaLabel='loading'
+                                            />
+                                        </div>
+                                        :
                                         <>
-                                            {console.log(post.value)}
-                                            <PostWithPhoto key={post.id}
-                                                post={post.value}
-                                                user={user1} />
-                                        </>
-                                    ))}
+                                            <CreatePost />
+                                            {groupedPosts.map((post) => (
+                                                <>
+                                                    {console.log(post.value)}
+                                                    <PostWithPhoto key={post.id}
+                                                        post={post.value}
+                                                        user={user1} />
+                                                </>
+                                            ))}</>
+                                    }
                                 </div >
                             </div >
                         </TabPanel>

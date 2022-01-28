@@ -101,7 +101,7 @@ export default class UserStore {
     changeUserPassword = async (creds: ChangePassword) => {
         try {
             await agent.Account.changePassword(creds)
-            history.push("/")
+            history.push("/home")
             swal("Password Changed!", {
                 icon: "success",
             });

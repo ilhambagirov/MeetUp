@@ -118,7 +118,8 @@ const Photos = {
 }
 const Chat = {
     usersList: () => request.get<User[]>('chat'),
-    messages: (userName: string) => request.get<Message[]>(`chat/firendId/${userName}`)
+    messages: (userName: string) => request.get<Message[]>(`chat/firendId/${userName}`),
+    usersRecomended: () => request.get<User[]>(`Chat/Users`)
 }
 const Like = {
     like: (id: number) => request.post(`like/${id}`,{}),

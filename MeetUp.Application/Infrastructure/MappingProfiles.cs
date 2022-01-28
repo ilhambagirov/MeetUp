@@ -11,6 +11,7 @@ namespace MeetUp.Application.Infrastructure
         {
             CreateMap<Post, PostDto>()
                 .ForMember(i => i.LikeCount, o => o.MapFrom(s => s.Likes.Count))
+                .ForMember(i => i.CreatedDate, o => o.MapFrom(s => s.CreatedDate))
                 .ReverseMap();
            /* CreateMap<IQueryable<Post>, IQueryable<PostDto>>()
               .ReverseMap();*/

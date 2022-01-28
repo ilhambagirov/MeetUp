@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'bootstrap/dist/css/bootstrap.css';
@@ -29,17 +29,29 @@ import AdminLogin from './components/Admin/AdminLogin'
 import AdminNavbar from './components/Admin/Navbar'
 import ResetPassword from './components/Layout/Account/ResetPassword/ResetPassword'
 import SendEmailResetPass from './components/Layout/Account/ResetPassword/SendEmailResetPass';
+import ChatBox from './components/Layout/ChatBox/ChatBox';
 export default observer(function App() {
 
-  const { activitystore, userStore, adminstore } = useDarkMode()
+  const { activitystore, userStore, adminstore, chatStore, commentStore } = useDarkMode()
   const { darkMode } = activitystore
 
   const wrapper = classNames("wrapper", { containerdark: darkMode })
   const location = useLocation();
   const path = location.pathname
+  useEffect(() => {
+    chatStore.createHubConnection();
+    commentStore.createHubConnection()
+    return () => {
+      commentStore.clearComments()
+      chatStore.stopHubConnection()
+    }
+  })
 
   return (
     <div className={wrapper}>
+      {chatStore.boxMode &&
+        <ChatBox />
+      }
       <ToastContainer position='bottom-right' hideProgressBar />
       <Route exact path='/' component={Login} />
       <Route path='/register' component={Register} />
