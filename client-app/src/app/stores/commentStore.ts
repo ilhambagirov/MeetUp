@@ -1,5 +1,5 @@
 import signalR, { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, values } from "mobx";
 import { dark } from "./store";
 import { User } from "../../app/models/user";
 import { PostComment } from "../models/comment";
@@ -35,6 +35,7 @@ export default class CommentStore {
             runInAction(() => {
                 console.log(comment)
                 this.comments.unshift(comment)
+                
             })
         });
         this.hubConnection.on("ReceiveNotification", (test: any) => {
@@ -69,6 +70,7 @@ export default class CommentStore {
         try {
             console.log(postId)
             await this.hubConnection.invoke('LoadComment', postId)
+           
         } catch (error) {
             console.log(error)
         }

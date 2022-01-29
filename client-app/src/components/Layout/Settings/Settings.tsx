@@ -23,35 +23,13 @@ export default observer(function Settings() {
                             <h4 className='mb-4 mb-lg-5 mb-4' style={{ fontWeight: 700 }}>Settings</h4>
                             <div className='setting-caption mb-2'>General</div>
                             <ul className='mb-4'>
-                                <li className=' border-bottom'>
+                                <li className=''>
                                     <Link className=' pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/accountdetails' >
                                         <div className='d-flex align-items-center ' >
                                             <span style={{ background: `linear-gradient(#0e0eec, #6a6aaf)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
                                                 <AiOutlineHome />
                                             </span>
                                             <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Account Information</h4>
-                                        </div>
-                                        <MdKeyboardArrowRight className='arrow-settings' />
-                                    </Link>
-                                </li>
-                                <li className=' border-bottom'>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/savedaddress' >
-                                        <div className='d-flex align-items-center justify-content-center' >
-                                            <span style={{ background: `linear-gradient(#f2994a,#f2c94c)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
-                                                <HiOutlineLocationMarker />
-                                            </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Saved Adresses</h4>
-                                        </div>
-                                        <MdKeyboardArrowRight className='arrow-settings' />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className='pb-2 pt-2 d-flex align-items-center justify-content-between w-100' to='/socialaccount' >
-                                        <div className='d-flex align-items-center justify-content-center' >
-                                            <span style={{ background: `linear-gradient(#e44d26,#f16529)` }} className='me-3 d-flex align-items-center nav-wrap-sidebar-feed-icon-wrap'>
-                                                <BsTwitter />
-                                            </span>
-                                            <h4 style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Social Account</h4>
                                         </div>
                                         <MdKeyboardArrowRight className='arrow-settings' />
                                     </Link>

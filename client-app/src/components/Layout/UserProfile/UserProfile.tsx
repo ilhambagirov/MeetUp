@@ -15,6 +15,7 @@ import { useDropzone } from "react-dropzone";
 import { FiDroplet, FiPlus } from "react-icons/fi";
 import { history } from "../../..";
 import { TailSpin } from "react-loader-spinner";
+import { truncate } from "fs";
 
 export default observer(function UserProfile(props: any) {
     const { postStore, profileStore, userStore, chatStore } = useDarkMode();
@@ -46,7 +47,6 @@ export default observer(function UserProfile(props: any) {
         setIsOpen(false);
     }
     const [loading, setLoading] = useState(false)
-
     useEffect(() => {
         setLoading(true)
         var point = window.location.pathname.lastIndexOf('/')
@@ -78,7 +78,7 @@ export default observer(function UserProfile(props: any) {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
     return (
-        loading ?
+        loading || profileStore.loading ?
             <div className="d-flex justify-content-center mb-5 post-loader">
                 <TailSpin
                     height={50}

@@ -8,6 +8,13 @@
 .not-drop h4{
     margin-top: 0;
 }
+.comment-body{
+    width: 100%;
+    height: 52px;
+    .field{
+        width: 90%;
+    }
+}
 
 .postadd-dark-mode{
     background-color: #293145 !important;
@@ -23,11 +30,16 @@
 }
 .comment-textarea{
     border-radius: 8px;
+    width: 100%;
+    padding: 10px 5px;
 }
 .username-comment{
     color: #212529;
     font-size: 12px;
     font-weight: 700;
+}
+.btns-com{
+    height: 43px;
 }
 .post-loader{
     position: absolute;

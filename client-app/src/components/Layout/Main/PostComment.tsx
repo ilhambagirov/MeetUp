@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 
 interface Props {
     postId: number
-    userId : string
+    userId: string
 }
 
 export default observer(function PostComment({ postId, userId }: Props) {
@@ -22,7 +22,7 @@ export default observer(function PostComment({ postId, userId }: Props) {
         if (postId) {
             commentStore.loadComment(postId.toString())
         }
-       
+
     }, [commentStore, postId])
 
     const validationSchema = Yup.object(
@@ -61,16 +61,16 @@ export default observer(function PostComment({ postId, userId }: Props) {
                         commentStore.addComment(values, userId).then(() => resetForm())}
                     initialValues={{ body: '', postId: postId.toString() }}>
                     {({ isSubmitting, isValid, handleSubmit }) => (
-                        <Form>
-                            <div className="d-flex flex-row align-items-start">
+                        <Form className="d-flex justify-content-between">
+                            <div className="d-flex flex-row align-items-end comment-body">
                                 <img className="rounded-circle me-1" src={user1.image || "https://i.imgur.com/RpzrMR2.jpg"} width="40" />
                                 <MyTextInput style="form-control ml-1 shadow-none textarea comment-textarea"
                                     name="body"
                                     placeholder="Add Comment" />
                             </div>
-                            <div className="mt-2 text-right d-flex justify-content-end">
+                            <div className="mt-2 text-right d-flex justify-content-end btns-com">
                                 <button className="btn btn-primary btn-sm shadow-none me-2" type="submit">Post comment</button>
-                                <button className="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+                                <button onClick={() => commentStore.commentMode !== postId ? commentStore.setCommentMode(postId) : commentStore.setCommentMode(0)} className="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
                             </div>
                         </Form>
                     )}

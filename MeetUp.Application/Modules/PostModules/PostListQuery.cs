@@ -39,6 +39,7 @@ namespace MeetUp.Application.Modules.PostModules
             .ThenInclude(u => u.Photos)
             .Include(x=>x.Likes)
             .Where(x => x.DeletedDate == null)
+            .Include(x=>x.Comments)
             .OrderByDescending(x=>x.CreatedDate)
             .AsNoTracking().AsQueryable();
             var posts = await postsFromDb.PaginatedMappedListAsync<PostDto, Post>(mapper, request.Params.PageIndex, request.Params.PageSize);

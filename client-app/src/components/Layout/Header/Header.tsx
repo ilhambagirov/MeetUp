@@ -186,9 +186,9 @@ export default observer(function Header() {
                                 chatStore.getUsers()
                             }} fill='#0d6efd' className='nav-right-logo' />
                         </a>
-                        <a className=' text-decoration-none nav-right-link rotate' onClick={() => handleSettingsDropdown()} href="#">
+                        <Link to='/settings' className=' text-decoration-none nav-right-link rotate' onClick={() => handleSettingsDropdown()} >
                             <VscSettingsGear fill='#0d6efd' className={toggleCatch} />
-                        </a>
+                        </Link>
                         {/* {
                             settingsDropdown &&
                             <div className={settingsDrop}>

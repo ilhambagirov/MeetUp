@@ -7,6 +7,7 @@ import { dark } from "./store";
 export default class ProfileStore {
     profile: User | Promise<User> | null = null
     followings: User[] = []
+    loading = false
 
     constructor() {
         makeAutoObservable(this)
@@ -29,15 +30,18 @@ export default class ProfileStore {
 
     changeImage = async (file: any) => {
         try {
+            runInAction(()=>this.loading=true)
             const user = await agent.Photos.create(file).then(result => result.data)
             runInAction(() => {
                 var p = this.profile as User
                 p.image = user.image
                 var i = dark.userStore.user as User
                 i.image = user.image
+                runInAction(()=>this.loading=false)
             })
             return user;
         } catch (error) {
+            runInAction(()=>this.loading=false)
             throw error
         }
     }
