@@ -9,6 +9,7 @@ export interface User {
     phoneNumber?: string,
     bio?: string,
     image?: string,
+    isBanned: boolean,
     school?: string,
     university?: string,
     academicDegree?: string,

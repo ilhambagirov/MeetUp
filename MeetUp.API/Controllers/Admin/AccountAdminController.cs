@@ -1,4 +1,4 @@
-﻿using MeetUp.Application.Modules.AccountModules;
+﻿using MeetUp.Application.Modules.Admin.AdminAccountModule;
 using MeetUp.Application.Modules.AdminModules.AccountAdminModules;
 using MeetUp.Domain.Models.EntityDtos;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +16,11 @@ namespace MeetUp.API.Controllers.Admin
             var response = await Mediator.Send(command);
             if (response == null) return ValidationProblem();
             return Ok(response.Value);
+        }
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserDto>> BanUsers(string username)
+        {
+            return HandleResult(await Mediator.Send(new BanUserToggleCommand {UserName = username }));
         }
     }
 }

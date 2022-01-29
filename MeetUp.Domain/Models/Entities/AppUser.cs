@@ -12,6 +12,7 @@ namespace MeetUp.Domain.Models.Entities
         public string University { get; set; }
         public string AcademicDegree { get; set; }
         public string Profession { get; set; }
+        public bool IsBanned { get; set; }
         public virtual ICollection<SavedPost> SavedPosts { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }

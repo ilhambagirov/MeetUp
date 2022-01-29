@@ -25,6 +25,7 @@ axios.interceptors.request.use(config => {
         throw new Error(`Expected 'config' and 'config.headers' not to be undefined`);
     }
     if (token) config.headers.Authorization = `Bearer ${token}`
+    if (token === null) config.headers.Authorization = `Bearer ${localStorage.getItem('adm')}`
     return config
 })
 axios.interceptors.response.use(async response => {
@@ -129,6 +130,8 @@ const Notifications = {
 }
 const Admin = {
     login: (user: UserFormValues) => request.post<User>(`/AccountAdmin`, user),
+    adminUserList: () => request.get<User[]>(`Chat/UsersAdmin`),
+    banUser: (username : string) => request.get(`AccountAdmin/${username}`)
 }
 const agent = {
     Account,

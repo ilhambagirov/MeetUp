@@ -19,6 +19,7 @@ namespace MeetUp.Domain.Models.EntityDtos
         public int FollowersCount { get; set; }
         public int FollowingCount { get; set; }
         public int LikesCount { get; set; } = 0;
+        public bool IsBanned { get; set; }
         public ICollection<Photo> Photos { get; set; }
         public ICollection<PostDto> Posts { get; set; }
     }

@@ -26,7 +26,7 @@ import { Container } from 'semantic-ui-react';
 import ServerError from './components/Layout/Errors/ServerError';
 import EmailConfirm from './app/common/EmailConfirm';
 import AdminLogin from './components/Admin/AdminLogin'
-import AdminNavbar from './components/Admin/Navbar'
+import AdminDashboard from './components/Admin/AdminDashboard'
 import ResetPassword from './components/Layout/Account/ResetPassword/ResetPassword'
 import SendEmailResetPass from './components/Layout/Account/ResetPassword/SendEmailResetPass';
 import ChatBox from './components/Layout/ChatBox/ChatBox';
@@ -61,7 +61,7 @@ export default observer(function App() {
       <Route exact path='/admin' component={AdminLogin} />
       <Route exact path='/passwordreset' component={SendEmailResetPass} />
       <Switch>
-        <Route exact path='/adminDashboard' render={() => (adminstore.admin !== null ? (<AdminNavbar />) : (<Redirect to="/admin" />))} />
+        <Route exact path='/adminDashboard' render={() => (adminstore.admin !== null ? (<AdminDashboard />) : (<Redirect to="/admin" />))} />
       </Switch>
       <Switch>
         <Route path='/confirmResetPassword' render={() => (userStore.tokenIsValid ? (<ResetPassword />) : (<Redirect to="/" />))} />
@@ -97,8 +97,6 @@ export default observer(function App() {
           </>
         )} />
       }
-
-
     </div>
   );
 })

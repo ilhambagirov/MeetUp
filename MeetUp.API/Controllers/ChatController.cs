@@ -39,7 +39,22 @@ namespace MeetUp.API.Controllers
         public IActionResult Users()
         {
             string userId = _userManager.GetUserId(User);
-            List<AppUser> customUsers = _context.Users.Include(x => x.Photos).Include(x=>x.Followers).ThenInclude(x=>x.Observer).Where(u => u.Id != userId).ToList();
+            List<AppUser> customUsers = _context.Users.Include(x => x.Photos).Include(x=>x.Followers).ThenInclude(x=>x.Observer).Where(u => u.Id != userId && u.IsBanned == false).ToList();
+            var result = new List<AppUserDto>();
+            foreach (var profile in customUsers)
+            {
+                var profileMapped = mapper.Map<AppUserDto>(profile);
+                var following = profile.Followers.Any(x => x.ObserverId == userId);
+                profileMapped.Following = following;
+                result.Add(profileMapped);
+            }
+            return Ok(result);
+        }
+        [HttpGet("UsersAdmin")]
+        public IActionResult AdminUsers()
+        {
+            string userId = _userManager.GetUserId(User);
+            List<AppUser> customUsers = _context.Users.Include(x => x.Photos).Include(x => x.Followers).ThenInclude(x => x.Observer).Where(u => u.Id != userId).ToList();
             var result = new List<AppUserDto>();
             foreach (var profile in customUsers)
             {
