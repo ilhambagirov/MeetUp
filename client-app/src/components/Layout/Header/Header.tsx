@@ -46,6 +46,7 @@ export default observer(function Header() {
     const user = userStore.user as User
     const user1 = profile as User
 
+
     //custom local methods
     function handleMenuBackColor(color: string) {
         menuBackground.length === 0 ? SetmenuBackground(color) : SetmenuBackground("");
