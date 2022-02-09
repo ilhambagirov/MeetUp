@@ -132,7 +132,7 @@ export default class ChatStore {
     createHubConnection = () => {
         var user = dark.userStore.user as User
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44395/chat', {
+            .withUrl(process.env.REACT_APP_CHAT_URL, {
                 accessTokenFactory: () => localStorage.getItem('jwt'),
             })
             .withAutomaticReconnect()

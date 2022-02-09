@@ -13,14 +13,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MeetUp.Application.Modules.AdminModules.AccountAdminModules
+namespace MeetUp.Application.Modules.AdminModules
 {
     public class LoginAdminCommand : IRequest<Result<UserDto>>
     {
         public string Email { get; set; }
         public string Password { get; set; }
     }
-    public class AccountLoginCommandHandler : IRequestHandler<LoginAdminCommand, Result<UserDto>>
+    public class LoginAdminCommandHandler : IRequestHandler<LoginAdminCommand, Result<UserDto>>
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
@@ -28,7 +28,7 @@ namespace MeetUp.Application.Modules.AdminModules.AccountAdminModules
         private readonly IActionContextAccessor ctx;
         private readonly AppDbContext db;
 
-        public AccountLoginCommandHandler(SignInManager<AppUser> signInManager,
+        public LoginAdminCommandHandler(SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
            IHttpContextAccessor httpContextAccessor,
            IActionContextAccessor ctx,

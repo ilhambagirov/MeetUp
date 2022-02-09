@@ -121,7 +121,7 @@ export default observer(function PostWithPhoto({ post, userr }: Props) {
 
                     {postStore.editMode != post.id &&
                         <p>{post.title}
-                           </p>}
+                        </p>}
                     {
                         postStore.editMode == post.id &&
                         <Formik validationSchema={validationSchema}

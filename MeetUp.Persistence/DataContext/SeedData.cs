@@ -13,6 +13,7 @@ namespace MeetUp.Persistence.DataContext
             UserManager<AppUser> userManager
             )
         {
+            var test = context.Roles.Any();
             if (!context.Roles.Any())
             {
                 var roles = new List<AppRole>
@@ -55,7 +56,7 @@ namespace MeetUp.Persistence.DataContext
                 await context.SaveChangesAsync();
             }
 
-            if (!userManager.Users.Any() && !context.Posts.Any() && !context.Roles.Any())
+            if (!userManager.Users.Any() && !context.Posts.Any())
             {
                 /* var role = new RoleManager<Role>()
                  {
@@ -71,19 +72,22 @@ namespace MeetUp.Persistence.DataContext
                     {
                         DsiplayName = "Bob",
                         UserName = "bob",
-                        Email = "bob@test.com"
+                        Email = "bob@test.com",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
                         DsiplayName = "Jane",
                         UserName = "jane",
-                        Email = "jane@test.com"
+                        Email = "jane@test.com",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
                         DsiplayName = "Tom",
                         UserName = "tom",
-                        Email = "tom@test.com"
+                        Email = "tom@test.com",
+                        EmailConfirmed = true
                     },
                 };
 
@@ -94,96 +98,29 @@ namespace MeetUp.Persistence.DataContext
 
                 var activities = new List<Post>
                 {
-                    new Post
-                    {
+                        new Post{
                         Title = "Past Activity 1",
-                        FilePath = "picture.png",
                         CreatedByUserId = users.FirstOrDefault().Id,
                         CreatedDate = DateTime.Now
-
-
-                    },
-                     new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
+                        },
                        new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
+                       {
+                           Title = "Past Activity 1",
+                           CreatedByUserId = users.FirstOrDefault().Id,
+                           CreatedDate = DateTime.Now
+                       },
                        new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
+                       {
+                           Title = "Past Activity 1",
+                           CreatedByUserId = users.FirstOrDefault().Id,
+                           CreatedDate = DateTime.Now
+                       },
                        new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
-                        new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
-                       new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
-                       new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
-                       new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
-                        new Post
-                    {
-                        Title = "Past Activity 1",
-                        FilePath = "picture.png",
-                        CreatedByUserId = users.FirstOrDefault().Id,
-                        CreatedDate = DateTime.Now
-
-
-                    },
+                       {
+                           Title = "Past Activity 1",
+                           CreatedByUserId = users.FirstOrDefault().Id,
+                           CreatedDate = DateTime.Now
+                       }
                 };
 
                 await context.Posts.AddRangeAsync(activities);
