@@ -4,12 +4,10 @@ using MeetUp.Application.Infrastructure.Photos;
 using MeetUp.Application.Interfaces;
 using MeetUp.Application.Services;
 using MeetUp.Persistence.DataContext;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
